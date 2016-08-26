@@ -1,0 +1,89 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜订单详情">
+    <meta name="description" content="迈噜订单详情">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <div id="main">
+            <ul class="order-ul">
+                <li class="choice-on" id="order-all">全部</li>
+                <li id="order-ing">进行中</li>
+                <li id="order-evaluated">待评价</li>
+                <li id="order-cancel">已取消</li>
+            </ul>
+            <!--订单信息-->
+            <div class="order" id="data-container">
+
+            </div>
+        </div>
+        <!--主体内容结束-->
+        <!--底部菜单栏开始-->
+        <footer>
+            <a href="index.html" class="ft-a">
+                <img src="images/index.png" alt="">
+                <span>首页</span>
+            </a>
+            <a href="provider.html" class="ft-a">
+                <img src="images/technician.png" alt="">
+                <span>技师</span>
+            </a>
+            <a href="javascript:" class="ft-a">
+                <img src="images/order-on.png" alt="">
+                <span class="page-on">订单</span>
+            </a>
+            <a href="middle-no.html" class="ft-a">
+                <img src="images/user.png" alt="">
+                <span>个人中心</span>
+            </a>
+        </footer>
+        <!--底部菜单栏结束-->
+    </div>
+    <!--回到顶部按钮-->
+    <div id="go-top"></div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/order-details.js"></script>
+    <script src="js/main.js"></script>
+    <script id="template" type="x-tmpl-mustache">
+        {{#rows}}
+            <div class='order-box' id='order_{{id}}'>
+            <div class='order-top-box'>
+                <img src='images/provider.jpg' class='order-provider-img fl'>
+                <div class='providerInf'>
+                    <p class='details-name'>{{detailsName}}</p>
+                    <p class='orderIndexzY'>{{providerOldTitle}}</span>
+                    <span class='{{orderStateClass}} guding'>{{orderState}}</span>
+                    <p class='orderP'>
+                        <span>预约时间</span>
+                        <span>{{time}}</span>
+                        <span class='orderJe'>金额:{{je}}</span>
+                    </p>
+                </div>
+            </div>
+                <div class='orderIndexBot'>
+                    <a href='{{orderHrefNG}}' class='a-btn {{StateNG}}'>{{operationNG}}</a>
+                    <a href='{{orderHref}}' class='a-btn {{btnState}}'>{{operation}}</a>
+                </div>
+            </div>
+        {{/rows}}
+    </script>
+</body>
+</html>

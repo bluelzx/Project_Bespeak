@@ -1,0 +1,58 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜登录">
+    <meta name="description" content="迈噜登录">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <style>
+        html{
+            height: 100%;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <a href="middle-no.html" class="back">
+            <img src="images/back.png" alt="">
+        </a>
+        <form action="" class="signInBox">
+            <div class="divInput">
+                <label class="signIn-user" for="signIn-user">&nbsp;</label>
+                <input type="text" id="signIn-user" placeholder="昵称/手机号/邮箱" autocomplete="off" required>
+            </div>
+            <div class="divInput">
+                <label class="signIn-pass" for="signIn-pass">&nbsp;</label>
+                <input type="password" id="signIn-pass" placeholder="请输入密码" required>
+            </div>
+            <div class="yzmBox">
+                <label class="yanzm" for="yanzm">&nbsp;</label>
+                <input type="text" id="yanzm" placeholder="请输入验证码" autocomplete="off" required>
+                <a href="#">
+                    <img src="images/yz.png" alt="" class="yzImg">
+                </a>
+            </div>
+            <a href="#" class="missMA">忘记密码？</a>
+            <a href="#" class="sign">手机号登录</a>
+            <a href="#" class="sign">登录</a>
+            <a href="register.html" class="zhuce">注册</a>
+        </form>
+    </div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhfeiyu.dao.domain.ChargeMapper">
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">charge</sql>
+	<sql id="baseColumns"><!-- 基础字段 -->
+		A.id AS id,A.serial AS serial,A.main_status AS mainStatus,A.logic_status AS logicStatus,A.type_id AS typeId,A.type_code AS typeCode,A.deleted_at AS deletedAt,A.deleted_by AS deletedBy,A.group_id AS groupId,A.grade_id AS gradeId,A.dict_code AS dictCode,A.user_id AS userId,A.username AS username,A.charge_date AS chargeDate,A.charge_money AS chargeMoney,A.fee AS fee,A.msg AS msg,A.deal_date AS dealDate,A.deal_status AS dealStatus,A.app_id AS appId,A.mch_id AS mchId,A.nonce_str AS nonceStr,A.sign AS sign,A.prepay_id AS prepayId,A.trade_type AS tradeType,A.open_id AS openId,A.out_trade_no AS outTradeNo,A.pay_type AS payType,A.order_goods_id AS orderGoodsId,A.order_id AS orderId,A.link_type AS linkType,A.link_id AS linkId,A.owner_id AS ownerId,A.owner_ids AS ownerIds,A.attr_str AS attrStr,A.attr_str2 AS attrStr2,A.attr_int AS attrInt,A.attr_int2 AS attrInt2,A.sequence AS sequence,A.remark AS remark,A.created_at AS createdAt,A.created_by AS createdBy,A.updated_at AS updatedAt,A.updated_by AS updatedBy
+	</sql>
+	<sql id="baseSearch"><!-- 基础查询条件 -->
+		<if test="deleted == null">AND A.deleted_at IS NULL</if> 
+		<if test="deleted != null">AND A.deleted_at IS NOT NULL</if>
+		<if test="id != null and id != '' ">AND A.id = #{id}</if>
+		<if test="chargeId != null and chargeId != '' ">AND A.id = #{chargeId}</if>
+		<if test="serial != null and serial != '' ">AND A.serial = #{serial}</if>
+		<if test="mainStatus != null and mainStatus != '' ">AND A.main_status = #{mainStatus}</if>
+		<if test="logicStatus != null and logicStatus != '' ">AND A.logic_status = #{logicStatus}</if>
+	</sql>
+	<sql id="suffix"><!-- 分组排序  -->
+		<if test="groupBy != null and groupBy !='' "> GROUP BY #{groupBy,jdbcType=VARCHAR} </if>
+		<if test="selfOrder == null"><if test="orderBy != null and orderBy !='' "> ORDER BY A.${orderBy}</if> <if test="ascOrdesc != null and ascOrdesc !='' "> ${ascOrdesc}</if> </if>
+		<if test="selfOrder != null"> ORDER BY ${selfOrder} </if>
+		<if test="selfOrder == null and orderBy == null "> ORDER BY A.id DESC </if>
+	</sql><!-- 分页 -->
+	<sql id="limitCount"><if test="count != null and count !='' "> LIMIT ${start},${count}</if> </sql>
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+	
+	
+	
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="columns">
+		, u.serial AS userSerial, u.real_name AS realName,u.username AS userName
+	</sql>
+	<sql id="search">
+		<if test="chargeId != null and chargeId !=''">
+		  AND A.id = #{chargeId}
+		</if>
+      	<if test="serial != null and serial !=''">
+		  AND A.serial = #{serial}
+		</if>
+		<if test="userId != null and userId !=''">
+		  AND A.user_id = #{userId}
+		</if>
+		<if test="createdAt != null and createdAt !=''">
+		  AND DATE(A.created_at) = DATE(#{createdAt})
+		</if>
+		<if test="userSerial != null and userSerial !=''">
+		  AND u.serial = #{userSerial}
+		</if>
+		<if test="userName != null and userName !=''">
+		  AND u.username LIKE '%${userName}%'
+		</if>
+		<if test="appid != null and appid !=''">
+		  AND A.app_id = #{appid}
+		</if>
+		<if test="mch_id != null and mch_id !=''">
+		  AND A.mch_id = #{mch_id}
+		</if>
+		<if test="nonce_str != null and nonce_str !=''">
+		  AND A.nonce_str = #{nonce_str}
+		</if>
+		<if test="sign != null and sign !=''">
+		  AND A.sign = #{sign}
+		</if>
+		<if test="prepay_id != null and prepay_id !=''">
+		  AND A.prepay_id = #{prepay_id}
+		</if>
+		<if test="openid != null and openid !=''">
+		  AND A.open_id = #{openid}
+		</if>
+		<if test="out_trade_no != null and out_trade_no !=''">
+		  AND A.out_trade_no = #{out_trade_no}
+		</if>
+		<if test="trade_type != null and trade_type !=''">
+		  AND A.trade_type = #{trade_type}
+		</if>
+	</sql>
+	<sql id="leftJoin">
+		LEFT JOIN user u ON A.user_id = u.id
+	</sql>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+	
+	
+	
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.Charge">
+    	SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1 
+		<include refid="baseSearch"/><include refid="search"/>
+		<include refid="suffix"/>
+		<include refid="limitCount"/>
+	</select>
+	
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.Charge">
+   		SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1 
+		<include refid="baseSearch"/><include refid="search"/>
+		<include refid="suffix"/>
+		LIMIT 0,1 
+	</select>
+	
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1
+		<include refid="baseSearch"/><include refid="search"/>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultType="com.lhfeiyu.po.domain.Charge" parameterType="java.lang.Integer">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectBySerial" resultType="com.lhfeiyu.po.domain.Charge">
+   		SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A
+		<include refid="leftJoin"/>
+    	WHERE A.serial = #{serial,jdbcType=VARCHAR}
+		LIMIT 0,1 
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+	
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.po.domain.Charge">
+	    UPDATE <include refid="table"/>
+		<set>
+			
+			serial = #{serial,jdbcType=VARCHAR},
+			main_status = #{mainStatus,jdbcType=INTEGER},
+			logic_status = #{logicStatus,jdbcType=INTEGER},
+			type_id = #{typeId,jdbcType=INTEGER},
+			type_code = #{typeCode,jdbcType=VARCHAR},
+			deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			deleted_by = #{deletedBy,jdbcType=VARCHAR},
+			group_id = #{groupId,jdbcType=INTEGER},
+			grade_id = #{gradeId,jdbcType=INTEGER},
+			dict_code = #{dictCode,jdbcType=VARCHAR},
+			user_id = #{userId,jdbcType=INTEGER},
+			username = #{username,jdbcType=VARCHAR},
+			charge_date = #{chargeDate,jdbcType=TIMESTAMP},
+			charge_money = #{chargeMoney,jdbcType=DECIMAL},
+			fee = #{fee,jdbcType=DECIMAL},
+			msg = #{msg,jdbcType=VARCHAR},
+			deal_date = #{dealDate,jdbcType=TIMESTAMP},
+			deal_status = #{dealStatus,jdbcType=INTEGER},
+			app_id = #{appId,jdbcType=VARCHAR},
+			mch_id = #{mchId,jdbcType=VARCHAR},
+			nonce_str = #{nonceStr,jdbcType=VARCHAR},
+			sign = #{sign,jdbcType=VARCHAR},
+			prepay_id = #{prepayId,jdbcType=VARCHAR},
+			trade_type = #{tradeType,jdbcType=VARCHAR},
+			open_id = #{openId,jdbcType=VARCHAR},
+			out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+			pay_type = #{payType,jdbcType=INTEGER},
+			order_goods_id = #{orderGoodsId,jdbcType=INTEGER},
+			order_id = #{orderId,jdbcType=INTEGER},
+			link_type = #{linkType,jdbcType=INTEGER},
+			link_id = #{linkId,jdbcType=INTEGER},
+			owner_id = #{ownerId,jdbcType=INTEGER},
+			owner_ids = #{ownerIds,jdbcType=VARCHAR},
+			attr_str = #{attrStr,jdbcType=VARCHAR},
+			attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+			attr_int = #{attrInt,jdbcType=INTEGER},
+			attr_int2 = #{attrInt2,jdbcType=INTEGER},
+			sequence = #{sequence,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySerial" parameterType="com.lhfeiyu.po.domain.Charge">
+	    UPDATE <include refid="table"/>
+		<set>
+		  	
+		  	serial = #{serial,jdbcType=VARCHAR},
+		  	main_status = #{mainStatus,jdbcType=INTEGER},
+		  	logic_status = #{logicStatus,jdbcType=INTEGER},
+		  	type_id = #{typeId,jdbcType=INTEGER},
+		  	type_code = #{typeCode,jdbcType=VARCHAR},
+		  	deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+		  	deleted_by = #{deletedBy,jdbcType=VARCHAR},
+		  	group_id = #{groupId,jdbcType=INTEGER},
+		  	grade_id = #{gradeId,jdbcType=INTEGER},
+		  	dict_code = #{dictCode,jdbcType=VARCHAR},
+		  	user_id = #{userId,jdbcType=INTEGER},
+		  	username = #{username,jdbcType=VARCHAR},
+		  	charge_date = #{chargeDate,jdbcType=TIMESTAMP},
+		  	charge_money = #{chargeMoney,jdbcType=DECIMAL},
+		  	fee = #{fee,jdbcType=DECIMAL},
+		  	msg = #{msg,jdbcType=VARCHAR},
+		  	deal_date = #{dealDate,jdbcType=TIMESTAMP},
+		  	deal_status = #{dealStatus,jdbcType=INTEGER},
+		  	app_id = #{appId,jdbcType=VARCHAR},
+		  	mch_id = #{mchId,jdbcType=VARCHAR},
+		  	nonce_str = #{nonceStr,jdbcType=VARCHAR},
+		  	sign = #{sign,jdbcType=VARCHAR},
+		  	prepay_id = #{prepayId,jdbcType=VARCHAR},
+		  	trade_type = #{tradeType,jdbcType=VARCHAR},
+		  	open_id = #{openId,jdbcType=VARCHAR},
+		  	out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+		  	pay_type = #{payType,jdbcType=INTEGER},
+		  	order_goods_id = #{orderGoodsId,jdbcType=INTEGER},
+		  	order_id = #{orderId,jdbcType=INTEGER},
+		  	link_type = #{linkType,jdbcType=INTEGER},
+		  	link_id = #{linkId,jdbcType=INTEGER},
+		  	owner_id = #{ownerId,jdbcType=INTEGER},
+		  	owner_ids = #{ownerIds,jdbcType=VARCHAR},
+		  	attr_str = #{attrStr,jdbcType=VARCHAR},
+		  	attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+		  	attr_int = #{attrInt,jdbcType=INTEGER},
+		  	attr_int2 = #{attrInt2,jdbcType=INTEGER},
+		  	sequence = #{sequence,jdbcType=INTEGER},
+		  	remark = #{remark,jdbcType=VARCHAR},
+		  	created_at = #{createdAt,jdbcType=TIMESTAMP},
+		  	created_by = #{createdBy,jdbcType=VARCHAR},
+		  	updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+		  	
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE serial = #{serial,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByIds">
+	    UPDATE <include refid="table"/>
+		<set>
+			
+			serial = #{serial,jdbcType=VARCHAR},
+			main_status = #{mainStatus,jdbcType=INTEGER},
+			logic_status = #{logicStatus,jdbcType=INTEGER},
+			type_id = #{typeId,jdbcType=INTEGER},
+			type_code = #{typeCode,jdbcType=VARCHAR},
+			deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			deleted_by = #{deletedBy,jdbcType=VARCHAR},
+			group_id = #{groupId,jdbcType=INTEGER},
+			grade_id = #{gradeId,jdbcType=INTEGER},
+			dict_code = #{dictCode,jdbcType=VARCHAR},
+			user_id = #{userId,jdbcType=INTEGER},
+			username = #{username,jdbcType=VARCHAR},
+			charge_date = #{chargeDate,jdbcType=TIMESTAMP},
+			charge_money = #{chargeMoney,jdbcType=DECIMAL},
+			fee = #{fee,jdbcType=DECIMAL},
+			msg = #{msg,jdbcType=VARCHAR},
+			deal_date = #{dealDate,jdbcType=TIMESTAMP},
+			deal_status = #{dealStatus,jdbcType=INTEGER},
+			app_id = #{appId,jdbcType=VARCHAR},
+			mch_id = #{mchId,jdbcType=VARCHAR},
+			nonce_str = #{nonceStr,jdbcType=VARCHAR},
+			sign = #{sign,jdbcType=VARCHAR},
+			prepay_id = #{prepayId,jdbcType=VARCHAR},
+			trade_type = #{tradeType,jdbcType=VARCHAR},
+			open_id = #{openId,jdbcType=VARCHAR},
+			out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+			pay_type = #{payType,jdbcType=INTEGER},
+			order_goods_id = #{orderGoodsId,jdbcType=INTEGER},
+			order_id = #{orderId,jdbcType=INTEGER},
+			link_type = #{linkType,jdbcType=INTEGER},
+			link_id = #{linkId,jdbcType=INTEGER},
+			owner_id = #{ownerId,jdbcType=INTEGER},
+			owner_ids = #{ownerIds,jdbcType=VARCHAR},
+			attr_str = #{attrStr,jdbcType=VARCHAR},
+			attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+			attr_int = #{attrInt,jdbcType=INTEGER},
+			attr_int2 = #{attrInt2,jdbcType=INTEGER},
+			sequence = #{sequence,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateByCondition">
+		UPDATE <include refid="table"/> SET
+		<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		updated_at = NOW(),
+		${condition}
+	</update>
+	
+	<update id="updateDeletedNowByIds">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NOW(),
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateDeletedNullByIds">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NULL,
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateDeletedNowById" parameterType="java.lang.Integer">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NOW(),
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateDeletedNullById">
+		UPDATE <include refid="table"/>
+		<set> 
+			deleted_at = NULL, 
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateFieldById" parameterType="java.util.Map">
+		UPDATE <include refid="table"/>
+		<set>
+			<if test="expression1 != null">${expression1},</if>
+			<if test="expression2 != null">${expression2},</if>
+			<if test="expression3 != null">${expression3},</if>
+			<if test="expression4 != null">${expression4},</if>
+			<if test="expression5 != null">${expression5},</if>
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateFieldByIds" parameterType="java.util.Map">
+		UPDATE <include refid="table"/>
+		<set>
+			<if test="expression1 != null">${expression1},</if>
+			<if test="expression2 != null">${expression2},</if>
+			<if test="expression3 != null">${expression3},</if>
+			<if test="expression4 != null">${expression4},</if>
+			<if test="expression5 != null">${expression5},</if>
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.po.domain.Charge">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="groupId != null">group_id = #{groupId,jdbcType=INTEGER},</if>
+				<if test="gradeId != null">grade_id = #{gradeId,jdbcType=INTEGER},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
+				<if test="username != null">username = #{username,jdbcType=VARCHAR},</if>
+				<if test="chargeDate != null">charge_date = #{chargeDate,jdbcType=TIMESTAMP},</if>
+				<if test="chargeMoney != null">charge_money = #{chargeMoney,jdbcType=DECIMAL},</if>
+				<if test="fee != null">fee = #{fee,jdbcType=DECIMAL},</if>
+				<if test="msg != null">msg = #{msg,jdbcType=VARCHAR},</if>
+				<if test="dealDate != null">deal_date = #{dealDate,jdbcType=TIMESTAMP},</if>
+				<if test="dealStatus != null">deal_status = #{dealStatus,jdbcType=INTEGER},</if>
+				<if test="appId != null">app_id = #{appId,jdbcType=VARCHAR},</if>
+				<if test="mchId != null">mch_id = #{mchId,jdbcType=VARCHAR},</if>
+				<if test="nonceStr != null">nonce_str = #{nonceStr,jdbcType=VARCHAR},</if>
+				<if test="sign != null">sign = #{sign,jdbcType=VARCHAR},</if>
+				<if test="prepayId != null">prepay_id = #{prepayId,jdbcType=VARCHAR},</if>
+				<if test="tradeType != null">trade_type = #{tradeType,jdbcType=VARCHAR},</if>
+				<if test="openId != null">open_id = #{openId,jdbcType=VARCHAR},</if>
+				<if test="outTradeNo != null">out_trade_no = #{outTradeNo,jdbcType=VARCHAR},</if>
+				<if test="payType != null">pay_type = #{payType,jdbcType=INTEGER},</if>
+				<if test="orderGoodsId != null">order_goods_id = #{orderGoodsId,jdbcType=INTEGER},</if>
+				<if test="orderId != null">order_id = #{orderId,jdbcType=INTEGER},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySerialSelective" parameterType="com.lhfeiyu.po.domain.Charge">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="groupId != null">group_id = #{groupId,jdbcType=INTEGER},</if>
+				<if test="gradeId != null">grade_id = #{gradeId,jdbcType=INTEGER},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
+				<if test="username != null">username = #{username,jdbcType=VARCHAR},</if>
+				<if test="chargeDate != null">charge_date = #{chargeDate,jdbcType=TIMESTAMP},</if>
+				<if test="chargeMoney != null">charge_money = #{chargeMoney,jdbcType=DECIMAL},</if>
+				<if test="fee != null">fee = #{fee,jdbcType=DECIMAL},</if>
+				<if test="msg != null">msg = #{msg,jdbcType=VARCHAR},</if>
+				<if test="dealDate != null">deal_date = #{dealDate,jdbcType=TIMESTAMP},</if>
+				<if test="dealStatus != null">deal_status = #{dealStatus,jdbcType=INTEGER},</if>
+				<if test="appId != null">app_id = #{appId,jdbcType=VARCHAR},</if>
+				<if test="mchId != null">mch_id = #{mchId,jdbcType=VARCHAR},</if>
+				<if test="nonceStr != null">nonce_str = #{nonceStr,jdbcType=VARCHAR},</if>
+				<if test="sign != null">sign = #{sign,jdbcType=VARCHAR},</if>
+				<if test="prepayId != null">prepay_id = #{prepayId,jdbcType=VARCHAR},</if>
+				<if test="tradeType != null">trade_type = #{tradeType,jdbcType=VARCHAR},</if>
+				<if test="openId != null">open_id = #{openId,jdbcType=VARCHAR},</if>
+				<if test="outTradeNo != null">out_trade_no = #{outTradeNo,jdbcType=VARCHAR},</if>
+				<if test="payType != null">pay_type = #{payType,jdbcType=INTEGER},</if>
+				<if test="orderGoodsId != null">order_goods_id = #{orderGoodsId,jdbcType=INTEGER},</if>
+				<if test="orderId != null">order_id = #{orderId,jdbcType=INTEGER},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE serial = #{serial,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByIdsSelective">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="groupId != null">group_id = #{groupId,jdbcType=INTEGER},</if>
+				<if test="gradeId != null">grade_id = #{gradeId,jdbcType=INTEGER},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
+				<if test="username != null">username = #{username,jdbcType=VARCHAR},</if>
+				<if test="chargeDate != null">charge_date = #{chargeDate,jdbcType=TIMESTAMP},</if>
+				<if test="chargeMoney != null">charge_money = #{chargeMoney,jdbcType=DECIMAL},</if>
+				<if test="fee != null">fee = #{fee,jdbcType=DECIMAL},</if>
+				<if test="msg != null">msg = #{msg,jdbcType=VARCHAR},</if>
+				<if test="dealDate != null">deal_date = #{dealDate,jdbcType=TIMESTAMP},</if>
+				<if test="dealStatus != null">deal_status = #{dealStatus,jdbcType=INTEGER},</if>
+				<if test="appId != null">app_id = #{appId,jdbcType=VARCHAR},</if>
+				<if test="mchId != null">mch_id = #{mchId,jdbcType=VARCHAR},</if>
+				<if test="nonceStr != null">nonce_str = #{nonceStr,jdbcType=VARCHAR},</if>
+				<if test="sign != null">sign = #{sign,jdbcType=VARCHAR},</if>
+				<if test="prepayId != null">prepay_id = #{prepayId,jdbcType=VARCHAR},</if>
+				<if test="tradeType != null">trade_type = #{tradeType,jdbcType=VARCHAR},</if>
+				<if test="openId != null">open_id = #{openId,jdbcType=VARCHAR},</if>
+				<if test="outTradeNo != null">out_trade_no = #{outTradeNo,jdbcType=VARCHAR},</if>
+				<if test="payType != null">pay_type = #{payType,jdbcType=INTEGER},</if>
+				<if test="orderGoodsId != null">order_goods_id = #{orderGoodsId,jdbcType=INTEGER},</if>
+				<if test="orderId != null">order_id = #{orderId,jdbcType=INTEGER},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id IN( ${ids} )
+	</update>
+    <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+	
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.lhfeiyu.po.domain.Charge" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>(
+			serial,main_status,logic_status,type_id,type_code,deleted_at,deleted_by,group_id,grade_id,dict_code,user_id,username,charge_date,charge_money,fee,msg,deal_date,deal_status,app_id,mch_id,nonce_str,sign,prepay_id,trade_type,open_id,out_trade_no,pay_type,order_goods_id,order_id,link_type,link_id,owner_id,owner_ids,attr_str,attr_str2,attr_int,attr_int2,sequence,remark,created_at,created_by,updated_at,updated_by
+		)VALUES(
+		    #{serial,jdbcType=VARCHAR},#{mainStatus,jdbcType=INTEGER},#{logicStatus,jdbcType=INTEGER},#{typeId,jdbcType=INTEGER},#{typeCode,jdbcType=VARCHAR},#{deletedAt,jdbcType=TIMESTAMP},#{deletedBy,jdbcType=VARCHAR},#{groupId,jdbcType=INTEGER},#{gradeId,jdbcType=INTEGER},#{dictCode,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{username,jdbcType=VARCHAR},#{chargeDate,jdbcType=TIMESTAMP},#{chargeMoney,jdbcType=DECIMAL},#{fee,jdbcType=DECIMAL},#{msg,jdbcType=VARCHAR},#{dealDate,jdbcType=TIMESTAMP},#{dealStatus,jdbcType=INTEGER},#{appId,jdbcType=VARCHAR},#{mchId,jdbcType=VARCHAR},#{nonceStr,jdbcType=VARCHAR},#{sign,jdbcType=VARCHAR},#{prepayId,jdbcType=VARCHAR},#{tradeType,jdbcType=VARCHAR},#{openId,jdbcType=VARCHAR},#{outTradeNo,jdbcType=VARCHAR},#{payType,jdbcType=INTEGER},#{orderGoodsId,jdbcType=INTEGER},#{orderId,jdbcType=INTEGER},#{linkType,jdbcType=INTEGER},#{linkId,jdbcType=INTEGER},#{ownerId,jdbcType=INTEGER},#{ownerIds,jdbcType=VARCHAR},#{attrStr,jdbcType=VARCHAR},#{attrStr2,jdbcType=VARCHAR},#{attrInt,jdbcType=INTEGER},#{attrInt2,jdbcType=INTEGER},#{sequence,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{createdBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR}
+	    )
+	</insert>
+	
+	<insert id="insertBatch">
+		INSERT INTO <include refid="table"/>(
+			serial,main_status,logic_status,type_id,type_code,deleted_at,deleted_by,group_id,grade_id,dict_code,user_id,username,charge_date,charge_money,fee,msg,deal_date,deal_status,app_id,mch_id,nonce_str,sign,prepay_id,trade_type,open_id,out_trade_no,pay_type,order_goods_id,order_id,link_type,link_id,owner_id,owner_ids,attr_str,attr_str2,attr_int,attr_int2,sequence,remark,created_at,created_by,updated_at,updated_by
+		)VALUES
+		<foreach collection="list" item="c" separator=",">
+			(
+		    #{c.serial,jdbcType=VARCHAR},#{c.mainStatus,jdbcType=INTEGER},#{c.logicStatus,jdbcType=INTEGER},#{c.typeId,jdbcType=INTEGER},#{c.typeCode,jdbcType=VARCHAR},#{c.deletedAt,jdbcType=TIMESTAMP},#{c.deletedBy,jdbcType=VARCHAR},#{c.groupId,jdbcType=INTEGER},#{c.gradeId,jdbcType=INTEGER},#{c.dictCode,jdbcType=VARCHAR},#{c.userId,jdbcType=INTEGER},#{c.username,jdbcType=VARCHAR},#{c.chargeDate,jdbcType=TIMESTAMP},#{c.chargeMoney,jdbcType=DECIMAL},#{c.fee,jdbcType=DECIMAL},#{c.msg,jdbcType=VARCHAR},#{c.dealDate,jdbcType=TIMESTAMP},#{c.dealStatus,jdbcType=INTEGER},#{c.appId,jdbcType=VARCHAR},#{c.mchId,jdbcType=VARCHAR},#{c.nonceStr,jdbcType=VARCHAR},#{c.sign,jdbcType=VARCHAR},#{c.prepayId,jdbcType=VARCHAR},#{c.tradeType,jdbcType=VARCHAR},#{c.openId,jdbcType=VARCHAR},#{c.outTradeNo,jdbcType=VARCHAR},#{c.payType,jdbcType=INTEGER},#{c.orderGoodsId,jdbcType=INTEGER},#{c.orderId,jdbcType=INTEGER},#{c.linkType,jdbcType=INTEGER},#{c.linkId,jdbcType=INTEGER},#{c.ownerId,jdbcType=INTEGER},#{c.ownerIds,jdbcType=VARCHAR},#{c.attrStr,jdbcType=VARCHAR},#{c.attrStr2,jdbcType=VARCHAR},#{c.attrInt,jdbcType=INTEGER},#{c.attrInt2,jdbcType=INTEGER},#{c.sequence,jdbcType=INTEGER},#{c.remark,jdbcType=VARCHAR},#{c.createdAt,jdbcType=TIMESTAMP},#{c.createdBy,jdbcType=VARCHAR},#{c.updatedAt,jdbcType=TIMESTAMP},#{c.updatedBy,jdbcType=VARCHAR}
+	    	)
+		</foreach>
+	</insert>
+  	
+	<insert id="insertSelective" parameterType="com.lhfeiyu.po.domain.Charge" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="serial != null"> serial,</if>
+					<if test="mainStatus != null"> main_status,</if>
+					<if test="logicStatus != null"> logic_status,</if>
+					<if test="typeId != null"> type_id,</if>
+					<if test="typeCode != null"> type_code,</if>
+					<if test="deletedAt != null"> deleted_at,</if>
+					<if test="deletedBy != null"> deleted_by,</if>
+					<if test="groupId != null"> group_id,</if>
+					<if test="gradeId != null"> grade_id,</if>
+					<if test="dictCode != null"> dict_code,</if>
+					<if test="userId != null"> user_id,</if>
+					<if test="username != null"> username,</if>
+					<if test="chargeDate != null"> charge_date,</if>
+					<if test="chargeMoney != null"> charge_money,</if>
+					<if test="fee != null"> fee,</if>
+					<if test="msg != null"> msg,</if>
+					<if test="dealDate != null"> deal_date,</if>
+					<if test="dealStatus != null"> deal_status,</if>
+					<if test="appId != null"> app_id,</if>
+					<if test="mchId != null"> mch_id,</if>
+					<if test="nonceStr != null"> nonce_str,</if>
+					<if test="sign != null"> sign,</if>
+					<if test="prepayId != null"> prepay_id,</if>
+					<if test="tradeType != null"> trade_type,</if>
+					<if test="openId != null"> open_id,</if>
+					<if test="outTradeNo != null"> out_trade_no,</if>
+					<if test="payType != null"> pay_type,</if>
+					<if test="orderGoodsId != null"> order_goods_id,</if>
+					<if test="orderId != null"> order_id,</if>
+					<if test="linkType != null"> link_type,</if>
+					<if test="linkId != null"> link_id,</if>
+					<if test="ownerId != null"> owner_id,</if>
+					<if test="ownerIds != null"> owner_ids,</if>
+					<if test="attrStr != null"> attr_str,</if>
+					<if test="attrStr2 != null"> attr_str2,</if>
+					<if test="attrInt != null"> attr_int,</if>
+					<if test="attrInt2 != null"> attr_int2,</if>
+					<if test="sequence != null"> sequence,</if>
+					<if test="remark != null"> remark,</if>
+					<if test="createdAt != null"> created_at,</if>
+					<if test="createdBy != null"> created_by,</if>
+					<if test="updatedAt != null"> updated_at,</if>
+					<if test="updatedBy != null"> updated_by,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+					<if test="serial != null">#{serial,jdbcType=VARCHAR},</if>
+					<if test="mainStatus != null">#{mainStatus,jdbcType=INTEGER},</if>
+					<if test="logicStatus != null">#{logicStatus,jdbcType=INTEGER},</if>
+					<if test="typeId != null">#{typeId,jdbcType=INTEGER},</if>
+					<if test="typeCode != null">#{typeCode,jdbcType=VARCHAR},</if>
+					<if test="deletedAt != null">#{deletedAt,jdbcType=TIMESTAMP},</if>
+					<if test="deletedBy != null">#{deletedBy,jdbcType=VARCHAR},</if>
+					<if test="groupId != null">#{groupId,jdbcType=INTEGER},</if>
+					<if test="gradeId != null">#{gradeId,jdbcType=INTEGER},</if>
+					<if test="dictCode != null">#{dictCode,jdbcType=VARCHAR},</if>
+					<if test="userId != null">#{userId,jdbcType=INTEGER},</if>
+					<if test="username != null">#{username,jdbcType=VARCHAR},</if>
+					<if test="chargeDate != null">#{chargeDate,jdbcType=TIMESTAMP},</if>
+					<if test="chargeMoney != null">#{chargeMoney,jdbcType=DECIMAL},</if>
+					<if test="fee != null">#{fee,jdbcType=DECIMAL},</if>
+					<if test="msg != null">#{msg,jdbcType=VARCHAR},</if>
+					<if test="dealDate != null">#{dealDate,jdbcType=TIMESTAMP},</if>
+					<if test="dealStatus != null">#{dealStatus,jdbcType=INTEGER},</if>
+					<if test="appId != null">#{appId,jdbcType=VARCHAR},</if>
+					<if test="mchId != null">#{mchId,jdbcType=VARCHAR},</if>
+					<if test="nonceStr != null">#{nonceStr,jdbcType=VARCHAR},</if>
+					<if test="sign != null">#{sign,jdbcType=VARCHAR},</if>
+					<if test="prepayId != null">#{prepayId,jdbcType=VARCHAR},</if>
+					<if test="tradeType != null">#{tradeType,jdbcType=VARCHAR},</if>
+					<if test="openId != null">#{openId,jdbcType=VARCHAR},</if>
+					<if test="outTradeNo != null">#{outTradeNo,jdbcType=VARCHAR},</if>
+					<if test="payType != null">#{payType,jdbcType=INTEGER},</if>
+					<if test="orderGoodsId != null">#{orderGoodsId,jdbcType=INTEGER},</if>
+					<if test="orderId != null">#{orderId,jdbcType=INTEGER},</if>
+					<if test="linkType != null">#{linkType,jdbcType=INTEGER},</if>
+					<if test="linkId != null">#{linkId,jdbcType=INTEGER},</if>
+					<if test="ownerId != null">#{ownerId,jdbcType=INTEGER},</if>
+					<if test="ownerIds != null">#{ownerIds,jdbcType=VARCHAR},</if>
+					<if test="attrStr != null">#{attrStr,jdbcType=VARCHAR},</if>
+					<if test="attrStr2 != null">#{attrStr2,jdbcType=VARCHAR},</if>
+					<if test="attrInt != null">#{attrInt,jdbcType=INTEGER},</if>
+					<if test="attrInt2 != null">#{attrInt2,jdbcType=INTEGER},</if>
+					<if test="sequence != null">#{sequence,jdbcType=INTEGER},</if>
+					<if test="remark != null">#{remark,jdbcType=VARCHAR},</if>
+					<if test="createdAt != null">#{createdAt,jdbcType=TIMESTAMP},</if>
+					<if test="createdBy != null">#{createdBy,jdbcType=VARCHAR},</if>
+					<if test="updatedAt != null">#{updatedAt,jdbcType=TIMESTAMP},</if>
+					<if test="updatedBy != null">#{updatedBy,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+  	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+	
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByCondition">
+		DELETE FROM <include refid="table"/> WHERE ${condition}
+	</delete>
+	
+	<delete id="deleteByIds">
+	    DELETE FROM <include refid="table"/> WHERE id IN (${ids})
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+      
+</mapper>

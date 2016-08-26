@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>微拍客</title>
+	<link rel="stylesheet" href="css/weui.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+	<![endif]-->
+	<link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/style_v1.css">
+	<script src="js/jquery-1.11.2.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="js/index.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+				    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+				    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+				    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+				</ol>
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+				    <div class="item active">
+				    	<img src="images/banner.png" class="img-img-responsive">
+				    </div>
+				    <div class="item">
+				    	<img src="images/banner.png" class="img-img-responsive">
+				    </div>
+				    <div class="item">
+				    	<img src="images/banner.png" class="img-img-responsive">
+				    </div>
+				</div>
+			</div>
+		</div>
+		<div class="row pb10">
+			<div class="col-xs-12 pt10 plr0 text-center menuMsg">
+				<div class="col-xs-3 plr0">
+					<img src="images/index_menu_01.png" class="img-responsive center-block">
+					<div class="pt8">微拍</div>
+					<i class="red icon-circle"></i>
+				</div>
+				<div class="col-xs-3 plr0">
+					<img src="images/index_menu_02.png" class="img-responsive center-block">
+					<div class="pt8">专场</div>
+				</div>
+				<div class="col-xs-3 plr0">
+					<img src="images/index_menu_03.png" class="img-responsive center-block">
+					<div class="pt8">微现场</div>
+				</div>
+				<div class="col-xs-3 plr0">
+					<img src="images/index_menu_04.png" class="img-responsive center-block">
+					<div class="pt8">微代理</div>
+				</div>
+			</div>
+			<div class="col-xs-12 pt10 plr0 text-center">
+				<div class="col-xs-3 plr0">
+					<img src="images/index_menu_05.png" class="img-responsive center-block">
+					<div class="pt8">商家</div>
+				</div>
+				<div class="col-xs-3 plr0">
+					<img src="images/index_menu_06.png" class="img-responsive center-block">
+					<div class="pt8">社区</div>
+				</div>
+				<div class="col-xs-3 plr0">
+					<img src="images/index_menu_07.png" class="img-responsive center-block">
+					<div class="pt8">展会</div>
+				</div>
+				<div class="col-xs-3 plr0">
+					<img src="images/index_menu_08.png" class="img-responsive center-block">
+					<div class="pt8">我要赚钱</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="col-xs-12 plr0 bdt ptb10">
+					<div class="col-xs-3 bdr">
+						<img src="images/top_line.png" width="42" height="42" class="img-responsive center-block">
+					</div>
+					<div class="col-xs-9 pl7 pr0 fs10">
+						<div class="col-xs-12 plr0">
+							<div class="col-xs-1 plr0 text-center"><i class="red_deep icon-circle"></i></div>
+							<div class="col-xs-11 pr0 elli pl7">最新和田玉新品出售，需要的赶快来抢。</div>
+						</div>
+						<div class="pt5 col-xs-12 plr0">
+							<div class="col-xs-1 plr0 text-center"><i class="red_deep icon-circle"></i></div>
+							<div class="col-xs-11 pr0 elli pl7">春天在哪里啊，春天就在微社区。</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row h10 bg_gray"></div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="col-xs-12 ptb5 plr0 bdb">
+					<div class="col-xs-2 plr0">
+						<img class="img-responsive center-block" width="48" height="48" src="images/pic_09.png" />
+					</div>
+					<div class="col-xs-8 pr0">
+						<div class="col-xs-12 plr0">慈元阁<i class="weui_icon_safe weui_icon_safe_success fs14"></i></div>
+						<div class="col-xs-12 plr0 pt5 fs10">
+							<div class="authentication">七天无理由退款</div>
+							<div class="authentication ml7">质量保证</div>
+						</div>
+					</div>
+					<div class="col-xs-2 plr0 text-right" id="more">
+						<div class="dropdown">
+						  	<button class="btn btn-default index-dropdown-button dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    ...
+						  </button>
+						  <ul class="dropdown-menu index-dropdown-menu" aria-labelledby="dropdownMenu1">
+						    <li><a href="#">关注</a></li>
+						    <li><a href="#">咨询</a></li>
+						    <li><a href="#">点评</a></li>
+						    <li><a href="#">打电话</a></li>
+						  </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<div class="col-xs-12 plr0 ptb10">最新和田玉新品出售，需要的赶快来抢。</div>
+				<div class="made scrollbox" id="horizontal">
+				    <div class="madegame">
+				    	<ul class="clearfix" id="ho1">
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				            <li><img src="images/index_products_02.png" width="80" /></li>
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				            <li><img src="images/index_products_02.png" width="80" /></li>
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				            <li><img src="images/index_products_02.png" width="80" /></li>
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				            <li><img src="images/index_products_02.png" width="80" /></li>
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				    	</ul>
+				    </div> 
+				</div>
+				<div class="col-xs-12 plr0 ptb10">
+					<div class="col-xs-6 plr0 red_deep1 fw">
+						即将开始：00:00:00
+					</div>
+					<div class="col-xs-6 plr0 gray text-right">
+						<i class="icon-comment-alt"></i>&nbsp;<span>275</span>&nbsp;&nbsp;&nbsp;
+						<i class="icon-heart-empty"></i>&nbsp;<span>1660</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row h10 bg_gray"></div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="col-xs-12 ptb5 plr0 bdb">
+					<div class="col-xs-2 plr0">
+						<img class="img-responsive center-block" width="48" height="48" src="images/pic_09.png" />
+					</div>
+					<div class="col-xs-8 pr0">
+						<div class="col-xs-12 plr0">慈元阁<i class="weui_icon_safe weui_icon_safe_success fs14"></i></div>
+						<div class="col-xs-12 plr0 pt5 fs10">
+							<div class="authentication">七天无理由退款</div>
+							<div class="authentication ml7">质量保证</div>
+						</div>
+					</div>
+					<div class="col-xs-2 plr0 text-right" id="more">
+						<div class="dropdown">
+						  	<button class="btn btn-default index-dropdown-button dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    ...
+						  </button>
+						  <ul class="dropdown-menu index-dropdown-menu" aria-labelledby="dropdownMenu1">
+						    <li><a href="#">关注</a></li>
+						    <li><a href="#">咨询</a></li>
+						    <li><a href="#">点评</a></li>
+						    <li><a href="#">打电话</a></li>
+						  </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<div class="col-xs-12 plr0 ptb10">最新和田玉新品出售，需要的赶快来抢。</div>
+				<div class="made scrollbox" id="horizontal">
+				    <div class="madegame">
+				    	<ul class="clearfix" id="ho1">
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				            <li><img src="images/index_products_02.png" width="80" /></li>
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				            <li><img src="images/index_products_02.png" width="80" /></li>
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				            <li><img src="images/index_products_02.png" width="80" /></li>
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				            <li><img src="images/index_products_02.png" width="80" /></li>
+				            <li><img src="images/index_products_01.png" width="80" /></li>
+				    	</ul>
+				    </div> 
+				</div>
+				<div class="col-xs-12 plr0 ptb10">
+					<div class="col-xs-6 plr0 red_deep1 fw">
+						即将开始：00:00:00
+					</div>
+					<div class="col-xs-6 plr0 gray text-right">
+						<i class="icon-comment-alt"></i>&nbsp;<span>275</span>&nbsp;&nbsp;&nbsp;
+						<i class="icon-heart-empty"></i>&nbsp;<span>1660</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row h10 bg_gray"></div>
+		<div class="row fs16 ptb10">
+			<div class="col-xs-6">拍品推荐</div>
+			<div class="col-xs-6 text-right gray">更多</div>
+		</div>
+		<div class="row bg_gray pt5">
+			<div class="col-xs-12 pl7 pr0">
+	            <div class="col-xs-6 pl0 pr7 pb5">
+	                <img class="img-responsive" src="images/goods_01.png" />
+	                <div class="col-xs-12 plr0 bg_white fs13">
+	                    碧玉尊 冰糯种翡翠霸王貔貅 吊坠
+	                </div>
+	                <div class="col-xs-12 plr0 bg_white">
+	                    <div class="col-xs-4 plr0 red">
+	                        ￥<span class="fs18">899</span>
+	                    </div>
+	                    <div class="col-xs-8 plr0 text-right">
+	                        <i class="icon-time fs16"></i> <span class="red">00:00:00</span>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-xs-6 pl0 pr7 pb5">
+	                <img class="img-responsive" src="images/goods_02.png" />
+	                <div class="col-xs-12 plr0 bg_white fs13">
+	                    碧玉尊 冰糯种翡翠霸王貔貅 吊坠
+	                </div>
+	                <div class="col-xs-12 plr0 bg_white">
+	                    <div class="col-xs-4 plr0 red">
+	                        ￥<span class="fs18">899</span>
+	                    </div>
+	                    <div class="col-xs-8 plr0 text-right">
+	                        <i class="icon-time fs16"></i> <span class="red">00:00:00</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+			<div class="col-xs-12 pl7 pr0">
+	            <div class="col-xs-6 pl0 pr7 pb5">
+	                <img class="img-responsive" src="images/goods_03.png" />
+	                <div class="col-xs-12 plr0 bg_white fs13">
+	                    碧玉尊 冰糯种翡翠霸王貔貅 吊坠
+	                </div>
+	                <div class="col-xs-12 plr0 bg_white">
+	                    <div class="col-xs-4 plr0 red">
+	                        ￥<span class="fs18">899</span>
+	                    </div>
+	                    <div class="col-xs-8 plr0 text-right">
+	                        <i class="icon-time fs16"></i> <span class="red">00:00:00</span>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-xs-6 pl0 pr7 pb5">
+	                <img class="img-responsive" src="images/goods_04.png" />
+	                <div class="col-xs-12 plr0 bg_white fs13">
+	                    碧玉尊 冰糯种翡翠霸王貔貅 吊坠
+	                </div>
+	                <div class="col-xs-12 plr0 bg_white">
+	                    <div class="col-xs-4 plr0 red">
+	                        ￥<span class="fs18">899</span>
+	                    </div>
+	                    <div class="col-xs-8 plr0 text-right">
+	                        <i class="icon-time fs16"></i> <span class="red">00:00:00</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+	</div>
+
+
+
+
+
+
+
+
+	<div class="index_search_fixed">
+		<input type="text" class="form-control" id="indexSearch">
+	</div>
+	<div class="index_search_fixed pt8 white" id="indexSearchWord">
+		<i class="icon-search"></i>
+		请输入您想搜索的商品名称
+	</div>
+	<div class="indexBgOp"></div>
+
+	<!-- 底部导航条 -->
+	<div class="h90"></div>
+	<div class="performance_fixed">
+		<a href="">
+			<div class="com orange">
+				<img class="img-responsive center-block" src="images/img_01.png" />
+				首页
+			</div>
+		</a>
+		<a href="">
+			<div class="com">
+				<img class="img-responsive center-block" src="images/img_02.png" />
+				文玩珠宝
+			</div>
+		</a>
+		<div class="release">
+			<div class="white_round">
+				<div class="orange_round" id="release">
+					<img class="img-responsive center-block" src="images/img_05.png" />
+				</div>
+				<div class="word">发布</div>
+			</div>
+		</div>
+		<div class="com">
+			<img class="img-responsive center-block" src="images/img_03.png" />
+			消息
+			<i class="red icon-circle"></i>
+		</div>
+		<div class="com">
+			<img class="img-responsive center-block" src="images/img_04.png" />
+			我的
+			<i class="red icon-circle"></i>
+		</div>
+	</div>
+	<div class="release_click">
+		<div class="row bottom">
+			<div class="col-xs-12 plr0 pt10">
+				<div class="col-xs-4 text-center plr7">
+					<img src="images/release_01.png" class="img-responsive center-block">
+				</div>
+				<div class="col-xs-4 text-center plr7">
+					<img src="images/release_02.png" class="img-responsive center-block">
+				</div>
+				<div class="col-xs-4 text-center plr7">
+					<img src="images/release_03.png" class="img-responsive center-block">
+				</div>
+			</div>
+			<div class="col-xs-12 plr0 pt10">
+				<div class="col-xs-4 text-center plr7">
+					<img src="images/release_04.png" class="img-responsive center-block">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="closeX">
+		<img src="images/closeX.png" id="closeX" class="img-responsive center-block">
+	</div>
+<script>
+	(function($){
+		$(window).load(function(){
+			$.mCustomScrollbar.defaults.theme="light-2"; //set "light-2" as the default theme
+			
+			$("#ho1,#ho2").mCustomScrollbar({
+				axis:"x",
+				advanced:{autoExpandHorizontalScroll:true}
+			});
+		});
+	})(jQuery);
+</script>
+</body>
+</html>

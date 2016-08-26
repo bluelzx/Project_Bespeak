@@ -1,0 +1,88 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>预约技师</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜预约技师">
+    <meta name="description" content="迈噜预约技师">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <div id="main">
+            <!--tab滑动文字-->
+            <div class="swiper-container appointment-provider swiper-fixed" >
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide choice-on swiper-a" id="provider-anmo">按摩理疗</div>
+                    <div class="swiper-slide swiper-a" id="provider-zuliao">足疗</div>
+                    <div class="swiper-slide swiper-a" id="provider-aijiu">艾灸</div>
+                    <div class="swiper-slide swiper-a" id="provider-guasha">刮痧</div>
+                    <div class="swiper-slide swiper-a" id="provider-spa">SPA</div>
+                    <div class="swiper-slide swiper-a" id="provider-children">小儿推拿</div>
+                    <div class="swiper-slide swiper-a" id="provider-tongru">通乳</div>
+                </div>
+            </div>
+            <!--信息详情-->
+            <div class="provider" id="data-container">
+                <!--<a href="{{providerYuYue}}">
+                    <span class='provider-yuyue'>预约</span>
+                </a>-->
+            </div>
+        </div>
+        <footer>
+            <a href="index.html" class="ft-a">
+                <img src="images/index.png" alt="">
+                <span>首页</span>
+            </a>
+            <a href="javascript:" class="ft-a">
+                <img src="images/technician-on.png" alt="">
+                <span class="page-on">技师</span>
+            </a>
+            <a href="order-details.html" class="ft-a">
+                <img src="images/order.png" alt="">
+                <span>订单</span>
+            </a>
+            <a href="middle-no.html" class="ft-a">
+                <img src="images/user.png" alt="">
+                <span>个人中心</span>
+            </a>
+        </footer>
+        <!--底部菜单栏结束-->
+    </div>
+    <!--回到顶部按钮-->
+    <div id="go-top"></div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/appointment.js"></script>
+    <script src="js/main.js"></script>
+    <script id="template" type="x-tmpl-mustache">
+        {{#rows}}
+            <div class='provider-box' id='provider_{{id}}' onclick="document.location='provider-data.html';">
+                <a href="{{providerInfUrl}}">
+                    <img src='images/provider.jpg' class='provider-img'>
+                </a>
+                <div class='provider-inf'>
+                    <span class='provider-name'>{{providerName}}</span>
+                    <span class='provider-juli'>{{providerJuli}}km</span>
+                    <p class='provider-zy'>{{providerOldTitle}}</p>
+                    <span class='js-like'>{{jsLike}}人喜欢</span>
+                    <p class='provider-p'>{{providerInt}}</p>
+                </div>
+            </div>
+        {{/rows}}
+    </script>
+</body>
+</html>

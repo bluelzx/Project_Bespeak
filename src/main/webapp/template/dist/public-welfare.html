@@ -1,0 +1,65 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>迈噜公益</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜公益">
+    <meta name="description" content="迈噜公益">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <a href="index.html" class="back">
+            <img src="images/back.png" alt="">
+        </a>
+        <!--轮播图-->
+        <div class="swiper-container index-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="#" class="swiper-choice">
+                        <img src="images/gy-bg.png" alt="" class="swiper-image">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" class="swiper-choice">
+                        <img src="images/gy-bg-2.png" alt="" class="swiper-image">
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-pagination" id="pubCir"></div>
+        </div>
+        <div id="data-container" class="train-container">
+
+        </div>
+    </div>
+    <!--回到顶部-->
+    <div id="go-top"></div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/public-welfare.js"></script>
+    <script src="js/main.js"></script>  <!--单位设置-->
+    <script id="template" type="x-tmpl-mustache">
+        {{#rows}}
+            <a href="{{Url}}" id="{{id}}" class="gongyi-box">
+                <img src="{{src}}" alt="" class="gongyi-headImg">
+                <h2 class="gongyi-title">{{title}}</h2>
+                <span class='p-time'>{{time}}</span>
+                <p class="gongyi-inf">{{trainInf}}</p>
+            </a>
+        {{/rows}}
+    </script>
+</body>
+</html>

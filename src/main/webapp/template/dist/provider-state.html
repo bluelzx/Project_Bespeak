@@ -1,0 +1,61 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>服务状态</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜服务状态">
+    <meta name="description" content="迈噜服务状态">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <a href="index.html" class="back">
+            <img src="images/back.png" alt="" >
+        </a>
+        <!--主体内容开始-->
+        <div id="main" style="margin-bottom: 2.1rem;">
+            <!--轮播图-->
+
+            </div>
+
+            <!--服务细节-->
+            <div class="recommend" id="data-container">
+                <!--JS插入-->
+            </div>
+        </div>
+        <!--主体内容结束-->
+        <!--底部固定菜单栏开始-->
+
+        <!--底部固定菜单栏结束-->
+    </div>
+    <!--回到顶部-->
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/main.js"></script>  <!--单位设置-->
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/provider-state.js"></script>
+    <script id="template" type="x-tmpl-mustache">
+        {{#rows}}
+            <a href='body-massage.html' class='details' id='details_{{id}}'>
+                <img src='images/order-img.png' alt='' class='details-head-img'>
+                <div class='stateBox'>
+                    <span class='details-name'>{{serviceName}}</span>
+                    <span class='{{providerState}}'>{{state}}</span>
+                    <p class='state-p'>{{serviceInt}}</p>
+                </div>
+            </a>
+        {{/rows}}
+    </script>
+</body>
+</html>

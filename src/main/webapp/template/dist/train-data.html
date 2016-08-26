@@ -1,0 +1,58 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>培训详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜健康培训">
+    <meta name="description" content="迈噜健康培训">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="train-data-top">
+            <a href="train.html" class="back">
+                <img src="images/back.png" alt="">
+            </a>
+        </div>
+        <div class="train-data-inf">
+            <h2>产品护理知识有哪些</h2>
+            <p>
+                一、生活护理<br>
+                首先是对自我的保健、身体恢复、起居等方面的护理。生活护理包括的面很广，通俗的说法就是，打理自己的生活起居。
+                <br>
+                二、乳房护理<br>
+                对于乳房护理，这个就有的说了。下面详细介绍一下吧！
+                产后体内荷尔蒙下降，母亲彷佛失去生命力一般，加上产后经期立即来潮，使您的身心受到相当大的负担。
+                此时应多注意饮食健康，饮用足量的流体(每天至少500cc的牛奶及2000cc的开水或果汁)。如果您哺喂母奶的话，应注意乳房及乳头的护理。
+                乳房与乳头
+                由于乳房的尺寸及重量均增加，因此应穿着合身舒
+            </p>
+        </div>
+        <p class="train-data-more">相关资料</p>
+        <div id="data-container" class="train-container">
+
+        </div>
+    </div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/train.js"></script>
+    <script id="template" type="x-tmpl-mustache">
+        {{#rows}}
+            <a href="{{Url}}" id="{{id}}" class="peixun-box">
+                <img src="{{src}}" alt="" class="train-headImg">
+                <h2 class="train-title">{{title}}</h2>
+                <p class="train-inf">{{trainInf}}</p>
+            </a>
+        {{/rows}}
+    </script>
+</body>
+</html>

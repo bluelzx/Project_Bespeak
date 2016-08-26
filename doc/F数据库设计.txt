@@ -1,0 +1,24 @@
+实体：
+	基础：user,admin,role,menu,advertisement,comment,picture,article,apply,province_city_area,dict,notice,login_log,user_address
+	交易：order_info,account_log,user_fund,withdraw,shop
+	业务：
+		服务goods,
+		技师provider,
+		月嫂people,
+		培训课程course，
+		报名申请investigation，
+		优惠券coupon，
+		折扣码code,
+		加盟商shop
+		 预约时间记录time_gap
+		预约记录表  bespeak
+		订单order_info
+2016年8月2日
+技师资金表  
+
+2016年8月2日
+数据字典      dict
+goods_type_1  服务类型1
+goods_type_2  服务类型2
+goods_type_3  服务类型3
+goods_type_4  服务类型4

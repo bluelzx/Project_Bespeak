@@ -1,0 +1,99 @@
+
+<!-- js数字键盘一口价 -->
+<div id="actionSheet_wrap">
+	<div class="weui_mask_transition" id="call_mask" style="display: none;"></div>
+	<div class="weui_actionsheet" id="call_weui_actionsheet" style="z-index: 9999;">
+		<div class="weui_actionsheet_menu">
+			<div id="callPage" class="tagPage callPage" style="">
+				<div class="keyboard">
+					<div style="font-size: 20px;">
+						<!--
+							<div id="call_opt_pay" style="background-color:#ECECEC;height:52px;">
+								<button id="pay_direct" class="weui_btn weui_btn_mini weui_btn_primary pointer fl" style="margin:5px;height:40px;width:45%;" onclick="doDirectPay();">直接付款</button>
+								<button id="pay_remainder" class="weui_btn weui_btn_mini weui_btn_primary pointer fr" style="margin:5px;height:40px;width:45%;" onclick="doRemainderPay();">余额支付</button>
+							</div>
+							-->
+						<div id="call_opt_bid" style="background-color: #ECECEC; height: 32px; display: block; font-size: 16px;padding: 5px;">
+							<span style="position: relative; bottom: 0px;">领先价：</span> 
+							<span id="call_current_price" style="color: #009999; font-size: 16px; position: relative; bottom: 0;">0</span>&nbsp;元
+						</div>
+						<!--<div id="call_opt_charge" style="background-color:#ECECEC;height:52px;display:none;">
+							</div>-->
+						<div style="clear: both;"></div>
+						<div style="margin: 5px;">
+							<span style="position: relative; bottom: 8px;">出价：</span> 
+							<span id="numView" style="color: #009999; font-size: 40px;" class="numView"></span> 
+							<span class="call_clear_num"
+								style="float: right; padding: 10px; font-size: 24px;">
+								<i class="fa fa-times-circle-o"></i>
+							</span>
+						</div>
+					</div>
+					<div id="call_opt_bid2" style="background-color: #ECECEC; height: 65px;">
+						<button id="call_opt_bid3" class="weui_btn weui_btn_mini weui_btn_primary pointer" style="margin-top: 6px; height: 40px; width: 40%; background-color: #03bcd3; float: left;" 
+								onclick="doBuyout()">
+							一口价￥<span id="buyoutPrice"></span>
+						</button>
+						<button id="call_opt_bid4" class="weui_btn weui_btn_mini weui_btn_primary pointer" style="margin-top: 6px; height: 40px; width: 55%; float: left; margin-left: 5%;" 
+								onclick="doOffer('save')">出价</button>
+						<div class="gray fs10 text-right">出价即表示同意《微拍客竞拍服务协议》</div>
+						<!-- <button id="call_opt_bid5" class="weui_btn weui_btn_mini weui_btn_primary pointer" style="margin-top:6px;height:40px;width:100%;" onclick="doBid();">一口价</button> -->
+
+					</div>
+					<!--
+						<div id="call_opt_charge2" style="background-color:#ECECEC;height:52px;">
+							<button class="weui_btn weui_btn_mini weui_btn_primary  pointer" style="margin-top:6px;height:40px;width:100%;" onclick="doCharge();">确定充值</button>
+						</div>
+						-->
+					<div class="kb-row">
+						<div class="kb-key numKey ">
+							<h1>1</h1>
+						</div>
+						<div class="kb-key numKey">
+							<h1>2</h1>
+						</div>
+						<div class="kb-key numKey">
+							<h1>3</h1>
+						</div>
+					</div>
+					<div class="kb-row">
+						<div class="kb-key numKey">
+							<h1>4</h1>
+						</div>
+						<div class="kb-key numKey">
+							<h1>5</h1>
+						</div>
+						<div class="kb-key numKey">
+							<h1>6</h1>
+						</div>
+					</div>
+					<div class="kb-row">
+						<div class="kb-key numKey">
+							<h1>7</h1>
+						</div>
+						<div class="kb-key numKey">
+							<h1>8</h1>
+						</div>
+						<div class="kb-key numKey">
+							<h1>9</h1>
+						</div>
+					</div>
+					<div class="kb-row">
+						<div class="kb-key numKey" style="background-color: #F3F2F2">
+							<h1>00</h1>
+						</div>
+						<div class="kb-key numKey spaceBtn">
+							<h1>0</h1>
+						</div>
+						<div class="kb-key backBtn" style="background-color: #F3F2F2">
+							<h1 class="fa fa-arrow-circle-o-left" style="line-height: 55px;"></h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="weui_actionsheet_action">
+			<div class="weui_actionsheet_cell pointer" id="call_actionsheet_cancel">关闭</div>
+		</div>
+	</div>
+</div>

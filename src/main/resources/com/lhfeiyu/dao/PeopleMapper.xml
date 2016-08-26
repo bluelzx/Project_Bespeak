@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhfeiyu.dao.domain.PeopleMapper">
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">people</sql>
+	<sql id="baseColumns"><!-- 基础字段 -->
+		A.id AS id,A.serial AS serial,A.main_status AS mainStatus,A.logic_status AS logicStatus,A.type_id AS typeId,A.type_code AS typeCode,A.deleted_at AS deletedAt,A.deleted_by AS deletedBy,A.group_id AS groupId,A.grade_id AS gradeId,A.dict_code AS dictCode,A.username AS username,A.password AS password,A.nick_name AS nickName,A.real_name AS realName,A.is_real_auth AS isRealAuth,A.sex AS sex,A.phone AS phone,A.login_name AS loginName,A.tel AS tel,A.phone_conceal AS phoneConceal,A.email AS email,A.avatar AS avatar,A.pic_path AS picPath,A.pic_paths AS picPaths,A.contact_way AS contactWay,A.last_login_time AS lastLoginTime,A.last_login_ip AS lastLoginIp,A.address AS address,A.province AS province,A.city AS city,A.weixin AS weixin,A.qq AS qq,A.weibo AS weibo,A.job_id AS jobId,A.job_code AS jobCode,A.birthday AS birthday,A.title_code AS titleCode,A.qr_code AS qrCode,A.qr_code2 AS qrCode2,A.third_name AS thirdName,A.third_id AS thirdId,A.third_password AS thirdPassword,A.wx_openid AS wxOpenid,A.role_id AS roleId,A.organization AS organization,A.idcard_num AS idcardNum,A.certificate_type AS certificateType,A.certificate_number AS certificateNumber,A.certificate_name AS certificateName,A.description AS description,A.link_id2 AS linkId2,A.link_id3 AS linkId3,A.link_id4 AS linkId4,A.link_id5 AS linkId5,A.link_code AS linkCode,A.link_code2 AS linkCode2,A.link_code3 AS linkCode3,A.link_code4 AS linkCode4,A.link_code5 AS linkCode5,A.link_str AS linkStr,A.param_json AS paramJson,A.link_type AS linkType,A.link_id AS linkId,A.owner_id AS ownerId,A.owner_ids AS ownerIds,A.attr_decimal AS attrDecimal,A.attr_str AS attrStr,A.attr_str2 AS attrStr2,A.attr_str3 AS attrStr3,A.attr_int AS attrInt,A.attr_int2 AS attrInt2,A.sequence AS sequence,A.remark AS remark,A.created_at AS createdAt,A.created_by AS createdBy,A.updated_at AS updatedAt,A.updated_by AS updatedBy,A.introduction AS introduction,A.tags AS tags,A.bussiness_scope AS bussinessScope,A.education_code AS educationCode,A.good_at_ids AS goodAtIds,A.good_at AS goodAt,A.title_names AS titleNames,A.title_ids AS titleIds,A.position_ids AS positionIds,A.position_names AS positionNames,A.price_text AS priceText,A.work_year AS workYear
+	</sql>
+	<sql id="baseSearch"><!-- 基础查询条件 -->
+		<if test="deleted == null">AND A.deleted_at IS NULL</if> 
+		<if test="deleted != null">AND A.deleted_at IS NOT NULL</if>
+		<if test="id != null and id != '' ">AND A.id = #{id}</if>
+		<if test="peopleId != null and peopleId != '' ">AND A.id = #{peopleId}</if>
+		<if test="serial != null and serial != '' ">AND A.serial = #{serial}</if>
+		<if test="mainStatus != null and mainStatus != '' ">AND A.main_status = #{mainStatus}</if>
+		<if test="logicStatus != null and logicStatus != '' ">AND A.logic_status = #{logicStatus}</if>
+	</sql>
+	<sql id="suffix"><!-- 分组排序  -->
+		<if test="groupBy != null and groupBy !='' "> GROUP BY #{groupBy,jdbcType=VARCHAR} </if>
+		<if test="selfOrder == null"><if test="orderBy != null and orderBy !='' "> ORDER BY A.${orderBy}</if> <if test="ascOrdesc != null and ascOrdesc !='' "> ${ascOrdesc}</if> </if>
+		<if test="selfOrder != null"> ORDER BY ${selfOrder} </if>
+		<if test="selfOrder == null and orderBy == null "> ORDER BY A.id DESC </if>
+	</sql><!-- 分页 -->
+	<sql id="limitCount"><if test="count != null and count !='' "> LIMIT ${start},${count}</if> </sql>
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+	
+	
+	
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="columns">
+	,pca.area_name AS cityName
+	,pca1.area_name AS provinceName
+	<!-- ,di.code_name AS titleName -->
+	</sql>
+	<sql id="search">
+	    <if test="username != null and username  != '' ">
+	       AND A.username LIKE '%${username}%'
+	    </if>
+	    <if test="realName != null and realName  != '' ">
+	       AND A.real_name LIKE '%${realName}%'
+	    </if>
+	    <if test="phone != null and phone  != '' ">
+	       AND A.phone = #{phone}
+	    </if>
+	    <if test="province != null and province  != '' ">
+	       AND A.province = #{province}
+	    </if>
+	    <if test="typeCode != null and typeCode  != '' and typeCode  != 'all' ">
+	       AND A.type_code = #{typeCode}
+	    </if>
+	    <if test="isRealAuth != null and isRealAuth != '' ">
+           AND A.is_real_auth = #{isRealAuth}
+      	</if> 
+      	<if test="mainStatus != null and mainStatus != '' ">
+           AND A.main_status = #{mainStatus}
+      	</if> 
+	    <if test="city != null and city  != '' ">
+	       AND A.city = #{city}
+	    </if>
+	    <if test="createdAt != null and createdAt != '' ">
+           AND DATE(A.created_at) = DATE(#{createdAt})  
+      	</if>
+	</sql>
+	<sql id="leftJoin">
+	    LEFT JOIN province_city_area pca ON pca.id = A.city
+	    LEFT JOIN province_city_area pca1 ON pca1.id = A.province
+	    LEFT JOIN dict di ON di.parent_code = A.type_code
+	   <!--  LEFT JOIN dict di1 ON di1.id = A.title_code -->
+	</sql>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+	
+	
+	
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.People">
+    	SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1 
+		<include refid="baseSearch"/><include refid="search"/>
+		<include refid="suffix"/>
+		<include refid="limitCount"/>
+	</select>
+	
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.People">
+   		SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1 
+		<include refid="baseSearch"/><include refid="search"/>
+		<include refid="suffix"/>
+		LIMIT 0,1 
+	</select>
+	
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1
+		<include refid="baseSearch"/><include refid="search"/>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultType="com.lhfeiyu.po.domain.People" parameterType="java.lang.Integer">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectBySerial" resultType="com.lhfeiyu.po.domain.People">
+   		SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A
+		<include refid="leftJoin"/>
+    	WHERE A.serial = #{serial,jdbcType=VARCHAR}
+		LIMIT 0,1 
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+	
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.po.domain.People">
+	    UPDATE <include refid="table"/>
+		<set>
+			
+			serial = #{serial,jdbcType=VARCHAR},
+			main_status = #{mainStatus,jdbcType=INTEGER},
+			logic_status = #{logicStatus,jdbcType=INTEGER},
+			type_id = #{typeId,jdbcType=INTEGER},
+			type_code = #{typeCode,jdbcType=VARCHAR},
+			deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			deleted_by = #{deletedBy,jdbcType=VARCHAR},
+			group_id = #{groupId,jdbcType=INTEGER},
+			grade_id = #{gradeId,jdbcType=INTEGER},
+			dict_code = #{dictCode,jdbcType=VARCHAR},
+			username = #{username,jdbcType=VARCHAR},
+			password = #{password,jdbcType=VARCHAR},
+			nick_name = #{nickName,jdbcType=VARCHAR},
+			real_name = #{realName,jdbcType=VARCHAR},
+			is_real_auth = #{isRealAuth,jdbcType=INTEGER},
+			sex = #{sex,jdbcType=INTEGER},
+			phone = #{phone,jdbcType=VARCHAR},
+			login_name = #{loginName,jdbcType=VARCHAR},
+			tel = #{tel,jdbcType=VARCHAR},
+			phone_conceal = #{phoneConceal,jdbcType=INTEGER},
+			email = #{email,jdbcType=VARCHAR},
+			avatar = #{avatar,jdbcType=VARCHAR},
+			pic_path = #{picPath,jdbcType=VARCHAR},
+			pic_paths = #{picPaths,jdbcType=VARCHAR},
+			contact_way = #{contactWay,jdbcType=VARCHAR},
+			last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+			last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+			address = #{address,jdbcType=VARCHAR},
+			province = #{province,jdbcType=INTEGER},
+			city = #{city,jdbcType=INTEGER},
+			weixin = #{weixin,jdbcType=VARCHAR},
+			qq = #{qq,jdbcType=VARCHAR},
+			weibo = #{weibo,jdbcType=VARCHAR},
+			job_id = #{jobId,jdbcType=INTEGER},
+			job_code = #{jobCode,jdbcType=VARCHAR},
+			birthday = #{birthday,jdbcType=TIMESTAMP},
+			title_code = #{titleCode,jdbcType=VARCHAR},
+			qr_code = #{qrCode,jdbcType=VARCHAR},
+			qr_code2 = #{qrCode2,jdbcType=VARCHAR},
+			third_name = #{thirdName,jdbcType=VARCHAR},
+			third_id = #{thirdId,jdbcType=VARCHAR},
+			third_password = #{thirdPassword,jdbcType=VARCHAR},
+			wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+			role_id = #{roleId,jdbcType=INTEGER},
+			organization = #{organization,jdbcType=VARCHAR},
+			idcard_num = #{idcardNum,jdbcType=VARCHAR},
+			certificate_type = #{certificateType,jdbcType=INTEGER},
+			certificate_number = #{certificateNumber,jdbcType=VARCHAR},
+			certificate_name = #{certificateName,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			link_id2 = #{linkId2,jdbcType=INTEGER},
+			link_id3 = #{linkId3,jdbcType=INTEGER},
+			link_id4 = #{linkId4,jdbcType=INTEGER},
+			link_id5 = #{linkId5,jdbcType=INTEGER},
+			link_code = #{linkCode,jdbcType=VARCHAR},
+			link_code2 = #{linkCode2,jdbcType=VARCHAR},
+			link_code3 = #{linkCode3,jdbcType=VARCHAR},
+			link_code4 = #{linkCode4,jdbcType=VARCHAR},
+			link_code5 = #{linkCode5,jdbcType=VARCHAR},
+			link_str = #{linkStr,jdbcType=VARCHAR},
+			param_json = #{paramJson,jdbcType=VARCHAR},
+			link_type = #{linkType,jdbcType=INTEGER},
+			link_id = #{linkId,jdbcType=INTEGER},
+			owner_id = #{ownerId,jdbcType=INTEGER},
+			owner_ids = #{ownerIds,jdbcType=VARCHAR},
+			attr_decimal = #{attrDecimal,jdbcType=DECIMAL},
+			attr_str = #{attrStr,jdbcType=VARCHAR},
+			attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+			attr_str3 = #{attrStr3,jdbcType=VARCHAR},
+			attr_int = #{attrInt,jdbcType=INTEGER},
+			attr_int2 = #{attrInt2,jdbcType=INTEGER},
+			sequence = #{sequence,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			
+			introduction = #{introduction,jdbcType=VARCHAR},
+			tags = #{tags,jdbcType=VARCHAR},
+			bussiness_scope = #{bussinessScope,jdbcType=VARCHAR},
+			education_code = #{educationCode,jdbcType=VARCHAR},
+			good_at_ids = #{goodAtIds,jdbcType=VARCHAR},
+			good_at = #{goodAt,jdbcType=VARCHAR},
+			title_names = #{titleNames,jdbcType=VARCHAR},
+			title_ids = #{titleIds,jdbcType=VARCHAR},
+			position_ids = #{positionIds,jdbcType=VARCHAR},
+			position_names = #{positionNames,jdbcType=VARCHAR},
+			price_text = #{priceText,jdbcType=VARCHAR},
+			work_year = #{workYear,jdbcType=INTEGER},
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySerial" parameterType="com.lhfeiyu.po.domain.People">
+	    UPDATE <include refid="table"/>
+		<set>
+		  	
+		  	serial = #{serial,jdbcType=VARCHAR},
+		  	main_status = #{mainStatus,jdbcType=INTEGER},
+		  	logic_status = #{logicStatus,jdbcType=INTEGER},
+		  	type_id = #{typeId,jdbcType=INTEGER},
+		  	type_code = #{typeCode,jdbcType=VARCHAR},
+		  	deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+		  	deleted_by = #{deletedBy,jdbcType=VARCHAR},
+		  	group_id = #{groupId,jdbcType=INTEGER},
+		  	grade_id = #{gradeId,jdbcType=INTEGER},
+		  	dict_code = #{dictCode,jdbcType=VARCHAR},
+		  	username = #{username,jdbcType=VARCHAR},
+		  	password = #{password,jdbcType=VARCHAR},
+		  	nick_name = #{nickName,jdbcType=VARCHAR},
+		  	real_name = #{realName,jdbcType=VARCHAR},
+		  	is_real_auth = #{isRealAuth,jdbcType=INTEGER},
+		  	sex = #{sex,jdbcType=INTEGER},
+		  	phone = #{phone,jdbcType=VARCHAR},
+		  	login_name = #{loginName,jdbcType=VARCHAR},
+		  	tel = #{tel,jdbcType=VARCHAR},
+		  	phone_conceal = #{phoneConceal,jdbcType=INTEGER},
+		  	email = #{email,jdbcType=VARCHAR},
+		  	avatar = #{avatar,jdbcType=VARCHAR},
+		  	pic_path = #{picPath,jdbcType=VARCHAR},
+		  	pic_paths = #{picPaths,jdbcType=VARCHAR},
+		  	contact_way = #{contactWay,jdbcType=VARCHAR},
+		  	last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+		  	last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+		  	address = #{address,jdbcType=VARCHAR},
+		  	province = #{province,jdbcType=INTEGER},
+		  	city = #{city,jdbcType=INTEGER},
+		  	weixin = #{weixin,jdbcType=VARCHAR},
+		  	qq = #{qq,jdbcType=VARCHAR},
+		  	weibo = #{weibo,jdbcType=VARCHAR},
+		  	job_id = #{jobId,jdbcType=INTEGER},
+		  	job_code = #{jobCode,jdbcType=VARCHAR},
+		  	birthday = #{birthday,jdbcType=TIMESTAMP},
+		  	title_code = #{titleCode,jdbcType=VARCHAR},
+		  	qr_code = #{qrCode,jdbcType=VARCHAR},
+		  	qr_code2 = #{qrCode2,jdbcType=VARCHAR},
+		  	third_name = #{thirdName,jdbcType=VARCHAR},
+		  	third_id = #{thirdId,jdbcType=VARCHAR},
+		  	third_password = #{thirdPassword,jdbcType=VARCHAR},
+		  	wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+		  	role_id = #{roleId,jdbcType=INTEGER},
+		  	organization = #{organization,jdbcType=VARCHAR},
+		  	idcard_num = #{idcardNum,jdbcType=VARCHAR},
+		  	certificate_type = #{certificateType,jdbcType=INTEGER},
+		  	certificate_number = #{certificateNumber,jdbcType=VARCHAR},
+		  	certificate_name = #{certificateName,jdbcType=VARCHAR},
+		  	description = #{description,jdbcType=VARCHAR},
+		  	link_id2 = #{linkId2,jdbcType=INTEGER},
+		  	link_id3 = #{linkId3,jdbcType=INTEGER},
+		  	link_id4 = #{linkId4,jdbcType=INTEGER},
+		  	link_id5 = #{linkId5,jdbcType=INTEGER},
+		  	link_code = #{linkCode,jdbcType=VARCHAR},
+		  	link_code2 = #{linkCode2,jdbcType=VARCHAR},
+		  	link_code3 = #{linkCode3,jdbcType=VARCHAR},
+		  	link_code4 = #{linkCode4,jdbcType=VARCHAR},
+		  	link_code5 = #{linkCode5,jdbcType=VARCHAR},
+		  	link_str = #{linkStr,jdbcType=VARCHAR},
+		  	param_json = #{paramJson,jdbcType=VARCHAR},
+		  	link_type = #{linkType,jdbcType=INTEGER},
+		  	link_id = #{linkId,jdbcType=INTEGER},
+		  	owner_id = #{ownerId,jdbcType=INTEGER},
+		  	owner_ids = #{ownerIds,jdbcType=VARCHAR},
+		  	attr_decimal = #{attrDecimal,jdbcType=DECIMAL},
+		  	attr_str = #{attrStr,jdbcType=VARCHAR},
+		  	attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+		  	attr_str3 = #{attrStr3,jdbcType=VARCHAR},
+		  	attr_int = #{attrInt,jdbcType=INTEGER},
+		  	attr_int2 = #{attrInt2,jdbcType=INTEGER},
+		  	sequence = #{sequence,jdbcType=INTEGER},
+		  	remark = #{remark,jdbcType=VARCHAR},
+		  	created_at = #{createdAt,jdbcType=TIMESTAMP},
+		  	created_by = #{createdBy,jdbcType=VARCHAR},
+		  	updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+		  	
+		  	introduction = #{introduction,jdbcType=VARCHAR},
+		  	tags = #{tags,jdbcType=VARCHAR},
+		  	bussiness_scope = #{bussinessScope,jdbcType=VARCHAR},
+		  	education_code = #{educationCode,jdbcType=VARCHAR},
+		  	good_at_ids = #{goodAtIds,jdbcType=VARCHAR},
+		  	good_at = #{goodAt,jdbcType=VARCHAR},
+		  	title_names = #{titleNames,jdbcType=VARCHAR},
+		  	title_ids = #{titleIds,jdbcType=VARCHAR},
+		  	position_ids = #{positionIds,jdbcType=VARCHAR},
+		  	position_names = #{positionNames,jdbcType=VARCHAR},
+		  	price_text = #{priceText,jdbcType=VARCHAR},
+		  	work_year = #{workYear,jdbcType=INTEGER},
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE serial = #{serial,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByIds">
+	    UPDATE <include refid="table"/>
+		<set>
+			
+			serial = #{serial,jdbcType=VARCHAR},
+			main_status = #{mainStatus,jdbcType=INTEGER},
+			logic_status = #{logicStatus,jdbcType=INTEGER},
+			type_id = #{typeId,jdbcType=INTEGER},
+			type_code = #{typeCode,jdbcType=VARCHAR},
+			deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			deleted_by = #{deletedBy,jdbcType=VARCHAR},
+			group_id = #{groupId,jdbcType=INTEGER},
+			grade_id = #{gradeId,jdbcType=INTEGER},
+			dict_code = #{dictCode,jdbcType=VARCHAR},
+			username = #{username,jdbcType=VARCHAR},
+			password = #{password,jdbcType=VARCHAR},
+			nick_name = #{nickName,jdbcType=VARCHAR},
+			real_name = #{realName,jdbcType=VARCHAR},
+			is_real_auth = #{isRealAuth,jdbcType=INTEGER},
+			sex = #{sex,jdbcType=INTEGER},
+			phone = #{phone,jdbcType=VARCHAR},
+			login_name = #{loginName,jdbcType=VARCHAR},
+			tel = #{tel,jdbcType=VARCHAR},
+			phone_conceal = #{phoneConceal,jdbcType=INTEGER},
+			email = #{email,jdbcType=VARCHAR},
+			avatar = #{avatar,jdbcType=VARCHAR},
+			pic_path = #{picPath,jdbcType=VARCHAR},
+			pic_paths = #{picPaths,jdbcType=VARCHAR},
+			contact_way = #{contactWay,jdbcType=VARCHAR},
+			last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+			last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+			address = #{address,jdbcType=VARCHAR},
+			province = #{province,jdbcType=INTEGER},
+			city = #{city,jdbcType=INTEGER},
+			weixin = #{weixin,jdbcType=VARCHAR},
+			qq = #{qq,jdbcType=VARCHAR},
+			weibo = #{weibo,jdbcType=VARCHAR},
+			job_id = #{jobId,jdbcType=INTEGER},
+			job_code = #{jobCode,jdbcType=VARCHAR},
+			birthday = #{birthday,jdbcType=TIMESTAMP},
+			title_code = #{titleCode,jdbcType=VARCHAR},
+			qr_code = #{qrCode,jdbcType=VARCHAR},
+			qr_code2 = #{qrCode2,jdbcType=VARCHAR},
+			third_name = #{thirdName,jdbcType=VARCHAR},
+			third_id = #{thirdId,jdbcType=VARCHAR},
+			third_password = #{thirdPassword,jdbcType=VARCHAR},
+			wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+			role_id = #{roleId,jdbcType=INTEGER},
+			organization = #{organization,jdbcType=VARCHAR},
+			idcard_num = #{idcardNum,jdbcType=VARCHAR},
+			certificate_type = #{certificateType,jdbcType=INTEGER},
+			certificate_number = #{certificateNumber,jdbcType=VARCHAR},
+			certificate_name = #{certificateName,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			link_id2 = #{linkId2,jdbcType=INTEGER},
+			link_id3 = #{linkId3,jdbcType=INTEGER},
+			link_id4 = #{linkId4,jdbcType=INTEGER},
+			link_id5 = #{linkId5,jdbcType=INTEGER},
+			link_code = #{linkCode,jdbcType=VARCHAR},
+			link_code2 = #{linkCode2,jdbcType=VARCHAR},
+			link_code3 = #{linkCode3,jdbcType=VARCHAR},
+			link_code4 = #{linkCode4,jdbcType=VARCHAR},
+			link_code5 = #{linkCode5,jdbcType=VARCHAR},
+			link_str = #{linkStr,jdbcType=VARCHAR},
+			param_json = #{paramJson,jdbcType=VARCHAR},
+			link_type = #{linkType,jdbcType=INTEGER},
+			link_id = #{linkId,jdbcType=INTEGER},
+			owner_id = #{ownerId,jdbcType=INTEGER},
+			owner_ids = #{ownerIds,jdbcType=VARCHAR},
+			attr_decimal = #{attrDecimal,jdbcType=DECIMAL},
+			attr_str = #{attrStr,jdbcType=VARCHAR},
+			attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+			attr_str3 = #{attrStr3,jdbcType=VARCHAR},
+			attr_int = #{attrInt,jdbcType=INTEGER},
+			attr_int2 = #{attrInt2,jdbcType=INTEGER},
+			sequence = #{sequence,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			
+			introduction = #{introduction,jdbcType=VARCHAR},
+			tags = #{tags,jdbcType=VARCHAR},
+			bussiness_scope = #{bussinessScope,jdbcType=VARCHAR},
+			education_code = #{educationCode,jdbcType=VARCHAR},
+			good_at_ids = #{goodAtIds,jdbcType=VARCHAR},
+			good_at = #{goodAt,jdbcType=VARCHAR},
+			title_names = #{titleNames,jdbcType=VARCHAR},
+			title_ids = #{titleIds,jdbcType=VARCHAR},
+			position_ids = #{positionIds,jdbcType=VARCHAR},
+			position_names = #{positionNames,jdbcType=VARCHAR},
+			price_text = #{priceText,jdbcType=VARCHAR},
+			work_year = #{workYear,jdbcType=INTEGER},
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateByCondition">
+		UPDATE <include refid="table"/> SET
+		<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		updated_at = NOW(),
+		${condition}
+	</update>
+	
+	<update id="updateDeletedNowByIds">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NOW(),
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateDeletedNullByIds">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NULL,
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateDeletedNowById" parameterType="java.lang.Integer">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NOW(),
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateDeletedNullById">
+		UPDATE <include refid="table"/>
+		<set> 
+			deleted_at = NULL, 
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateFieldById" parameterType="java.util.Map">
+		UPDATE <include refid="table"/>
+		<set>
+			<if test="expression1 != null">${expression1},</if>
+			<if test="expression2 != null">${expression2},</if>
+			<if test="expression3 != null">${expression3},</if>
+			<if test="expression4 != null">${expression4},</if>
+			<if test="expression5 != null">${expression5},</if>
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateFieldByIds" parameterType="java.util.Map">
+		UPDATE <include refid="table"/>
+		<set>
+			<if test="expression1 != null">${expression1},</if>
+			<if test="expression2 != null">${expression2},</if>
+			<if test="expression3 != null">${expression3},</if>
+			<if test="expression4 != null">${expression4},</if>
+			<if test="expression5 != null">${expression5},</if>
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.po.domain.People">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="groupId != null">group_id = #{groupId,jdbcType=INTEGER},</if>
+				<if test="gradeId != null">grade_id = #{gradeId,jdbcType=INTEGER},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="username != null">username = #{username,jdbcType=VARCHAR},</if>
+				<if test="password != null">password = #{password,jdbcType=VARCHAR},</if>
+				<if test="nickName != null">nick_name = #{nickName,jdbcType=VARCHAR},</if>
+				<if test="realName != null">real_name = #{realName,jdbcType=VARCHAR},</if>
+				<if test="isRealAuth != null">is_real_auth = #{isRealAuth,jdbcType=INTEGER},</if>
+				<if test="sex != null">sex = #{sex,jdbcType=INTEGER},</if>
+				<if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+				<if test="loginName != null">login_name = #{loginName,jdbcType=VARCHAR},</if>
+				<if test="tel != null">tel = #{tel,jdbcType=VARCHAR},</if>
+				<if test="phoneConceal != null">phone_conceal = #{phoneConceal,jdbcType=INTEGER},</if>
+				<if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+				<if test="avatar != null">avatar = #{avatar,jdbcType=VARCHAR},</if>
+				<if test="picPath != null">pic_path = #{picPath,jdbcType=VARCHAR},</if>
+				<if test="picPaths != null">pic_paths = #{picPaths,jdbcType=VARCHAR},</if>
+				<if test="contactWay != null">contact_way = #{contactWay,jdbcType=VARCHAR},</if>
+				<if test="lastLoginTime != null">last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},</if>
+				<if test="lastLoginIp != null">last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},</if>
+				<if test="address != null">address = #{address,jdbcType=VARCHAR},</if>
+				<if test="province != null">province = #{province,jdbcType=INTEGER},</if>
+				<if test="city != null">city = #{city,jdbcType=INTEGER},</if>
+				<if test="weixin != null">weixin = #{weixin,jdbcType=VARCHAR},</if>
+				<if test="qq != null">qq = #{qq,jdbcType=VARCHAR},</if>
+				<if test="weibo != null">weibo = #{weibo,jdbcType=VARCHAR},</if>
+				<if test="jobId != null">job_id = #{jobId,jdbcType=INTEGER},</if>
+				<if test="jobCode != null">job_code = #{jobCode,jdbcType=VARCHAR},</if>
+				<if test="birthday != null">birthday = #{birthday,jdbcType=TIMESTAMP},</if>
+				<if test="titleCode != null">title_code = #{titleCode,jdbcType=VARCHAR},</if>
+				<if test="qrCode != null">qr_code = #{qrCode,jdbcType=VARCHAR},</if>
+				<if test="qrCode2 != null">qr_code2 = #{qrCode2,jdbcType=VARCHAR},</if>
+				<if test="thirdName != null">third_name = #{thirdName,jdbcType=VARCHAR},</if>
+				<if test="thirdId != null">third_id = #{thirdId,jdbcType=VARCHAR},</if>
+				<if test="thirdPassword != null">third_password = #{thirdPassword,jdbcType=VARCHAR},</if>
+				<if test="wxOpenid != null">wx_openid = #{wxOpenid,jdbcType=VARCHAR},</if>
+				<if test="roleId != null">role_id = #{roleId,jdbcType=INTEGER},</if>
+				<if test="organization != null">organization = #{organization,jdbcType=VARCHAR},</if>
+				<if test="idcardNum != null">idcard_num = #{idcardNum,jdbcType=VARCHAR},</if>
+				<if test="certificateType != null">certificate_type = #{certificateType,jdbcType=INTEGER},</if>
+				<if test="certificateNumber != null">certificate_number = #{certificateNumber,jdbcType=VARCHAR},</if>
+				<if test="certificateName != null">certificate_name = #{certificateName,jdbcType=VARCHAR},</if>
+				<if test="description != null">description = #{description,jdbcType=VARCHAR},</if>
+				<if test="linkId2 != null">link_id2 = #{linkId2,jdbcType=INTEGER},</if>
+				<if test="linkId3 != null">link_id3 = #{linkId3,jdbcType=INTEGER},</if>
+				<if test="linkId4 != null">link_id4 = #{linkId4,jdbcType=INTEGER},</if>
+				<if test="linkId5 != null">link_id5 = #{linkId5,jdbcType=INTEGER},</if>
+				<if test="linkCode != null">link_code = #{linkCode,jdbcType=VARCHAR},</if>
+				<if test="linkCode2 != null">link_code2 = #{linkCode2,jdbcType=VARCHAR},</if>
+				<if test="linkCode3 != null">link_code3 = #{linkCode3,jdbcType=VARCHAR},</if>
+				<if test="linkCode4 != null">link_code4 = #{linkCode4,jdbcType=VARCHAR},</if>
+				<if test="linkCode5 != null">link_code5 = #{linkCode5,jdbcType=VARCHAR},</if>
+				<if test="linkStr != null">link_str = #{linkStr,jdbcType=VARCHAR},</if>
+				<if test="paramJson != null">param_json = #{paramJson,jdbcType=VARCHAR},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="attrDecimal != null">attr_decimal = #{attrDecimal,jdbcType=DECIMAL},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrStr3 != null">attr_str3 = #{attrStr3,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+				<if test="introduction != null">introduction = #{introduction,jdbcType=VARCHAR},</if>
+				<if test="tags != null">tags = #{tags,jdbcType=VARCHAR},</if>
+				<if test="bussinessScope != null">bussiness_scope = #{bussinessScope,jdbcType=VARCHAR},</if>
+				<if test="educationCode != null">education_code = #{educationCode,jdbcType=VARCHAR},</if>
+				<if test="goodAtIds != null">good_at_ids = #{goodAtIds,jdbcType=VARCHAR},</if>
+				<if test="goodAt != null">good_at = #{goodAt,jdbcType=VARCHAR},</if>
+				<if test="titleNames != null">title_names = #{titleNames,jdbcType=VARCHAR},</if>
+				<if test="titleIds != null">title_ids = #{titleIds,jdbcType=VARCHAR},</if>
+				<if test="positionIds != null">position_ids = #{positionIds,jdbcType=VARCHAR},</if>
+				<if test="positionNames != null">position_names = #{positionNames,jdbcType=VARCHAR},</if>
+				<if test="priceText != null">price_text = #{priceText,jdbcType=VARCHAR},</if>
+				<if test="workYear != null">work_year = #{workYear,jdbcType=INTEGER},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySerialSelective" parameterType="com.lhfeiyu.po.domain.People">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="groupId != null">group_id = #{groupId,jdbcType=INTEGER},</if>
+				<if test="gradeId != null">grade_id = #{gradeId,jdbcType=INTEGER},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="username != null">username = #{username,jdbcType=VARCHAR},</if>
+				<if test="password != null">password = #{password,jdbcType=VARCHAR},</if>
+				<if test="nickName != null">nick_name = #{nickName,jdbcType=VARCHAR},</if>
+				<if test="realName != null">real_name = #{realName,jdbcType=VARCHAR},</if>
+				<if test="isRealAuth != null">is_real_auth = #{isRealAuth,jdbcType=INTEGER},</if>
+				<if test="sex != null">sex = #{sex,jdbcType=INTEGER},</if>
+				<if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+				<if test="loginName != null">login_name = #{loginName,jdbcType=VARCHAR},</if>
+				<if test="tel != null">tel = #{tel,jdbcType=VARCHAR},</if>
+				<if test="phoneConceal != null">phone_conceal = #{phoneConceal,jdbcType=INTEGER},</if>
+				<if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+				<if test="avatar != null">avatar = #{avatar,jdbcType=VARCHAR},</if>
+				<if test="picPath != null">pic_path = #{picPath,jdbcType=VARCHAR},</if>
+				<if test="picPaths != null">pic_paths = #{picPaths,jdbcType=VARCHAR},</if>
+				<if test="contactWay != null">contact_way = #{contactWay,jdbcType=VARCHAR},</if>
+				<if test="lastLoginTime != null">last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},</if>
+				<if test="lastLoginIp != null">last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},</if>
+				<if test="address != null">address = #{address,jdbcType=VARCHAR},</if>
+				<if test="province != null">province = #{province,jdbcType=INTEGER},</if>
+				<if test="city != null">city = #{city,jdbcType=INTEGER},</if>
+				<if test="weixin != null">weixin = #{weixin,jdbcType=VARCHAR},</if>
+				<if test="qq != null">qq = #{qq,jdbcType=VARCHAR},</if>
+				<if test="weibo != null">weibo = #{weibo,jdbcType=VARCHAR},</if>
+				<if test="jobId != null">job_id = #{jobId,jdbcType=INTEGER},</if>
+				<if test="jobCode != null">job_code = #{jobCode,jdbcType=VARCHAR},</if>
+				<if test="birthday != null">birthday = #{birthday,jdbcType=TIMESTAMP},</if>
+				<if test="titleCode != null">title_code = #{titleCode,jdbcType=VARCHAR},</if>
+				<if test="qrCode != null">qr_code = #{qrCode,jdbcType=VARCHAR},</if>
+				<if test="qrCode2 != null">qr_code2 = #{qrCode2,jdbcType=VARCHAR},</if>
+				<if test="thirdName != null">third_name = #{thirdName,jdbcType=VARCHAR},</if>
+				<if test="thirdId != null">third_id = #{thirdId,jdbcType=VARCHAR},</if>
+				<if test="thirdPassword != null">third_password = #{thirdPassword,jdbcType=VARCHAR},</if>
+				<if test="wxOpenid != null">wx_openid = #{wxOpenid,jdbcType=VARCHAR},</if>
+				<if test="roleId != null">role_id = #{roleId,jdbcType=INTEGER},</if>
+				<if test="organization != null">organization = #{organization,jdbcType=VARCHAR},</if>
+				<if test="idcardNum != null">idcard_num = #{idcardNum,jdbcType=VARCHAR},</if>
+				<if test="certificateType != null">certificate_type = #{certificateType,jdbcType=INTEGER},</if>
+				<if test="certificateNumber != null">certificate_number = #{certificateNumber,jdbcType=VARCHAR},</if>
+				<if test="certificateName != null">certificate_name = #{certificateName,jdbcType=VARCHAR},</if>
+				<if test="description != null">description = #{description,jdbcType=VARCHAR},</if>
+				<if test="linkId2 != null">link_id2 = #{linkId2,jdbcType=INTEGER},</if>
+				<if test="linkId3 != null">link_id3 = #{linkId3,jdbcType=INTEGER},</if>
+				<if test="linkId4 != null">link_id4 = #{linkId4,jdbcType=INTEGER},</if>
+				<if test="linkId5 != null">link_id5 = #{linkId5,jdbcType=INTEGER},</if>
+				<if test="linkCode != null">link_code = #{linkCode,jdbcType=VARCHAR},</if>
+				<if test="linkCode2 != null">link_code2 = #{linkCode2,jdbcType=VARCHAR},</if>
+				<if test="linkCode3 != null">link_code3 = #{linkCode3,jdbcType=VARCHAR},</if>
+				<if test="linkCode4 != null">link_code4 = #{linkCode4,jdbcType=VARCHAR},</if>
+				<if test="linkCode5 != null">link_code5 = #{linkCode5,jdbcType=VARCHAR},</if>
+				<if test="linkStr != null">link_str = #{linkStr,jdbcType=VARCHAR},</if>
+				<if test="paramJson != null">param_json = #{paramJson,jdbcType=VARCHAR},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="attrDecimal != null">attr_decimal = #{attrDecimal,jdbcType=DECIMAL},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrStr3 != null">attr_str3 = #{attrStr3,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+				<if test="introduction != null">introduction = #{introduction,jdbcType=VARCHAR},</if>
+				<if test="tags != null">tags = #{tags,jdbcType=VARCHAR},</if>
+				<if test="bussinessScope != null">bussiness_scope = #{bussinessScope,jdbcType=VARCHAR},</if>
+				<if test="educationCode != null">education_code = #{educationCode,jdbcType=VARCHAR},</if>
+				<if test="goodAtIds != null">good_at_ids = #{goodAtIds,jdbcType=VARCHAR},</if>
+				<if test="goodAt != null">good_at = #{goodAt,jdbcType=VARCHAR},</if>
+				<if test="titleNames != null">title_names = #{titleNames,jdbcType=VARCHAR},</if>
+				<if test="titleIds != null">title_ids = #{titleIds,jdbcType=VARCHAR},</if>
+				<if test="positionIds != null">position_ids = #{positionIds,jdbcType=VARCHAR},</if>
+				<if test="positionNames != null">position_names = #{positionNames,jdbcType=VARCHAR},</if>
+				<if test="priceText != null">price_text = #{priceText,jdbcType=VARCHAR},</if>
+				<if test="workYear != null">work_year = #{workYear,jdbcType=INTEGER},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE serial = #{serial,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByIdsSelective">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="groupId != null">group_id = #{groupId,jdbcType=INTEGER},</if>
+				<if test="gradeId != null">grade_id = #{gradeId,jdbcType=INTEGER},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="username != null">username = #{username,jdbcType=VARCHAR},</if>
+				<if test="password != null">password = #{password,jdbcType=VARCHAR},</if>
+				<if test="nickName != null">nick_name = #{nickName,jdbcType=VARCHAR},</if>
+				<if test="realName != null">real_name = #{realName,jdbcType=VARCHAR},</if>
+				<if test="isRealAuth != null">is_real_auth = #{isRealAuth,jdbcType=INTEGER},</if>
+				<if test="sex != null">sex = #{sex,jdbcType=INTEGER},</if>
+				<if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+				<if test="loginName != null">login_name = #{loginName,jdbcType=VARCHAR},</if>
+				<if test="tel != null">tel = #{tel,jdbcType=VARCHAR},</if>
+				<if test="phoneConceal != null">phone_conceal = #{phoneConceal,jdbcType=INTEGER},</if>
+				<if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+				<if test="avatar != null">avatar = #{avatar,jdbcType=VARCHAR},</if>
+				<if test="picPath != null">pic_path = #{picPath,jdbcType=VARCHAR},</if>
+				<if test="picPaths != null">pic_paths = #{picPaths,jdbcType=VARCHAR},</if>
+				<if test="contactWay != null">contact_way = #{contactWay,jdbcType=VARCHAR},</if>
+				<if test="lastLoginTime != null">last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},</if>
+				<if test="lastLoginIp != null">last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},</if>
+				<if test="address != null">address = #{address,jdbcType=VARCHAR},</if>
+				<if test="province != null">province = #{province,jdbcType=INTEGER},</if>
+				<if test="city != null">city = #{city,jdbcType=INTEGER},</if>
+				<if test="weixin != null">weixin = #{weixin,jdbcType=VARCHAR},</if>
+				<if test="qq != null">qq = #{qq,jdbcType=VARCHAR},</if>
+				<if test="weibo != null">weibo = #{weibo,jdbcType=VARCHAR},</if>
+				<if test="jobId != null">job_id = #{jobId,jdbcType=INTEGER},</if>
+				<if test="jobCode != null">job_code = #{jobCode,jdbcType=VARCHAR},</if>
+				<if test="birthday != null">birthday = #{birthday,jdbcType=TIMESTAMP},</if>
+				<if test="titleCode != null">title_code = #{titleCode,jdbcType=VARCHAR},</if>
+				<if test="qrCode != null">qr_code = #{qrCode,jdbcType=VARCHAR},</if>
+				<if test="qrCode2 != null">qr_code2 = #{qrCode2,jdbcType=VARCHAR},</if>
+				<if test="thirdName != null">third_name = #{thirdName,jdbcType=VARCHAR},</if>
+				<if test="thirdId != null">third_id = #{thirdId,jdbcType=VARCHAR},</if>
+				<if test="thirdPassword != null">third_password = #{thirdPassword,jdbcType=VARCHAR},</if>
+				<if test="wxOpenid != null">wx_openid = #{wxOpenid,jdbcType=VARCHAR},</if>
+				<if test="roleId != null">role_id = #{roleId,jdbcType=INTEGER},</if>
+				<if test="organization != null">organization = #{organization,jdbcType=VARCHAR},</if>
+				<if test="idcardNum != null">idcard_num = #{idcardNum,jdbcType=VARCHAR},</if>
+				<if test="certificateType != null">certificate_type = #{certificateType,jdbcType=INTEGER},</if>
+				<if test="certificateNumber != null">certificate_number = #{certificateNumber,jdbcType=VARCHAR},</if>
+				<if test="certificateName != null">certificate_name = #{certificateName,jdbcType=VARCHAR},</if>
+				<if test="description != null">description = #{description,jdbcType=VARCHAR},</if>
+				<if test="linkId2 != null">link_id2 = #{linkId2,jdbcType=INTEGER},</if>
+				<if test="linkId3 != null">link_id3 = #{linkId3,jdbcType=INTEGER},</if>
+				<if test="linkId4 != null">link_id4 = #{linkId4,jdbcType=INTEGER},</if>
+				<if test="linkId5 != null">link_id5 = #{linkId5,jdbcType=INTEGER},</if>
+				<if test="linkCode != null">link_code = #{linkCode,jdbcType=VARCHAR},</if>
+				<if test="linkCode2 != null">link_code2 = #{linkCode2,jdbcType=VARCHAR},</if>
+				<if test="linkCode3 != null">link_code3 = #{linkCode3,jdbcType=VARCHAR},</if>
+				<if test="linkCode4 != null">link_code4 = #{linkCode4,jdbcType=VARCHAR},</if>
+				<if test="linkCode5 != null">link_code5 = #{linkCode5,jdbcType=VARCHAR},</if>
+				<if test="linkStr != null">link_str = #{linkStr,jdbcType=VARCHAR},</if>
+				<if test="paramJson != null">param_json = #{paramJson,jdbcType=VARCHAR},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="attrDecimal != null">attr_decimal = #{attrDecimal,jdbcType=DECIMAL},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrStr3 != null">attr_str3 = #{attrStr3,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+				<if test="introduction != null">introduction = #{introduction,jdbcType=VARCHAR},</if>
+				<if test="tags != null">tags = #{tags,jdbcType=VARCHAR},</if>
+				<if test="bussinessScope != null">bussiness_scope = #{bussinessScope,jdbcType=VARCHAR},</if>
+				<if test="educationCode != null">education_code = #{educationCode,jdbcType=VARCHAR},</if>
+				<if test="goodAtIds != null">good_at_ids = #{goodAtIds,jdbcType=VARCHAR},</if>
+				<if test="goodAt != null">good_at = #{goodAt,jdbcType=VARCHAR},</if>
+				<if test="titleNames != null">title_names = #{titleNames,jdbcType=VARCHAR},</if>
+				<if test="titleIds != null">title_ids = #{titleIds,jdbcType=VARCHAR},</if>
+				<if test="positionIds != null">position_ids = #{positionIds,jdbcType=VARCHAR},</if>
+				<if test="positionNames != null">position_names = #{positionNames,jdbcType=VARCHAR},</if>
+				<if test="priceText != null">price_text = #{priceText,jdbcType=VARCHAR},</if>
+				<if test="workYear != null">work_year = #{workYear,jdbcType=INTEGER},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id IN( ${ids} )
+	</update>
+    <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+	
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.lhfeiyu.po.domain.People" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>(
+			serial,main_status,logic_status,type_id,type_code,deleted_at,deleted_by,group_id,grade_id,dict_code,username,password,nick_name,real_name,is_real_auth,sex,phone,login_name,tel,phone_conceal,email,avatar,pic_path,pic_paths,contact_way,last_login_time,last_login_ip,address,province,city,weixin,qq,weibo,job_id,job_code,birthday,title_code,qr_code,qr_code2,third_name,third_id,third_password,wx_openid,role_id,organization,idcard_num,certificate_type,certificate_number,certificate_name,description,link_id2,link_id3,link_id4,link_id5,link_code,link_code2,link_code3,link_code4,link_code5,link_str,param_json,link_type,link_id,owner_id,owner_ids,attr_decimal,attr_str,attr_str2,attr_str3,attr_int,attr_int2,sequence,remark,created_at,created_by,updated_at,updated_by,introduction,tags,bussiness_scope,education_code,good_at_ids,good_at,title_names,title_ids,position_ids,position_names,price_text,work_year
+		)VALUES(
+		    #{serial,jdbcType=VARCHAR},#{mainStatus,jdbcType=INTEGER},#{logicStatus,jdbcType=INTEGER},#{typeId,jdbcType=INTEGER},#{typeCode,jdbcType=VARCHAR},#{deletedAt,jdbcType=TIMESTAMP},#{deletedBy,jdbcType=VARCHAR},#{groupId,jdbcType=INTEGER},#{gradeId,jdbcType=INTEGER},#{dictCode,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR},#{realName,jdbcType=VARCHAR},#{isRealAuth,jdbcType=INTEGER},#{sex,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},#{loginName,jdbcType=VARCHAR},#{tel,jdbcType=VARCHAR},#{phoneConceal,jdbcType=INTEGER},#{email,jdbcType=VARCHAR},#{avatar,jdbcType=VARCHAR},#{picPath,jdbcType=VARCHAR},#{picPaths,jdbcType=VARCHAR},#{contactWay,jdbcType=VARCHAR},#{lastLoginTime,jdbcType=TIMESTAMP},#{lastLoginIp,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{province,jdbcType=INTEGER},#{city,jdbcType=INTEGER},#{weixin,jdbcType=VARCHAR},#{qq,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{jobId,jdbcType=INTEGER},#{jobCode,jdbcType=VARCHAR},#{birthday,jdbcType=TIMESTAMP},#{titleCode,jdbcType=VARCHAR},#{qrCode,jdbcType=VARCHAR},#{qrCode2,jdbcType=VARCHAR},#{thirdName,jdbcType=VARCHAR},#{thirdId,jdbcType=VARCHAR},#{thirdPassword,jdbcType=VARCHAR},#{wxOpenid,jdbcType=VARCHAR},#{roleId,jdbcType=INTEGER},#{organization,jdbcType=VARCHAR},#{idcardNum,jdbcType=VARCHAR},#{certificateType,jdbcType=INTEGER},#{certificateNumber,jdbcType=VARCHAR},#{certificateName,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},#{linkId2,jdbcType=INTEGER},#{linkId3,jdbcType=INTEGER},#{linkId4,jdbcType=INTEGER},#{linkId5,jdbcType=INTEGER},#{linkCode,jdbcType=VARCHAR},#{linkCode2,jdbcType=VARCHAR},#{linkCode3,jdbcType=VARCHAR},#{linkCode4,jdbcType=VARCHAR},#{linkCode5,jdbcType=VARCHAR},#{linkStr,jdbcType=VARCHAR},#{paramJson,jdbcType=VARCHAR},#{linkType,jdbcType=INTEGER},#{linkId,jdbcType=INTEGER},#{ownerId,jdbcType=INTEGER},#{ownerIds,jdbcType=VARCHAR},#{attrDecimal,jdbcType=DECIMAL},#{attrStr,jdbcType=VARCHAR},#{attrStr2,jdbcType=VARCHAR},#{attrStr3,jdbcType=VARCHAR},#{attrInt,jdbcType=INTEGER},#{attrInt2,jdbcType=INTEGER},#{sequence,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{createdBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{introduction,jdbcType=VARCHAR},#{tags,jdbcType=VARCHAR},#{bussinessScope,jdbcType=VARCHAR},#{educationCode,jdbcType=VARCHAR},#{goodAtIds,jdbcType=VARCHAR},#{goodAt,jdbcType=VARCHAR},#{titleNames,jdbcType=VARCHAR},#{titleIds,jdbcType=VARCHAR},#{positionIds,jdbcType=VARCHAR},#{positionNames,jdbcType=VARCHAR},#{priceText,jdbcType=VARCHAR},#{workYear,jdbcType=INTEGER}
+	    )
+	</insert>
+	
+	<insert id="insertBatch">
+		INSERT INTO <include refid="table"/>(
+			serial,main_status,logic_status,type_id,type_code,deleted_at,deleted_by,group_id,grade_id,dict_code,username,password,nick_name,real_name,is_real_auth,sex,phone,login_name,tel,phone_conceal,email,avatar,pic_path,pic_paths,contact_way,last_login_time,last_login_ip,address,province,city,weixin,qq,weibo,job_id,job_code,birthday,title_code,qr_code,qr_code2,third_name,third_id,third_password,wx_openid,role_id,organization,idcard_num,certificate_type,certificate_number,certificate_name,description,link_id2,link_id3,link_id4,link_id5,link_code,link_code2,link_code3,link_code4,link_code5,link_str,param_json,link_type,link_id,owner_id,owner_ids,attr_decimal,attr_str,attr_str2,attr_str3,attr_int,attr_int2,sequence,remark,created_at,created_by,updated_at,updated_by,introduction,tags,bussiness_scope,education_code,good_at_ids,good_at,title_names,title_ids,position_ids,position_names,price_text,work_year
+		)VALUES
+		<foreach collection="list" item="c" separator=",">
+			(
+		    #{c.serial,jdbcType=VARCHAR},#{c.mainStatus,jdbcType=INTEGER},#{c.logicStatus,jdbcType=INTEGER},#{c.typeId,jdbcType=INTEGER},#{c.typeCode,jdbcType=VARCHAR},#{c.deletedAt,jdbcType=TIMESTAMP},#{c.deletedBy,jdbcType=VARCHAR},#{c.groupId,jdbcType=INTEGER},#{c.gradeId,jdbcType=INTEGER},#{c.dictCode,jdbcType=VARCHAR},#{c.username,jdbcType=VARCHAR},#{c.password,jdbcType=VARCHAR},#{c.nickName,jdbcType=VARCHAR},#{c.realName,jdbcType=VARCHAR},#{c.isRealAuth,jdbcType=INTEGER},#{c.sex,jdbcType=INTEGER},#{c.phone,jdbcType=VARCHAR},#{c.loginName,jdbcType=VARCHAR},#{c.tel,jdbcType=VARCHAR},#{c.phoneConceal,jdbcType=INTEGER},#{c.email,jdbcType=VARCHAR},#{c.avatar,jdbcType=VARCHAR},#{c.picPath,jdbcType=VARCHAR},#{c.picPaths,jdbcType=VARCHAR},#{c.contactWay,jdbcType=VARCHAR},#{c.lastLoginTime,jdbcType=TIMESTAMP},#{c.lastLoginIp,jdbcType=VARCHAR},#{c.address,jdbcType=VARCHAR},#{c.province,jdbcType=INTEGER},#{c.city,jdbcType=INTEGER},#{c.weixin,jdbcType=VARCHAR},#{c.qq,jdbcType=VARCHAR},#{c.weibo,jdbcType=VARCHAR},#{c.jobId,jdbcType=INTEGER},#{c.jobCode,jdbcType=VARCHAR},#{c.birthday,jdbcType=TIMESTAMP},#{c.titleCode,jdbcType=VARCHAR},#{c.qrCode,jdbcType=VARCHAR},#{c.qrCode2,jdbcType=VARCHAR},#{c.thirdName,jdbcType=VARCHAR},#{c.thirdId,jdbcType=VARCHAR},#{c.thirdPassword,jdbcType=VARCHAR},#{c.wxOpenid,jdbcType=VARCHAR},#{c.roleId,jdbcType=INTEGER},#{c.organization,jdbcType=VARCHAR},#{c.idcardNum,jdbcType=VARCHAR},#{c.certificateType,jdbcType=INTEGER},#{c.certificateNumber,jdbcType=VARCHAR},#{c.certificateName,jdbcType=VARCHAR},#{c.description,jdbcType=VARCHAR},#{c.linkId2,jdbcType=INTEGER},#{c.linkId3,jdbcType=INTEGER},#{c.linkId4,jdbcType=INTEGER},#{c.linkId5,jdbcType=INTEGER},#{c.linkCode,jdbcType=VARCHAR},#{c.linkCode2,jdbcType=VARCHAR},#{c.linkCode3,jdbcType=VARCHAR},#{c.linkCode4,jdbcType=VARCHAR},#{c.linkCode5,jdbcType=VARCHAR},#{c.linkStr,jdbcType=VARCHAR},#{c.paramJson,jdbcType=VARCHAR},#{c.linkType,jdbcType=INTEGER},#{c.linkId,jdbcType=INTEGER},#{c.ownerId,jdbcType=INTEGER},#{c.ownerIds,jdbcType=VARCHAR},#{c.attrDecimal,jdbcType=DECIMAL},#{c.attrStr,jdbcType=VARCHAR},#{c.attrStr2,jdbcType=VARCHAR},#{c.attrStr3,jdbcType=VARCHAR},#{c.attrInt,jdbcType=INTEGER},#{c.attrInt2,jdbcType=INTEGER},#{c.sequence,jdbcType=INTEGER},#{c.remark,jdbcType=VARCHAR},#{c.createdAt,jdbcType=TIMESTAMP},#{c.createdBy,jdbcType=VARCHAR},#{c.updatedAt,jdbcType=TIMESTAMP},#{c.updatedBy,jdbcType=VARCHAR},#{c.introduction,jdbcType=VARCHAR},#{c.tags,jdbcType=VARCHAR},#{c.bussinessScope,jdbcType=VARCHAR},#{c.educationCode,jdbcType=VARCHAR},#{c.goodAtIds,jdbcType=VARCHAR},#{c.goodAt,jdbcType=VARCHAR},#{c.titleNames,jdbcType=VARCHAR},#{c.titleIds,jdbcType=VARCHAR},#{c.positionIds,jdbcType=VARCHAR},#{c.positionNames,jdbcType=VARCHAR},#{c.priceText,jdbcType=VARCHAR},#{c.workYear,jdbcType=INTEGER}
+	    	)
+		</foreach>
+	</insert>
+  	
+	<insert id="insertSelective" parameterType="com.lhfeiyu.po.domain.People" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="serial != null"> serial,</if>
+					<if test="mainStatus != null"> main_status,</if>
+					<if test="logicStatus != null"> logic_status,</if>
+					<if test="typeId != null"> type_id,</if>
+					<if test="typeCode != null"> type_code,</if>
+					<if test="deletedAt != null"> deleted_at,</if>
+					<if test="deletedBy != null"> deleted_by,</if>
+					<if test="groupId != null"> group_id,</if>
+					<if test="gradeId != null"> grade_id,</if>
+					<if test="dictCode != null"> dict_code,</if>
+					<if test="username != null"> username,</if>
+					<if test="password != null"> password,</if>
+					<if test="nickName != null"> nick_name,</if>
+					<if test="realName != null"> real_name,</if>
+					<if test="isRealAuth != null"> is_real_auth,</if>
+					<if test="sex != null"> sex,</if>
+					<if test="phone != null"> phone,</if>
+					<if test="loginName != null"> login_name,</if>
+					<if test="tel != null"> tel,</if>
+					<if test="phoneConceal != null"> phone_conceal,</if>
+					<if test="email != null"> email,</if>
+					<if test="avatar != null"> avatar,</if>
+					<if test="picPath != null"> pic_path,</if>
+					<if test="picPaths != null"> pic_paths,</if>
+					<if test="contactWay != null"> contact_way,</if>
+					<if test="lastLoginTime != null"> last_login_time,</if>
+					<if test="lastLoginIp != null"> last_login_ip,</if>
+					<if test="address != null"> address,</if>
+					<if test="province != null"> province,</if>
+					<if test="city != null"> city,</if>
+					<if test="weixin != null"> weixin,</if>
+					<if test="qq != null"> qq,</if>
+					<if test="weibo != null"> weibo,</if>
+					<if test="jobId != null"> job_id,</if>
+					<if test="jobCode != null"> job_code,</if>
+					<if test="birthday != null"> birthday,</if>
+					<if test="titleCode != null"> title_code,</if>
+					<if test="qrCode != null"> qr_code,</if>
+					<if test="qrCode2 != null"> qr_code2,</if>
+					<if test="thirdName != null"> third_name,</if>
+					<if test="thirdId != null"> third_id,</if>
+					<if test="thirdPassword != null"> third_password,</if>
+					<if test="wxOpenid != null"> wx_openid,</if>
+					<if test="roleId != null"> role_id,</if>
+					<if test="organization != null"> organization,</if>
+					<if test="idcardNum != null"> idcard_num,</if>
+					<if test="certificateType != null"> certificate_type,</if>
+					<if test="certificateNumber != null"> certificate_number,</if>
+					<if test="certificateName != null"> certificate_name,</if>
+					<if test="description != null"> description,</if>
+					<if test="linkId2 != null"> link_id2,</if>
+					<if test="linkId3 != null"> link_id3,</if>
+					<if test="linkId4 != null"> link_id4,</if>
+					<if test="linkId5 != null"> link_id5,</if>
+					<if test="linkCode != null"> link_code,</if>
+					<if test="linkCode2 != null"> link_code2,</if>
+					<if test="linkCode3 != null"> link_code3,</if>
+					<if test="linkCode4 != null"> link_code4,</if>
+					<if test="linkCode5 != null"> link_code5,</if>
+					<if test="linkStr != null"> link_str,</if>
+					<if test="paramJson != null"> param_json,</if>
+					<if test="linkType != null"> link_type,</if>
+					<if test="linkId != null"> link_id,</if>
+					<if test="ownerId != null"> owner_id,</if>
+					<if test="ownerIds != null"> owner_ids,</if>
+					<if test="attrDecimal != null"> attr_decimal,</if>
+					<if test="attrStr != null"> attr_str,</if>
+					<if test="attrStr2 != null"> attr_str2,</if>
+					<if test="attrStr3 != null"> attr_str3,</if>
+					<if test="attrInt != null"> attr_int,</if>
+					<if test="attrInt2 != null"> attr_int2,</if>
+					<if test="sequence != null"> sequence,</if>
+					<if test="remark != null"> remark,</if>
+					<if test="createdAt != null"> created_at,</if>
+					<if test="createdBy != null"> created_by,</if>
+					<if test="updatedAt != null"> updated_at,</if>
+					<if test="updatedBy != null"> updated_by,</if>
+					<if test="introduction != null"> introduction,</if>
+					<if test="tags != null"> tags,</if>
+					<if test="bussinessScope != null"> bussiness_scope,</if>
+					<if test="educationCode != null"> education_code,</if>
+					<if test="goodAtIds != null"> good_at_ids,</if>
+					<if test="goodAt != null"> good_at,</if>
+					<if test="titleNames != null"> title_names,</if>
+					<if test="titleIds != null"> title_ids,</if>
+					<if test="positionIds != null"> position_ids,</if>
+					<if test="positionNames != null"> position_names,</if>
+					<if test="priceText != null"> price_text,</if>
+					<if test="workYear != null"> work_year,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+					<if test="serial != null">#{serial,jdbcType=VARCHAR},</if>
+					<if test="mainStatus != null">#{mainStatus,jdbcType=INTEGER},</if>
+					<if test="logicStatus != null">#{logicStatus,jdbcType=INTEGER},</if>
+					<if test="typeId != null">#{typeId,jdbcType=INTEGER},</if>
+					<if test="typeCode != null">#{typeCode,jdbcType=VARCHAR},</if>
+					<if test="deletedAt != null">#{deletedAt,jdbcType=TIMESTAMP},</if>
+					<if test="deletedBy != null">#{deletedBy,jdbcType=VARCHAR},</if>
+					<if test="groupId != null">#{groupId,jdbcType=INTEGER},</if>
+					<if test="gradeId != null">#{gradeId,jdbcType=INTEGER},</if>
+					<if test="dictCode != null">#{dictCode,jdbcType=VARCHAR},</if>
+					<if test="username != null">#{username,jdbcType=VARCHAR},</if>
+					<if test="password != null">#{password,jdbcType=VARCHAR},</if>
+					<if test="nickName != null">#{nickName,jdbcType=VARCHAR},</if>
+					<if test="realName != null">#{realName,jdbcType=VARCHAR},</if>
+					<if test="isRealAuth != null">#{isRealAuth,jdbcType=INTEGER},</if>
+					<if test="sex != null">#{sex,jdbcType=INTEGER},</if>
+					<if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+					<if test="loginName != null">#{loginName,jdbcType=VARCHAR},</if>
+					<if test="tel != null">#{tel,jdbcType=VARCHAR},</if>
+					<if test="phoneConceal != null">#{phoneConceal,jdbcType=INTEGER},</if>
+					<if test="email != null">#{email,jdbcType=VARCHAR},</if>
+					<if test="avatar != null">#{avatar,jdbcType=VARCHAR},</if>
+					<if test="picPath != null">#{picPath,jdbcType=VARCHAR},</if>
+					<if test="picPaths != null">#{picPaths,jdbcType=VARCHAR},</if>
+					<if test="contactWay != null">#{contactWay,jdbcType=VARCHAR},</if>
+					<if test="lastLoginTime != null">#{lastLoginTime,jdbcType=TIMESTAMP},</if>
+					<if test="lastLoginIp != null">#{lastLoginIp,jdbcType=VARCHAR},</if>
+					<if test="address != null">#{address,jdbcType=VARCHAR},</if>
+					<if test="province != null">#{province,jdbcType=INTEGER},</if>
+					<if test="city != null">#{city,jdbcType=INTEGER},</if>
+					<if test="weixin != null">#{weixin,jdbcType=VARCHAR},</if>
+					<if test="qq != null">#{qq,jdbcType=VARCHAR},</if>
+					<if test="weibo != null">#{weibo,jdbcType=VARCHAR},</if>
+					<if test="jobId != null">#{jobId,jdbcType=INTEGER},</if>
+					<if test="jobCode != null">#{jobCode,jdbcType=VARCHAR},</if>
+					<if test="birthday != null">#{birthday,jdbcType=TIMESTAMP},</if>
+					<if test="titleCode != null">#{titleCode,jdbcType=VARCHAR},</if>
+					<if test="qrCode != null">#{qrCode,jdbcType=VARCHAR},</if>
+					<if test="qrCode2 != null">#{qrCode2,jdbcType=VARCHAR},</if>
+					<if test="thirdName != null">#{thirdName,jdbcType=VARCHAR},</if>
+					<if test="thirdId != null">#{thirdId,jdbcType=VARCHAR},</if>
+					<if test="thirdPassword != null">#{thirdPassword,jdbcType=VARCHAR},</if>
+					<if test="wxOpenid != null">#{wxOpenid,jdbcType=VARCHAR},</if>
+					<if test="roleId != null">#{roleId,jdbcType=INTEGER},</if>
+					<if test="organization != null">#{organization,jdbcType=VARCHAR},</if>
+					<if test="idcardNum != null">#{idcardNum,jdbcType=VARCHAR},</if>
+					<if test="certificateType != null">#{certificateType,jdbcType=INTEGER},</if>
+					<if test="certificateNumber != null">#{certificateNumber,jdbcType=VARCHAR},</if>
+					<if test="certificateName != null">#{certificateName,jdbcType=VARCHAR},</if>
+					<if test="description != null">#{description,jdbcType=VARCHAR},</if>
+					<if test="linkId2 != null">#{linkId2,jdbcType=INTEGER},</if>
+					<if test="linkId3 != null">#{linkId3,jdbcType=INTEGER},</if>
+					<if test="linkId4 != null">#{linkId4,jdbcType=INTEGER},</if>
+					<if test="linkId5 != null">#{linkId5,jdbcType=INTEGER},</if>
+					<if test="linkCode != null">#{linkCode,jdbcType=VARCHAR},</if>
+					<if test="linkCode2 != null">#{linkCode2,jdbcType=VARCHAR},</if>
+					<if test="linkCode3 != null">#{linkCode3,jdbcType=VARCHAR},</if>
+					<if test="linkCode4 != null">#{linkCode4,jdbcType=VARCHAR},</if>
+					<if test="linkCode5 != null">#{linkCode5,jdbcType=VARCHAR},</if>
+					<if test="linkStr != null">#{linkStr,jdbcType=VARCHAR},</if>
+					<if test="paramJson != null">#{paramJson,jdbcType=VARCHAR},</if>
+					<if test="linkType != null">#{linkType,jdbcType=INTEGER},</if>
+					<if test="linkId != null">#{linkId,jdbcType=INTEGER},</if>
+					<if test="ownerId != null">#{ownerId,jdbcType=INTEGER},</if>
+					<if test="ownerIds != null">#{ownerIds,jdbcType=VARCHAR},</if>
+					<if test="attrDecimal != null">#{attrDecimal,jdbcType=DECIMAL},</if>
+					<if test="attrStr != null">#{attrStr,jdbcType=VARCHAR},</if>
+					<if test="attrStr2 != null">#{attrStr2,jdbcType=VARCHAR},</if>
+					<if test="attrStr3 != null">#{attrStr3,jdbcType=VARCHAR},</if>
+					<if test="attrInt != null">#{attrInt,jdbcType=INTEGER},</if>
+					<if test="attrInt2 != null">#{attrInt2,jdbcType=INTEGER},</if>
+					<if test="sequence != null">#{sequence,jdbcType=INTEGER},</if>
+					<if test="remark != null">#{remark,jdbcType=VARCHAR},</if>
+					<if test="createdAt != null">#{createdAt,jdbcType=TIMESTAMP},</if>
+					<if test="createdBy != null">#{createdBy,jdbcType=VARCHAR},</if>
+					<if test="updatedAt != null">#{updatedAt,jdbcType=TIMESTAMP},</if>
+					<if test="updatedBy != null">#{updatedBy,jdbcType=VARCHAR},</if>
+					<if test="introduction != null">#{introduction,jdbcType=VARCHAR},</if>
+					<if test="tags != null">#{tags,jdbcType=VARCHAR},</if>
+					<if test="bussinessScope != null">#{bussinessScope,jdbcType=VARCHAR},</if>
+					<if test="educationCode != null">#{educationCode,jdbcType=VARCHAR},</if>
+					<if test="goodAtIds != null">#{goodAtIds,jdbcType=VARCHAR},</if>
+					<if test="goodAt != null">#{goodAt,jdbcType=VARCHAR},</if>
+					<if test="titleNames != null">#{titleNames,jdbcType=VARCHAR},</if>
+					<if test="titleIds != null">#{titleIds,jdbcType=VARCHAR},</if>
+					<if test="positionIds != null">#{positionIds,jdbcType=VARCHAR},</if>
+					<if test="positionNames != null">#{positionNames,jdbcType=VARCHAR},</if>
+					<if test="priceText != null">#{priceText,jdbcType=VARCHAR},</if>
+					<if test="workYear != null">#{workYear,jdbcType=INTEGER},</if>
+		</trim>
+	</insert>
+  	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+	
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByCondition">
+		DELETE FROM <include refid="table"/> WHERE ${condition}
+	</delete>
+	
+	<delete id="deleteByIds">
+	    DELETE FROM <include refid="table"/> WHERE id IN (${ids})
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+      
+</mapper>

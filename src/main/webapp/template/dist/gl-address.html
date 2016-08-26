@@ -1,0 +1,80 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>地址管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜地址管理">
+    <meta name="description" content="迈噜地址管理">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <a href="provider.html" class="back">
+            <img src="images/back.png" alt="">
+        </a>
+        <div class="addBox">
+            <div class="user-Address">
+                <div class="add-top">
+                    <span>王思聪</span>
+                    <span class="rt">18644448888</span>
+                    <p>四川省成都市金牛区蜀汉路888号四川省成都市金牛区蜀汉路888号</p>
+                </div>
+                <div class="add-bot">
+                    <span class="mrdzS">
+                        <img src="images/choice-no.png" alt="" class="mrdzC">
+                        设为默认地址
+                    </span>
+                    <div class="rt">
+                        <span>编辑</span>
+                        <span>删除</span>
+                    </div>
+                </div>
+            </div>
+            <div class="user-Address">
+                <div class="add-top">
+                    <span>王思聪</span>
+                    <span class="rt">18644448888</span>
+                    <p>四川省成都市金牛区蜀汉路888号四川省成都市金牛区蜀汉路888号</p>
+                </div>
+                <div class="add-bot">
+                    <span class="mrdzS">
+                        <img src="images/choice-no.png" alt="" class="mrdzC">
+                        设为默认地址
+                    </span>
+                    <div class="rt">
+                        <span>编辑</span>
+                        <span>删除</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="button" value="新增地址" class="xq-btn  newAdd" onclick="document.location='index-yuyue.html';">
+
+    </div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/main.js"></script>  <!--单位设置-->
+    <script>
+        $('.mrdzS').each(function (i) {
+            $(this).click(function () {
+                $('.mrdzS img').attr('src', 'images/choice-no.png')
+                $('.mrdzS').eq(i).children('img').attr('src', 'images/choice-on.png')
+            })
+        })
+    </script>
+</body>
+</html>

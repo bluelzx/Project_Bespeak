@@ -1,0 +1,56 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>健康培训</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜健康培训">
+    <meta name="description" content="迈噜健康培训">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="train-header">
+            <a href="index.html" class="back">
+                <img src="images/back.png" alt="">
+            </a>
+<!--
+            <a href="shenqing-train.html" class="train-sign">培训报名</a>
+-->
+        </div>
+        <div class="train-box">
+            <ul class="train-ul">
+                <li class="choice-on">月嫂</li>
+                <li>育儿嫂</li>
+                <li>家政</li>
+                <li>
+                    <a href="#">其他</a>
+                </li>
+            </ul>
+        </div>
+        <div id="data-container" class="train-container">
+
+        </div>
+    </div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/train.js"></script>
+    <script id="template" type="x-tmpl-mustache">
+        {{#rows}}
+            <a href="train-data.html" id="{{id}}" class="peixun-box">
+                <img src="{{src}}" alt="" class="train-headImg">
+                <h2 class="train-title">{{title}}</h2>
+                <p class="train-inf">{{trainInf}}</p>
+            </a>
+        {{/rows}}
+    </script>
+</body>
+</html>

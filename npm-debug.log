@@ -1,0 +1,341 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'D:\\nodejs\\\\node.exe',
+1 verbose cli   'D:\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@2.7.4
+3 info using node@v0.12.2
+4 verbose node symlink D:\nodejs\\node.exe
+5 warn package.json Project_Bespeak@1.3.3 No description
+6 warn package.json Project_Bespeak@1.3.3 No repository field.
+7 warn package.json Project_Bespeak@1.3.3 No README data
+8 verbose install where, deps [ 'D:\\workspace\\Project_Bespeak',
+8 verbose install   [ 'grunt',
+8 verbose install     'grunt-contrib-clean',
+8 verbose install     'grunt-contrib-concat',
+8 verbose install     'grunt-contrib-copy',
+8 verbose install     'grunt-contrib-cssmin',
+8 verbose install     'grunt-contrib-htmlmin',
+8 verbose install     'grunt-contrib-imagemin',
+8 verbose install     'grunt-contrib-jshint',
+8 verbose install     'grunt-contrib-uglify',
+8 verbose install     'grunt-contrib-usemin',
+8 verbose install     'grunt-contrib-watch',
+8 verbose install     'grunt-usemin' ] ]
+9 verbose install where, peers [ 'D:\\workspace\\Project_Bespeak', [] ]
+10 info preinstall Project_Bespeak@1.3.3
+11 verbose already installed skipping grunt-contrib-concat@~0.5.1 D:\workspace\Project_Bespeak
+12 verbose already installed skipping grunt-contrib-copy@^0.8.1 D:\workspace\Project_Bespeak
+13 verbose already installed skipping grunt-contrib-cssmin@^0.13.0 D:\workspace\Project_Bespeak
+14 verbose already installed skipping grunt-contrib-htmlmin@^0.4.0 D:\workspace\Project_Bespeak
+15 silly cache add args [ 'grunt-contrib-imagemin@~0.9.4', null ]
+16 verbose cache add spec grunt-contrib-imagemin@~0.9.4
+17 silly cache add parsed spec { raw: 'grunt-contrib-imagemin@~0.9.4',
+17 silly cache add   scope: null,
+17 silly cache add   name: 'grunt-contrib-imagemin',
+17 silly cache add   rawSpec: '~0.9.4',
+17 silly cache add   spec: '>=0.9.4 <0.10.0',
+17 silly cache add   type: 'range' }
+18 verbose addNamed grunt-contrib-imagemin@>=0.9.4 <0.10.0
+19 silly addNamed semver.valid null
+20 silly addNamed semver.validRange >=0.9.4 <0.10.0
+21 silly addNameRange { name: 'grunt-contrib-imagemin',
+21 silly addNameRange   range: '>=0.9.4 <0.10.0',
+21 silly addNameRange   hasData: false }
+22 silly mapToRegistry name grunt-contrib-imagemin
+23 silly mapToRegistry using default registry
+24 silly mapToRegistry registry https://registry.npmjs.org/
+25 silly mapToRegistry uri https://registry.npmjs.org/grunt-contrib-imagemin
+26 verbose addNameRange registry:https://registry.npmjs.org/grunt-contrib-imagemin not in flight; fetching
+27 silly cache add args [ 'grunt-contrib-jshint@~0.11.3', null ]
+28 verbose cache add spec grunt-contrib-jshint@~0.11.3
+29 silly cache add parsed spec { raw: 'grunt-contrib-jshint@~0.11.3',
+29 silly cache add   scope: null,
+29 silly cache add   name: 'grunt-contrib-jshint',
+29 silly cache add   rawSpec: '~0.11.3',
+29 silly cache add   spec: '>=0.11.3 <0.12.0',
+29 silly cache add   type: 'range' }
+30 verbose addNamed grunt-contrib-jshint@>=0.11.3 <0.12.0
+31 silly addNamed semver.valid null
+32 silly addNamed semver.validRange >=0.11.3 <0.12.0
+33 silly addNameRange { name: 'grunt-contrib-jshint',
+33 silly addNameRange   range: '>=0.11.3 <0.12.0',
+33 silly addNameRange   hasData: false }
+34 silly mapToRegistry name grunt-contrib-jshint
+35 silly mapToRegistry using default registry
+36 silly mapToRegistry registry https://registry.npmjs.org/
+37 silly mapToRegistry uri https://registry.npmjs.org/grunt-contrib-jshint
+38 verbose addNameRange registry:https://registry.npmjs.org/grunt-contrib-jshint not in flight; fetching
+39 verbose already installed skipping grunt-contrib-uglify@~0.9.2 D:\workspace\Project_Bespeak
+40 silly cache add args [ 'grunt-contrib-usemin@~3.1.1', null ]
+41 verbose cache add spec grunt-contrib-usemin@~3.1.1
+42 silly cache add parsed spec { raw: 'grunt-contrib-usemin@~3.1.1',
+42 silly cache add   scope: null,
+42 silly cache add   name: 'grunt-contrib-usemin',
+42 silly cache add   rawSpec: '~3.1.1',
+42 silly cache add   spec: '>=3.1.1 <3.2.0',
+42 silly cache add   type: 'range' }
+43 verbose addNamed grunt-contrib-usemin@>=3.1.1 <3.2.0
+44 silly addNamed semver.valid null
+45 silly addNamed semver.validRange >=3.1.1 <3.2.0
+46 silly addNameRange { name: 'grunt-contrib-usemin',
+46 silly addNameRange   range: '>=3.1.1 <3.2.0',
+46 silly addNameRange   hasData: false }
+47 silly mapToRegistry name grunt-contrib-usemin
+48 silly mapToRegistry using default registry
+49 silly mapToRegistry registry https://registry.npmjs.org/
+50 silly mapToRegistry uri https://registry.npmjs.org/grunt-contrib-usemin
+51 verbose addNameRange registry:https://registry.npmjs.org/grunt-contrib-usemin not in flight; fetching
+52 silly cache add args [ 'grunt-contrib-watch@~0.6.1', null ]
+53 verbose cache add spec grunt-contrib-watch@~0.6.1
+54 silly cache add parsed spec { raw: 'grunt-contrib-watch@~0.6.1',
+54 silly cache add   scope: null,
+54 silly cache add   name: 'grunt-contrib-watch',
+54 silly cache add   rawSpec: '~0.6.1',
+54 silly cache add   spec: '>=0.6.1 <0.7.0',
+54 silly cache add   type: 'range' }
+55 verbose addNamed grunt-contrib-watch@>=0.6.1 <0.7.0
+56 silly addNamed semver.valid null
+57 silly addNamed semver.validRange >=0.6.1 <0.7.0
+58 silly addNameRange { name: 'grunt-contrib-watch',
+58 silly addNameRange   range: '>=0.6.1 <0.7.0',
+58 silly addNameRange   hasData: false }
+59 silly mapToRegistry name grunt-contrib-watch
+60 silly mapToRegistry using default registry
+61 silly mapToRegistry registry https://registry.npmjs.org/
+62 silly mapToRegistry uri https://registry.npmjs.org/grunt-contrib-watch
+63 verbose addNameRange registry:https://registry.npmjs.org/grunt-contrib-watch not in flight; fetching
+64 verbose already installed skipping grunt-usemin@^3.1.1 D:\workspace\Project_Bespeak
+65 verbose already installed skipping grunt@^0.4.5 D:\workspace\Project_Bespeak
+66 verbose already installed skipping grunt-contrib-clean@~0.6.0 D:\workspace\Project_Bespeak
+67 verbose request uri https://registry.npmjs.org/grunt-contrib-usemin
+68 verbose request no auth needed
+69 info attempt registry request try #1 at 13:52:48
+70 verbose request id 59c2fc54d7e46caf
+71 http request GET https://registry.npmjs.org/grunt-contrib-usemin
+72 verbose request uri https://registry.npmjs.org/grunt-contrib-imagemin
+73 verbose request no auth needed
+74 info attempt registry request try #1 at 13:52:48
+75 verbose etag "AKZA3HKJHLRTXYWR4FPPT8NCW"
+76 http request GET https://registry.npmjs.org/grunt-contrib-imagemin
+77 verbose request uri https://registry.npmjs.org/grunt-contrib-watch
+78 verbose request no auth needed
+79 info attempt registry request try #1 at 13:52:48
+80 verbose etag "C7FFE3V6C74PGD7V2LKUUUF18"
+81 http request GET https://registry.npmjs.org/grunt-contrib-watch
+82 verbose request uri https://registry.npmjs.org/grunt-contrib-jshint
+83 verbose request no auth needed
+84 info attempt registry request try #1 at 13:52:48
+85 verbose etag "95I0363UTPGOOE2NRFVJNRA93"
+86 http request GET https://registry.npmjs.org/grunt-contrib-jshint
+87 http 304 https://registry.npmjs.org/grunt-contrib-jshint
+88 silly get cb [ 304,
+88 silly get   { date: 'Thu, 18 Feb 2016 05:52:09 GMT',
+88 silly get     via: '1.1 varnish',
+88 silly get     'cache-control': 'max-age=300',
+88 silly get     etag: '"95I0363UTPGOOE2NRFVJNRA93"',
+88 silly get     age: '83',
+88 silly get     connection: 'keep-alive',
+88 silly get     'x-served-by': 'cache-fra1224-FRA',
+88 silly get     'x-cache': 'HIT',
+88 silly get     'x-cache-hits': '1',
+88 silly get     'x-timer': 'S1455774729.421172,VS0,VE0',
+88 silly get     vary: 'Accept' } ]
+89 verbose etag https://registry.npmjs.org/grunt-contrib-jshint from cache
+90 verbose get saving grunt-contrib-jshint to C:\Users\荣华\AppData\Roaming\npm-cache\registry.npmjs.org\grunt-contrib-jshint\.cache.json
+91 http 304 https://registry.npmjs.org/grunt-contrib-watch
+92 silly get cb [ 304,
+92 silly get   { date: 'Thu, 18 Feb 2016 05:52:09 GMT',
+92 silly get     via: '1.1 varnish',
+92 silly get     'cache-control': 'max-age=300',
+92 silly get     etag: '"C7FFE3V6C74PGD7V2LKUUUF18"',
+92 silly get     age: '198',
+92 silly get     connection: 'keep-alive',
+92 silly get     'x-served-by': 'cache-fra1248-FRA',
+92 silly get     'x-cache': 'HIT',
+92 silly get     'x-cache-hits': '1',
+92 silly get     'x-timer': 'S1455774729.436197,VS0,VE0',
+92 silly get     vary: 'Accept' } ]
+93 verbose etag https://registry.npmjs.org/grunt-contrib-watch from cache
+94 verbose get saving grunt-contrib-watch to C:\Users\荣华\AppData\Roaming\npm-cache\registry.npmjs.org\grunt-contrib-watch\.cache.json
+95 silly addNameRange number 2 { name: 'grunt-contrib-jshint',
+95 silly addNameRange   range: '>=0.11.3 <0.12.0',
+95 silly addNameRange   hasData: true }
+96 silly addNameRange versions [ 'grunt-contrib-jshint',
+96 silly addNameRange   [ '0.1.0',
+96 silly addNameRange     '0.1.1',
+96 silly addNameRange     '0.2.0',
+96 silly addNameRange     '0.3.0',
+96 silly addNameRange     '0.4.0',
+96 silly addNameRange     '0.4.1',
+96 silly addNameRange     '0.4.2',
+96 silly addNameRange     '0.4.3',
+96 silly addNameRange     '0.5.0',
+96 silly addNameRange     '0.5.1',
+96 silly addNameRange     '0.5.2',
+96 silly addNameRange     '0.5.3',
+96 silly addNameRange     '0.5.4',
+96 silly addNameRange     '0.6.0',
+96 silly addNameRange     '0.6.1',
+96 silly addNameRange     '0.6.2',
+96 silly addNameRange     '0.6.3',
+96 silly addNameRange     '0.6.4',
+96 silly addNameRange     '0.6.5',
+96 silly addNameRange     '0.7.0',
+96 silly addNameRange     '0.7.1',
+96 silly addNameRange     '0.7.2',
+96 silly addNameRange     '0.8.0',
+96 silly addNameRange     '0.9.0',
+96 silly addNameRange     '0.9.1',
+96 silly addNameRange     '0.9.2',
+96 silly addNameRange     '0.10.0',
+96 silly addNameRange     '0.11.0',
+96 silly addNameRange     '0.11.1',
+96 silly addNameRange     '0.11.2',
+96 silly addNameRange     '0.11.3',
+96 silly addNameRange     '0.12.0',
+96 silly addNameRange     '1.0.0',
+96 silly addNameRange     '0.1.1-rc5',
+96 silly addNameRange     '0.1.1-rc6' ] ]
+97 verbose addNamed grunt-contrib-jshint@0.11.3
+98 silly addNamed semver.valid 0.11.3
+99 silly addNamed semver.validRange 0.11.3
+100 silly addNameRange number 2 { name: 'grunt-contrib-watch',
+100 silly addNameRange   range: '>=0.6.1 <0.7.0',
+100 silly addNameRange   hasData: true }
+101 silly addNameRange versions [ 'grunt-contrib-watch',
+101 silly addNameRange   [ '0.1.0',
+101 silly addNameRange     '0.1.1',
+101 silly addNameRange     '0.1.2',
+101 silly addNameRange     '0.1.3',
+101 silly addNameRange     '0.1.4',
+101 silly addNameRange     '0.2.0',
+101 silly addNameRange     '0.3.0',
+101 silly addNameRange     '0.3.1',
+101 silly addNameRange     '0.4.0',
+101 silly addNameRange     '0.4.1',
+101 silly addNameRange     '0.4.2',
+101 silly addNameRange     '0.4.3',
+101 silly addNameRange     '0.4.4',
+101 silly addNameRange     '0.5.0',
+101 silly addNameRange     '0.5.1',
+101 silly addNameRange     '0.5.2',
+101 silly addNameRange     '0.5.3',
+101 silly addNameRange     '0.6.0',
+101 silly addNameRange     '0.6.1',
+101 silly addNameRange     '0.2.0-a',
+101 silly addNameRange     '0.2.0-rc5',
+101 silly addNameRange     '0.2.0-rc7' ] ]
+102 verbose addNamed grunt-contrib-watch@0.6.1
+103 silly addNamed semver.valid 0.6.1
+104 silly addNamed semver.validRange 0.6.1
+105 silly cache afterAdd grunt-contrib-jshint@0.11.3
+106 verbose afterAdd C:\Users\荣华\AppData\Roaming\npm-cache\grunt-contrib-jshint\0.11.3\package\package.json not in flight; writing
+107 silly cache afterAdd grunt-contrib-watch@0.6.1
+108 verbose afterAdd C:\Users\荣华\AppData\Roaming\npm-cache\grunt-contrib-watch\0.6.1\package\package.json not in flight; writing
+109 verbose afterAdd C:\Users\荣华\AppData\Roaming\npm-cache\grunt-contrib-jshint\0.11.3\package\package.json written
+110 verbose afterAdd C:\Users\荣华\AppData\Roaming\npm-cache\grunt-contrib-watch\0.6.1\package\package.json written
+111 http 304 https://registry.npmjs.org/grunt-contrib-imagemin
+112 silly get cb [ 304,
+112 silly get   { date: 'Thu, 18 Feb 2016 05:52:09 GMT',
+112 silly get     via: '1.1 varnish',
+112 silly get     'cache-control': 'max-age=300',
+112 silly get     etag: '"AKZA3HKJHLRTXYWR4FPPT8NCW"',
+112 silly get     age: '84',
+112 silly get     connection: 'keep-alive',
+112 silly get     'x-served-by': 'cache-fra1227-FRA',
+112 silly get     'x-cache': 'HIT',
+112 silly get     'x-cache-hits': '1',
+112 silly get     'x-timer': 'S1455774729.749438,VS0,VE0',
+112 silly get     vary: 'Accept' } ]
+113 verbose etag https://registry.npmjs.org/grunt-contrib-imagemin from cache
+114 verbose get saving grunt-contrib-imagemin to C:\Users\荣华\AppData\Roaming\npm-cache\registry.npmjs.org\grunt-contrib-imagemin\.cache.json
+115 silly addNameRange number 2 { name: 'grunt-contrib-imagemin',
+115 silly addNameRange   range: '>=0.9.4 <0.10.0',
+115 silly addNameRange   hasData: true }
+116 silly addNameRange versions [ 'grunt-contrib-imagemin',
+116 silly addNameRange   [ '0.1.0',
+116 silly addNameRange     '0.1.1',
+116 silly addNameRange     '0.1.2',
+116 silly addNameRange     '0.1.3',
+116 silly addNameRange     '0.1.4',
+116 silly addNameRange     '0.1.1-rc7',
+116 silly addNameRange     '0.1.1-rc8',
+116 silly addNameRange     '0.2.0',
+116 silly addNameRange     '0.2.1',
+116 silly addNameRange     '0.3.0',
+116 silly addNameRange     '0.4.0',
+116 silly addNameRange     '0.4.1',
+116 silly addNameRange     '0.5.0',
+116 silly addNameRange     '0.6.0',
+116 silly addNameRange     '0.6.1',
+116 silly addNameRange     '0.7.0',
+116 silly addNameRange     '0.7.1',
+116 silly addNameRange     '0.7.2',
+116 silly addNameRange     '0.8.0',
+116 silly addNameRange     '0.8.1',
+116 silly addNameRange     '0.9.0',
+116 silly addNameRange     '0.9.1',
+116 silly addNameRange     '0.9.2',
+116 silly addNameRange     '0.9.3',
+116 silly addNameRange     '0.9.4',
+116 silly addNameRange     '1.0.0' ] ]
+117 verbose addNamed grunt-contrib-imagemin@0.9.4
+118 silly addNamed semver.valid 0.9.4
+119 silly addNamed semver.validRange 0.9.4
+120 silly cache afterAdd grunt-contrib-imagemin@0.9.4
+121 verbose afterAdd C:\Users\荣华\AppData\Roaming\npm-cache\grunt-contrib-imagemin\0.9.4\package\package.json not in flight; writing
+122 verbose afterAdd C:\Users\荣华\AppData\Roaming\npm-cache\grunt-contrib-imagemin\0.9.4\package\package.json written
+123 http 404 https://registry.npmjs.org/grunt-contrib-usemin
+124 verbose headers { 'content-type': 'application/json',
+124 verbose headers   'cache-control': 'max-age=0',
+124 verbose headers   'content-length': '2',
+124 verbose headers   'accept-ranges': 'bytes',
+124 verbose headers   date: 'Thu, 18 Feb 2016 05:52:10 GMT',
+124 verbose headers   via: '1.1 varnish',
+124 verbose headers   age: '0',
+124 verbose headers   connection: 'keep-alive',
+124 verbose headers   'x-served-by': 'cache-fra1226-FRA',
+124 verbose headers   'x-cache': 'MISS',
+124 verbose headers   'x-cache-hits': '0',
+124 verbose headers   'x-timer': 'S1455774729.739509,VS0,VE405' }
+125 silly get cb [ 404,
+125 silly get   { 'content-type': 'application/json',
+125 silly get     'cache-control': 'max-age=0',
+125 silly get     'content-length': '2',
+125 silly get     'accept-ranges': 'bytes',
+125 silly get     date: 'Thu, 18 Feb 2016 05:52:10 GMT',
+125 silly get     via: '1.1 varnish',
+125 silly get     age: '0',
+125 silly get     connection: 'keep-alive',
+125 silly get     'x-served-by': 'cache-fra1226-FRA',
+125 silly get     'x-cache': 'MISS',
+125 silly get     'x-cache-hits': '0',
+125 silly get     'x-timer': 'S1455774729.739509,VS0,VE405' } ]
+126 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/grunt-contrib-usemin
+126 verbose stack     at CachingRegistryClient.<anonymous> (D:\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:239:14)
+126 verbose stack     at Request._callback (D:\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:170:14)
+126 verbose stack     at Request.self.callback (D:\nodejs\node_modules\npm\node_modules\request\request.js:344:22)
+126 verbose stack     at Request.emit (events.js:110:17)
+126 verbose stack     at Request.<anonymous> (D:\nodejs\node_modules\npm\node_modules\request\request.js:1239:14)
+126 verbose stack     at Request.emit (events.js:129:20)
+126 verbose stack     at IncomingMessage.<anonymous> (D:\nodejs\node_modules\npm\node_modules\request\request.js:1187:12)
+126 verbose stack     at IncomingMessage.emit (events.js:129:20)
+126 verbose stack     at _stream_readable.js:908:16
+126 verbose stack     at process._tickCallback (node.js:355:11)
+127 verbose statusCode 404
+128 verbose pkgid grunt-contrib-usemin
+129 verbose cwd D:\workspace\Project_Bespeak
+130 error Windows_NT 6.3.9600
+131 error argv "D:\\nodejs\\\\node.exe" "D:\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+132 error node v0.12.2
+133 error npm  v2.7.4
+134 error code E404
+135 error 404 Registry returned 404 for GET on https://registry.npmjs.org/grunt-contrib-usemin
+135 error 404
+135 error 404 'grunt-contrib-usemin' is not in the npm registry.
+135 error 404 You should bug the author to publish it (or use the name yourself!)
+135 error 404 It was specified as a dependency of 'Project_Bespeak'
+135 error 404
+135 error 404 Note that you can also install from a
+135 error 404 tarball, folder, http url, or git url.
+136 verbose exit [ 1, true ]

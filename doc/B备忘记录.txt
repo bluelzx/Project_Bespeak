@@ -1,0 +1,75 @@
+﻿2016年8月24日 星期三
+shop表新增字段:
+x,y标记地图:coordinate  varchar   255
+//纬度:latitude  varchar   255 (暂不考虑)
+//精度:longitude varchar   255 (暂不考虑)
+
+
+
+
+﻿2016-08-03 14:50:22
+people（月嫂）表 字段增加：每小时工作价格，所属价格段，工作经验段，工作特长
+2016年8月1日15:56:22
+数据库shop（加盟商）字段改动：省市关联id，营业执照，执照登记类型，组织机构代码，旗下人员数，加盟商电话号码
+
+***:关联数据字典的地方，全部用code作为值，不用ID
+
+2016年8月9日14:15:55
+ 预约技师时，技师当前是否空闲未做判断
+ 优惠券有效时间未判断
+ 用户权限未完成
+ 2016年8月9日16:31:01
+ 
+
+ 
+ 数据库 dict 新增
+ code_name         code            parent_code 
+    技师分类                       provider_type         null
+   技师分类1       provider_type_1      provider_type
+   技师分类2       provider_type_2      provider_type
+       课程分类                      course_type         null          
+      足疗                               course_type_1        course_type
+       按摩                              course_type_2        course_type
+                 .......
+                 
+数据库  dict  修改
+物品类型   goods_type
+例：
+code_name         code            parent_code  
+  足疗                           goods_type_1           goods_type
+  
+ 2016年8月23日10:33:06
+ 订单逻辑架构分析：
+        ..........
+ 生成订单是 订单状态为 
+  未付款 
+  已付款
+pay_status_code(支付状态：未付款 、 已付款) (付款状态影响是否退款)
+(主线：订单状态)
+ 商家未接单（order_status_todo） ：商家显示接受单子进入已经接单状态
+ 商家已接单(派单中) （order_status_todo1）：审查单子（确认是否接单），指定单子服务人员
+ 派单中
+ 已派-技师未接单-服务未开始（shipping_status_todo）：商家为客户向技师发送派单具体消息及服务内容，
+// 技师已接单（shipping_status_todo1）：技师确认接单，//
+ 服务中（shipping_status_receive）：技师确认开始服务
+ 服务已完成（shipping_status_done）：技师确认完成服务
+ 取消订单中(order_status_cancel)：在商家已接单之前存在点击取消订单判断付款状态如果已经在线付款显示退款，如果未付款则取消订单
+ 已结束(order_status_invalid)： 评价或已退款后存在
+ 
+ 总状态：
+ 订单未完成（order_status_todo）：在用户确认服务完成前存在，在服务完成后用户不确认，1小时后自动完成
+ 订单已完成（order_status_done）：在用户确认服务完成后存在，之后显示评论，用户不确认完成服务，1小时后自动完成订单
+ 
+ 申请退款中（order_status_apply_return）：在取消订单中点击退款进入，在服务三个状态、订单完成、服务完成不满意服务后显示退款进入，拒绝退款后再次退款进入，线下退款点击确认退款
+ 已退款(order_status_return)：商家同意退款后进入
+ 拒绝退款(order_status_noreturn)：不同意退款进入显示再次申请退款，显示评价
+ 111111
+ 服务方式：上门服务，门店服务
+ 
+2016年8月23日11:21:55
+技师申请  （指定商家或不指定商家 如不指定商家，商家登陆过后不知道申请自己店铺的技师） 
+技师申请上传证件照未解决   
+
+2016年8月25日14:19:26
+消息类型code未添加
+全部消息发送，未分类

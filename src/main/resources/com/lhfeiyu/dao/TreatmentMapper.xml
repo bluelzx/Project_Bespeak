@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhfeiyu.dao.domain.TreatmentMapper">
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">treatment</sql>
+	<sql id="baseColumns"><!-- 基础字段 -->
+		A.id AS id,A.serial AS serial,A.main_status AS mainStatus,A.logic_status AS logicStatus,A.type_id AS typeId,A.type_code AS typeCode,A.deleted_at AS deletedAt,A.deleted_by AS deletedBy,A.goods_id AS goodsId,A.treatment_name AS treatmentName,A.group_num AS groupNum,A.group_price AS groupPrice,A.give_integral AS giveIntegral,A.attr_conent1 AS attrConent1,A.attr_conent2 AS attrConent2,A.attr_conent3 AS attrConent3,A.attr_conent4 AS attrConent4,A.status_code AS statusCode,A.valid_start_time AS validStartTime,A.valid_end_time AS validEndTime,A.is_real AS isReal,A.is_new AS isNew,A.is_hot AS isHot,A.is_best AS isBest,A.is_on_sale AS isOnSale,A.keywords AS keywords,A.postage_fee AS postageFee,A.pack_fee AS packFee,A.is_seven_return AS isSevenReturn,A.goods_name_style AS goodsNameStyle,A.provider_id AS providerId,A.provider_name AS providerName,A.goods_weight AS goodsWeight,A.sync_flag AS syncFlag,A.brand_id AS brandId,A.market_price AS marketPrice,A.agent_price AS agentPrice,A.agent_vip_price AS agentVipPrice,A.promote_price AS promotePrice,A.auction_price AS auctionPrice,A.promote_start_date AS promoteStartDate,A.promote_end_date AS promoteEndDate,A.goods_thumb_id AS goodsThumbId,A.goods_img_id AS goodsImgId,A.original_img_id AS originalImgId,A.extension_code AS extensionCode,A.is_alone_sale AS isAloneSale,A.is_promote AS isPromote,A.bonus_type_id AS bonusTypeId,A.bonus AS bonus,A.goods_type_id AS goodsTypeId,A.seller_note AS sellerNote,A.is_public AS isPublic,A.goods_from AS goodsFrom,A.goods_privilege AS goodsPrivilege,A.owner_id AS ownerId,A.owner_ids AS ownerIds,A.link_type AS linkType,A.link_id AS linkId,A.attr_str AS attrStr,A.attr_str2 AS attrStr2,A.attr_int AS attrInt,A.attr_int2 AS attrInt2,A.sequence AS sequence,A.remark AS remark,A.created_at AS createdAt,A.created_by AS createdBy,A.updated_at AS updatedAt,A.updated_by AS updatedBy
+	</sql>
+	<sql id="baseSearch"><!-- 基础查询条件 -->
+		<if test="deleted == null">AND A.deleted_at IS NULL</if> 
+		<if test="deleted != null">AND A.deleted_at IS NOT NULL</if>
+		<if test="id != null and id != '' ">AND A.id = #{id}</if>
+		<if test="treatmentId != null and treatmentId != '' ">AND A.id = #{treatmentId}</if>
+		<if test="serial != null and serial != '' ">AND A.serial = #{serial}</if>
+		<if test="mainStatus != null and mainStatus != '' ">AND A.main_status = #{mainStatus}</if>
+		<if test="logicStatus != null and logicStatus != '' ">AND A.logic_status = #{logicStatus}</if>
+	</sql>
+	<sql id="suffix"><!-- 分组排序  -->
+		<if test="groupBy != null and groupBy !='' "> GROUP BY #{groupBy,jdbcType=VARCHAR} </if>
+		<if test="selfOrder == null"><if test="orderBy != null and orderBy !='' "> ORDER BY A.${orderBy}</if> <if test="ascOrdesc != null and ascOrdesc !='' "> ${ascOrdesc}</if> </if>
+		<if test="selfOrder != null"> ORDER BY ${selfOrder} </if>
+		<if test="selfOrder == null and orderBy == null "> ORDER BY A.id DESC </if>
+	</sql><!-- 分页 -->
+	<sql id="limitCount"><if test="count != null and count !='' "> LIMIT ${start},${count}</if> </sql>
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+	
+	
+	
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="columns">
+		,g.goods_name AS goodsName
+	</sql>
+	<sql id="search">
+		<if test="goodsId != null and goodsId != '' ">
+			AND A.goods_id = #{goodsId}
+		</if>
+		<if test="treatmentName != null and treatmentName != '' ">
+			AND A.treatment_name = #{treatmentName}
+		</if>
+		<if test="groupNum != null and groupNum != '' ">
+			AND A.group_num = #{groupNum}
+		</if>
+		<if test="groupNum != null and groupNum != '' ">
+			AND A.group_num = #{groupNum}
+		</if>
+		<if test="priceFrom != null and priceFrom !='' and priceTo != null and priceTo !=''">
+		  AND A.group_price  >=#{priceFrom} AND   #{priceTo} >=A.group_price
+		</if>
+	</sql>
+	<sql id="leftJoin">
+		LEFT JOIN goods g ON A.goods_id = g.id
+	</sql>
+	 <select id="selectListByShopId" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.Treatment">
+		SELECT 
+		<include refid="baseColumns"/>,g.goods_name AS goodsName
+		FROM <include refid="table"/>  A LEFT JOIN goods g ON A.goods_id = g.id where  A.goods_id in (SELECT good.id  from goods good  where good.shop_id =  #{shopId}) 
+	 </select>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+	
+	
+	
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.Treatment">
+    	SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1 
+		<include refid="baseSearch"/><include refid="search"/>
+		<include refid="suffix"/>
+		<include refid="limitCount"/>
+	</select>
+	
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.Treatment">
+   		SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1 
+		<include refid="baseSearch"/><include refid="search"/>
+		<include refid="suffix"/>
+		LIMIT 0,1 
+	</select>
+	
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1
+		<include refid="baseSearch"/><include refid="search"/>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultType="com.lhfeiyu.po.domain.Treatment" parameterType="java.lang.Integer">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectBySerial" resultType="com.lhfeiyu.po.domain.Treatment">
+   		SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A
+		<include refid="leftJoin"/>
+    	WHERE A.serial = #{serial,jdbcType=VARCHAR}
+		LIMIT 0,1 
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+	
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.po.domain.Treatment">
+	    UPDATE <include refid="table"/>
+		<set>
+			
+			serial = #{serial,jdbcType=VARCHAR},
+			main_status = #{mainStatus,jdbcType=INTEGER},
+			logic_status = #{logicStatus,jdbcType=INTEGER},
+			type_id = #{typeId,jdbcType=INTEGER},
+			type_code = #{typeCode,jdbcType=VARCHAR},
+			deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			deleted_by = #{deletedBy,jdbcType=VARCHAR},
+			goods_id = #{goodsId,jdbcType=INTEGER},
+			treatment_name = #{treatmentName,jdbcType=VARCHAR},
+			group_num = #{groupNum,jdbcType=INTEGER},
+			group_price = #{groupPrice,jdbcType=DECIMAL},
+			give_integral = #{giveIntegral,jdbcType=INTEGER},
+			attr_conent1 = #{attrConent1,jdbcType=VARCHAR},
+			attr_conent2 = #{attrConent2,jdbcType=VARCHAR},
+			attr_conent3 = #{attrConent3,jdbcType=VARCHAR},
+			attr_conent4 = #{attrConent4,jdbcType=VARCHAR},
+			status_code = #{statusCode,jdbcType=VARCHAR},
+			valid_start_time = #{validStartTime,jdbcType=TIMESTAMP},
+			valid_end_time = #{validEndTime,jdbcType=TIMESTAMP},
+			is_real = #{isReal,jdbcType=INTEGER},
+			is_new = #{isNew,jdbcType=INTEGER},
+			is_hot = #{isHot,jdbcType=INTEGER},
+			is_best = #{isBest,jdbcType=INTEGER},
+			is_on_sale = #{isOnSale,jdbcType=INTEGER},
+			keywords = #{keywords,jdbcType=INTEGER},
+			postage_fee = #{postageFee,jdbcType=DECIMAL},
+			pack_fee = #{packFee,jdbcType=DECIMAL},
+			is_seven_return = #{isSevenReturn,jdbcType=INTEGER},
+			goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},
+			provider_id = #{providerId,jdbcType=INTEGER},
+			provider_name = #{providerName,jdbcType=VARCHAR},
+			goods_weight = #{goodsWeight,jdbcType=INTEGER},
+			sync_flag = #{syncFlag,jdbcType=INTEGER},
+			brand_id = #{brandId,jdbcType=INTEGER},
+			market_price = #{marketPrice,jdbcType=DECIMAL},
+			agent_price = #{agentPrice,jdbcType=DECIMAL},
+			agent_vip_price = #{agentVipPrice,jdbcType=DECIMAL},
+			promote_price = #{promotePrice,jdbcType=DECIMAL},
+			auction_price = #{auctionPrice,jdbcType=DECIMAL},
+			promote_start_date = #{promoteStartDate,jdbcType=TIMESTAMP},
+			promote_end_date = #{promoteEndDate,jdbcType=TIMESTAMP},
+			goods_thumb_id = #{goodsThumbId,jdbcType=INTEGER},
+			goods_img_id = #{goodsImgId,jdbcType=INTEGER},
+			original_img_id = #{originalImgId,jdbcType=INTEGER},
+			extension_code = #{extensionCode,jdbcType=VARCHAR},
+			is_alone_sale = #{isAloneSale,jdbcType=INTEGER},
+			is_promote = #{isPromote,jdbcType=INTEGER},
+			bonus_type_id = #{bonusTypeId,jdbcType=INTEGER},
+			bonus = #{bonus,jdbcType=DECIMAL},
+			goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+			seller_note = #{sellerNote,jdbcType=VARCHAR},
+			is_public = #{isPublic,jdbcType=INTEGER},
+			goods_from = #{goodsFrom,jdbcType=INTEGER},
+			goods_privilege = #{goodsPrivilege,jdbcType=INTEGER},
+			owner_id = #{ownerId,jdbcType=INTEGER},
+			owner_ids = #{ownerIds,jdbcType=VARCHAR},
+			link_type = #{linkType,jdbcType=INTEGER},
+			link_id = #{linkId,jdbcType=INTEGER},
+			attr_str = #{attrStr,jdbcType=VARCHAR},
+			attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+			attr_int = #{attrInt,jdbcType=INTEGER},
+			attr_int2 = #{attrInt2,jdbcType=INTEGER},
+			sequence = #{sequence,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySerial" parameterType="com.lhfeiyu.po.domain.Treatment">
+	    UPDATE <include refid="table"/>
+		<set>
+		  	
+		  	serial = #{serial,jdbcType=VARCHAR},
+		  	main_status = #{mainStatus,jdbcType=INTEGER},
+		  	logic_status = #{logicStatus,jdbcType=INTEGER},
+		  	type_id = #{typeId,jdbcType=INTEGER},
+		  	type_code = #{typeCode,jdbcType=VARCHAR},
+		  	deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+		  	deleted_by = #{deletedBy,jdbcType=VARCHAR},
+		  	goods_id = #{goodsId,jdbcType=INTEGER},
+		  	treatment_name = #{treatmentName,jdbcType=VARCHAR},
+		  	group_num = #{groupNum,jdbcType=INTEGER},
+		  	group_price = #{groupPrice,jdbcType=DECIMAL},
+		  	give_integral = #{giveIntegral,jdbcType=INTEGER},
+		  	attr_conent1 = #{attrConent1,jdbcType=VARCHAR},
+		  	attr_conent2 = #{attrConent2,jdbcType=VARCHAR},
+		  	attr_conent3 = #{attrConent3,jdbcType=VARCHAR},
+		  	attr_conent4 = #{attrConent4,jdbcType=VARCHAR},
+		  	status_code = #{statusCode,jdbcType=VARCHAR},
+		  	valid_start_time = #{validStartTime,jdbcType=TIMESTAMP},
+		  	valid_end_time = #{validEndTime,jdbcType=TIMESTAMP},
+		  	is_real = #{isReal,jdbcType=INTEGER},
+		  	is_new = #{isNew,jdbcType=INTEGER},
+		  	is_hot = #{isHot,jdbcType=INTEGER},
+		  	is_best = #{isBest,jdbcType=INTEGER},
+		  	is_on_sale = #{isOnSale,jdbcType=INTEGER},
+		  	keywords = #{keywords,jdbcType=INTEGER},
+		  	postage_fee = #{postageFee,jdbcType=DECIMAL},
+		  	pack_fee = #{packFee,jdbcType=DECIMAL},
+		  	is_seven_return = #{isSevenReturn,jdbcType=INTEGER},
+		  	goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},
+		  	provider_id = #{providerId,jdbcType=INTEGER},
+		  	provider_name = #{providerName,jdbcType=VARCHAR},
+		  	goods_weight = #{goodsWeight,jdbcType=INTEGER},
+		  	sync_flag = #{syncFlag,jdbcType=INTEGER},
+		  	brand_id = #{brandId,jdbcType=INTEGER},
+		  	market_price = #{marketPrice,jdbcType=DECIMAL},
+		  	agent_price = #{agentPrice,jdbcType=DECIMAL},
+		  	agent_vip_price = #{agentVipPrice,jdbcType=DECIMAL},
+		  	promote_price = #{promotePrice,jdbcType=DECIMAL},
+		  	auction_price = #{auctionPrice,jdbcType=DECIMAL},
+		  	promote_start_date = #{promoteStartDate,jdbcType=TIMESTAMP},
+		  	promote_end_date = #{promoteEndDate,jdbcType=TIMESTAMP},
+		  	goods_thumb_id = #{goodsThumbId,jdbcType=INTEGER},
+		  	goods_img_id = #{goodsImgId,jdbcType=INTEGER},
+		  	original_img_id = #{originalImgId,jdbcType=INTEGER},
+		  	extension_code = #{extensionCode,jdbcType=VARCHAR},
+		  	is_alone_sale = #{isAloneSale,jdbcType=INTEGER},
+		  	is_promote = #{isPromote,jdbcType=INTEGER},
+		  	bonus_type_id = #{bonusTypeId,jdbcType=INTEGER},
+		  	bonus = #{bonus,jdbcType=DECIMAL},
+		  	goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+		  	seller_note = #{sellerNote,jdbcType=VARCHAR},
+		  	is_public = #{isPublic,jdbcType=INTEGER},
+		  	goods_from = #{goodsFrom,jdbcType=INTEGER},
+		  	goods_privilege = #{goodsPrivilege,jdbcType=INTEGER},
+		  	owner_id = #{ownerId,jdbcType=INTEGER},
+		  	owner_ids = #{ownerIds,jdbcType=VARCHAR},
+		  	link_type = #{linkType,jdbcType=INTEGER},
+		  	link_id = #{linkId,jdbcType=INTEGER},
+		  	attr_str = #{attrStr,jdbcType=VARCHAR},
+		  	attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+		  	attr_int = #{attrInt,jdbcType=INTEGER},
+		  	attr_int2 = #{attrInt2,jdbcType=INTEGER},
+		  	sequence = #{sequence,jdbcType=INTEGER},
+		  	remark = #{remark,jdbcType=VARCHAR},
+		  	created_at = #{createdAt,jdbcType=TIMESTAMP},
+		  	created_by = #{createdBy,jdbcType=VARCHAR},
+		  	updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+		  	
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE serial = #{serial,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByIds">
+	    UPDATE <include refid="table"/>
+		<set>
+			
+			serial = #{serial,jdbcType=VARCHAR},
+			main_status = #{mainStatus,jdbcType=INTEGER},
+			logic_status = #{logicStatus,jdbcType=INTEGER},
+			type_id = #{typeId,jdbcType=INTEGER},
+			type_code = #{typeCode,jdbcType=VARCHAR},
+			deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			deleted_by = #{deletedBy,jdbcType=VARCHAR},
+			goods_id = #{goodsId,jdbcType=INTEGER},
+			treatment_name = #{treatmentName,jdbcType=VARCHAR},
+			group_num = #{groupNum,jdbcType=INTEGER},
+			group_price = #{groupPrice,jdbcType=DECIMAL},
+			give_integral = #{giveIntegral,jdbcType=INTEGER},
+			attr_conent1 = #{attrConent1,jdbcType=VARCHAR},
+			attr_conent2 = #{attrConent2,jdbcType=VARCHAR},
+			attr_conent3 = #{attrConent3,jdbcType=VARCHAR},
+			attr_conent4 = #{attrConent4,jdbcType=VARCHAR},
+			status_code = #{statusCode,jdbcType=VARCHAR},
+			valid_start_time = #{validStartTime,jdbcType=TIMESTAMP},
+			valid_end_time = #{validEndTime,jdbcType=TIMESTAMP},
+			is_real = #{isReal,jdbcType=INTEGER},
+			is_new = #{isNew,jdbcType=INTEGER},
+			is_hot = #{isHot,jdbcType=INTEGER},
+			is_best = #{isBest,jdbcType=INTEGER},
+			is_on_sale = #{isOnSale,jdbcType=INTEGER},
+			keywords = #{keywords,jdbcType=INTEGER},
+			postage_fee = #{postageFee,jdbcType=DECIMAL},
+			pack_fee = #{packFee,jdbcType=DECIMAL},
+			is_seven_return = #{isSevenReturn,jdbcType=INTEGER},
+			goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},
+			provider_id = #{providerId,jdbcType=INTEGER},
+			provider_name = #{providerName,jdbcType=VARCHAR},
+			goods_weight = #{goodsWeight,jdbcType=INTEGER},
+			sync_flag = #{syncFlag,jdbcType=INTEGER},
+			brand_id = #{brandId,jdbcType=INTEGER},
+			market_price = #{marketPrice,jdbcType=DECIMAL},
+			agent_price = #{agentPrice,jdbcType=DECIMAL},
+			agent_vip_price = #{agentVipPrice,jdbcType=DECIMAL},
+			promote_price = #{promotePrice,jdbcType=DECIMAL},
+			auction_price = #{auctionPrice,jdbcType=DECIMAL},
+			promote_start_date = #{promoteStartDate,jdbcType=TIMESTAMP},
+			promote_end_date = #{promoteEndDate,jdbcType=TIMESTAMP},
+			goods_thumb_id = #{goodsThumbId,jdbcType=INTEGER},
+			goods_img_id = #{goodsImgId,jdbcType=INTEGER},
+			original_img_id = #{originalImgId,jdbcType=INTEGER},
+			extension_code = #{extensionCode,jdbcType=VARCHAR},
+			is_alone_sale = #{isAloneSale,jdbcType=INTEGER},
+			is_promote = #{isPromote,jdbcType=INTEGER},
+			bonus_type_id = #{bonusTypeId,jdbcType=INTEGER},
+			bonus = #{bonus,jdbcType=DECIMAL},
+			goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+			seller_note = #{sellerNote,jdbcType=VARCHAR},
+			is_public = #{isPublic,jdbcType=INTEGER},
+			goods_from = #{goodsFrom,jdbcType=INTEGER},
+			goods_privilege = #{goodsPrivilege,jdbcType=INTEGER},
+			owner_id = #{ownerId,jdbcType=INTEGER},
+			owner_ids = #{ownerIds,jdbcType=VARCHAR},
+			link_type = #{linkType,jdbcType=INTEGER},
+			link_id = #{linkId,jdbcType=INTEGER},
+			attr_str = #{attrStr,jdbcType=VARCHAR},
+			attr_str2 = #{attrStr2,jdbcType=VARCHAR},
+			attr_int = #{attrInt,jdbcType=INTEGER},
+			attr_int2 = #{attrInt2,jdbcType=INTEGER},
+			sequence = #{sequence,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateByCondition">
+		UPDATE <include refid="table"/> SET
+		<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		updated_at = NOW(),
+		${condition}
+	</update>
+	
+	<update id="updateDeletedNowByIds">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NOW(),
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateDeletedNullByIds">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NULL,
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateDeletedNowById" parameterType="java.lang.Integer">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NOW(),
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateDeletedNullById">
+		UPDATE <include refid="table"/>
+		<set> 
+			deleted_at = NULL, 
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateFieldById" parameterType="java.util.Map">
+		UPDATE <include refid="table"/>
+		<set>
+			<if test="expression1 != null">${expression1},</if>
+			<if test="expression2 != null">${expression2},</if>
+			<if test="expression3 != null">${expression3},</if>
+			<if test="expression4 != null">${expression4},</if>
+			<if test="expression5 != null">${expression5},</if>
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateFieldByIds" parameterType="java.util.Map">
+		UPDATE <include refid="table"/>
+		<set>
+			<if test="expression1 != null">${expression1},</if>
+			<if test="expression2 != null">${expression2},</if>
+			<if test="expression3 != null">${expression3},</if>
+			<if test="expression4 != null">${expression4},</if>
+			<if test="expression5 != null">${expression5},</if>
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.po.domain.Treatment">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="goodsId != null">goods_id = #{goodsId,jdbcType=INTEGER},</if>
+				<if test="treatmentName != null">treatment_name = #{treatmentName,jdbcType=VARCHAR},</if>
+				<if test="groupNum != null">group_num = #{groupNum,jdbcType=INTEGER},</if>
+				<if test="groupPrice != null">group_price = #{groupPrice,jdbcType=DECIMAL},</if>
+				<if test="giveIntegral != null">give_integral = #{giveIntegral,jdbcType=INTEGER},</if>
+				<if test="attrConent1 != null">attr_conent1 = #{attrConent1,jdbcType=VARCHAR},</if>
+				<if test="attrConent2 != null">attr_conent2 = #{attrConent2,jdbcType=VARCHAR},</if>
+				<if test="attrConent3 != null">attr_conent3 = #{attrConent3,jdbcType=VARCHAR},</if>
+				<if test="attrConent4 != null">attr_conent4 = #{attrConent4,jdbcType=VARCHAR},</if>
+				<if test="statusCode != null">status_code = #{statusCode,jdbcType=VARCHAR},</if>
+				<if test="validStartTime != null">valid_start_time = #{validStartTime,jdbcType=TIMESTAMP},</if>
+				<if test="validEndTime != null">valid_end_time = #{validEndTime,jdbcType=TIMESTAMP},</if>
+				<if test="isReal != null">is_real = #{isReal,jdbcType=INTEGER},</if>
+				<if test="isNew != null">is_new = #{isNew,jdbcType=INTEGER},</if>
+				<if test="isHot != null">is_hot = #{isHot,jdbcType=INTEGER},</if>
+				<if test="isBest != null">is_best = #{isBest,jdbcType=INTEGER},</if>
+				<if test="isOnSale != null">is_on_sale = #{isOnSale,jdbcType=INTEGER},</if>
+				<if test="keywords != null">keywords = #{keywords,jdbcType=INTEGER},</if>
+				<if test="postageFee != null">postage_fee = #{postageFee,jdbcType=DECIMAL},</if>
+				<if test="packFee != null">pack_fee = #{packFee,jdbcType=DECIMAL},</if>
+				<if test="isSevenReturn != null">is_seven_return = #{isSevenReturn,jdbcType=INTEGER},</if>
+				<if test="goodsNameStyle != null">goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},</if>
+				<if test="providerId != null">provider_id = #{providerId,jdbcType=INTEGER},</if>
+				<if test="providerName != null">provider_name = #{providerName,jdbcType=VARCHAR},</if>
+				<if test="goodsWeight != null">goods_weight = #{goodsWeight,jdbcType=INTEGER},</if>
+				<if test="syncFlag != null">sync_flag = #{syncFlag,jdbcType=INTEGER},</if>
+				<if test="brandId != null">brand_id = #{brandId,jdbcType=INTEGER},</if>
+				<if test="marketPrice != null">market_price = #{marketPrice,jdbcType=DECIMAL},</if>
+				<if test="agentPrice != null">agent_price = #{agentPrice,jdbcType=DECIMAL},</if>
+				<if test="agentVipPrice != null">agent_vip_price = #{agentVipPrice,jdbcType=DECIMAL},</if>
+				<if test="promotePrice != null">promote_price = #{promotePrice,jdbcType=DECIMAL},</if>
+				<if test="auctionPrice != null">auction_price = #{auctionPrice,jdbcType=DECIMAL},</if>
+				<if test="promoteStartDate != null">promote_start_date = #{promoteStartDate,jdbcType=TIMESTAMP},</if>
+				<if test="promoteEndDate != null">promote_end_date = #{promoteEndDate,jdbcType=TIMESTAMP},</if>
+				<if test="goodsThumbId != null">goods_thumb_id = #{goodsThumbId,jdbcType=INTEGER},</if>
+				<if test="goodsImgId != null">goods_img_id = #{goodsImgId,jdbcType=INTEGER},</if>
+				<if test="originalImgId != null">original_img_id = #{originalImgId,jdbcType=INTEGER},</if>
+				<if test="extensionCode != null">extension_code = #{extensionCode,jdbcType=VARCHAR},</if>
+				<if test="isAloneSale != null">is_alone_sale = #{isAloneSale,jdbcType=INTEGER},</if>
+				<if test="isPromote != null">is_promote = #{isPromote,jdbcType=INTEGER},</if>
+				<if test="bonusTypeId != null">bonus_type_id = #{bonusTypeId,jdbcType=INTEGER},</if>
+				<if test="bonus != null">bonus = #{bonus,jdbcType=DECIMAL},</if>
+				<if test="goodsTypeId != null">goods_type_id = #{goodsTypeId,jdbcType=INTEGER},</if>
+				<if test="sellerNote != null">seller_note = #{sellerNote,jdbcType=VARCHAR},</if>
+				<if test="isPublic != null">is_public = #{isPublic,jdbcType=INTEGER},</if>
+				<if test="goodsFrom != null">goods_from = #{goodsFrom,jdbcType=INTEGER},</if>
+				<if test="goodsPrivilege != null">goods_privilege = #{goodsPrivilege,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySerialSelective" parameterType="com.lhfeiyu.po.domain.Treatment">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="goodsId != null">goods_id = #{goodsId,jdbcType=INTEGER},</if>
+				<if test="treatmentName != null">treatment_name = #{treatmentName,jdbcType=VARCHAR},</if>
+				<if test="groupNum != null">group_num = #{groupNum,jdbcType=INTEGER},</if>
+				<if test="groupPrice != null">group_price = #{groupPrice,jdbcType=DECIMAL},</if>
+				<if test="giveIntegral != null">give_integral = #{giveIntegral,jdbcType=INTEGER},</if>
+				<if test="attrConent1 != null">attr_conent1 = #{attrConent1,jdbcType=VARCHAR},</if>
+				<if test="attrConent2 != null">attr_conent2 = #{attrConent2,jdbcType=VARCHAR},</if>
+				<if test="attrConent3 != null">attr_conent3 = #{attrConent3,jdbcType=VARCHAR},</if>
+				<if test="attrConent4 != null">attr_conent4 = #{attrConent4,jdbcType=VARCHAR},</if>
+				<if test="statusCode != null">status_code = #{statusCode,jdbcType=VARCHAR},</if>
+				<if test="validStartTime != null">valid_start_time = #{validStartTime,jdbcType=TIMESTAMP},</if>
+				<if test="validEndTime != null">valid_end_time = #{validEndTime,jdbcType=TIMESTAMP},</if>
+				<if test="isReal != null">is_real = #{isReal,jdbcType=INTEGER},</if>
+				<if test="isNew != null">is_new = #{isNew,jdbcType=INTEGER},</if>
+				<if test="isHot != null">is_hot = #{isHot,jdbcType=INTEGER},</if>
+				<if test="isBest != null">is_best = #{isBest,jdbcType=INTEGER},</if>
+				<if test="isOnSale != null">is_on_sale = #{isOnSale,jdbcType=INTEGER},</if>
+				<if test="keywords != null">keywords = #{keywords,jdbcType=INTEGER},</if>
+				<if test="postageFee != null">postage_fee = #{postageFee,jdbcType=DECIMAL},</if>
+				<if test="packFee != null">pack_fee = #{packFee,jdbcType=DECIMAL},</if>
+				<if test="isSevenReturn != null">is_seven_return = #{isSevenReturn,jdbcType=INTEGER},</if>
+				<if test="goodsNameStyle != null">goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},</if>
+				<if test="providerId != null">provider_id = #{providerId,jdbcType=INTEGER},</if>
+				<if test="providerName != null">provider_name = #{providerName,jdbcType=VARCHAR},</if>
+				<if test="goodsWeight != null">goods_weight = #{goodsWeight,jdbcType=INTEGER},</if>
+				<if test="syncFlag != null">sync_flag = #{syncFlag,jdbcType=INTEGER},</if>
+				<if test="brandId != null">brand_id = #{brandId,jdbcType=INTEGER},</if>
+				<if test="marketPrice != null">market_price = #{marketPrice,jdbcType=DECIMAL},</if>
+				<if test="agentPrice != null">agent_price = #{agentPrice,jdbcType=DECIMAL},</if>
+				<if test="agentVipPrice != null">agent_vip_price = #{agentVipPrice,jdbcType=DECIMAL},</if>
+				<if test="promotePrice != null">promote_price = #{promotePrice,jdbcType=DECIMAL},</if>
+				<if test="auctionPrice != null">auction_price = #{auctionPrice,jdbcType=DECIMAL},</if>
+				<if test="promoteStartDate != null">promote_start_date = #{promoteStartDate,jdbcType=TIMESTAMP},</if>
+				<if test="promoteEndDate != null">promote_end_date = #{promoteEndDate,jdbcType=TIMESTAMP},</if>
+				<if test="goodsThumbId != null">goods_thumb_id = #{goodsThumbId,jdbcType=INTEGER},</if>
+				<if test="goodsImgId != null">goods_img_id = #{goodsImgId,jdbcType=INTEGER},</if>
+				<if test="originalImgId != null">original_img_id = #{originalImgId,jdbcType=INTEGER},</if>
+				<if test="extensionCode != null">extension_code = #{extensionCode,jdbcType=VARCHAR},</if>
+				<if test="isAloneSale != null">is_alone_sale = #{isAloneSale,jdbcType=INTEGER},</if>
+				<if test="isPromote != null">is_promote = #{isPromote,jdbcType=INTEGER},</if>
+				<if test="bonusTypeId != null">bonus_type_id = #{bonusTypeId,jdbcType=INTEGER},</if>
+				<if test="bonus != null">bonus = #{bonus,jdbcType=DECIMAL},</if>
+				<if test="goodsTypeId != null">goods_type_id = #{goodsTypeId,jdbcType=INTEGER},</if>
+				<if test="sellerNote != null">seller_note = #{sellerNote,jdbcType=VARCHAR},</if>
+				<if test="isPublic != null">is_public = #{isPublic,jdbcType=INTEGER},</if>
+				<if test="goodsFrom != null">goods_from = #{goodsFrom,jdbcType=INTEGER},</if>
+				<if test="goodsPrivilege != null">goods_privilege = #{goodsPrivilege,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE serial = #{serial,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByIdsSelective">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="serial != null">serial = #{serial,jdbcType=VARCHAR},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="logicStatus != null">logic_status = #{logicStatus,jdbcType=INTEGER},</if>
+				<if test="typeId != null">type_id = #{typeId,jdbcType=INTEGER},</if>
+				<if test="typeCode != null">type_code = #{typeCode,jdbcType=VARCHAR},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="goodsId != null">goods_id = #{goodsId,jdbcType=INTEGER},</if>
+				<if test="treatmentName != null">treatment_name = #{treatmentName,jdbcType=VARCHAR},</if>
+				<if test="groupNum != null">group_num = #{groupNum,jdbcType=INTEGER},</if>
+				<if test="groupPrice != null">group_price = #{groupPrice,jdbcType=DECIMAL},</if>
+				<if test="giveIntegral != null">give_integral = #{giveIntegral,jdbcType=INTEGER},</if>
+				<if test="attrConent1 != null">attr_conent1 = #{attrConent1,jdbcType=VARCHAR},</if>
+				<if test="attrConent2 != null">attr_conent2 = #{attrConent2,jdbcType=VARCHAR},</if>
+				<if test="attrConent3 != null">attr_conent3 = #{attrConent3,jdbcType=VARCHAR},</if>
+				<if test="attrConent4 != null">attr_conent4 = #{attrConent4,jdbcType=VARCHAR},</if>
+				<if test="statusCode != null">status_code = #{statusCode,jdbcType=VARCHAR},</if>
+				<if test="validStartTime != null">valid_start_time = #{validStartTime,jdbcType=TIMESTAMP},</if>
+				<if test="validEndTime != null">valid_end_time = #{validEndTime,jdbcType=TIMESTAMP},</if>
+				<if test="isReal != null">is_real = #{isReal,jdbcType=INTEGER},</if>
+				<if test="isNew != null">is_new = #{isNew,jdbcType=INTEGER},</if>
+				<if test="isHot != null">is_hot = #{isHot,jdbcType=INTEGER},</if>
+				<if test="isBest != null">is_best = #{isBest,jdbcType=INTEGER},</if>
+				<if test="isOnSale != null">is_on_sale = #{isOnSale,jdbcType=INTEGER},</if>
+				<if test="keywords != null">keywords = #{keywords,jdbcType=INTEGER},</if>
+				<if test="postageFee != null">postage_fee = #{postageFee,jdbcType=DECIMAL},</if>
+				<if test="packFee != null">pack_fee = #{packFee,jdbcType=DECIMAL},</if>
+				<if test="isSevenReturn != null">is_seven_return = #{isSevenReturn,jdbcType=INTEGER},</if>
+				<if test="goodsNameStyle != null">goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},</if>
+				<if test="providerId != null">provider_id = #{providerId,jdbcType=INTEGER},</if>
+				<if test="providerName != null">provider_name = #{providerName,jdbcType=VARCHAR},</if>
+				<if test="goodsWeight != null">goods_weight = #{goodsWeight,jdbcType=INTEGER},</if>
+				<if test="syncFlag != null">sync_flag = #{syncFlag,jdbcType=INTEGER},</if>
+				<if test="brandId != null">brand_id = #{brandId,jdbcType=INTEGER},</if>
+				<if test="marketPrice != null">market_price = #{marketPrice,jdbcType=DECIMAL},</if>
+				<if test="agentPrice != null">agent_price = #{agentPrice,jdbcType=DECIMAL},</if>
+				<if test="agentVipPrice != null">agent_vip_price = #{agentVipPrice,jdbcType=DECIMAL},</if>
+				<if test="promotePrice != null">promote_price = #{promotePrice,jdbcType=DECIMAL},</if>
+				<if test="auctionPrice != null">auction_price = #{auctionPrice,jdbcType=DECIMAL},</if>
+				<if test="promoteStartDate != null">promote_start_date = #{promoteStartDate,jdbcType=TIMESTAMP},</if>
+				<if test="promoteEndDate != null">promote_end_date = #{promoteEndDate,jdbcType=TIMESTAMP},</if>
+				<if test="goodsThumbId != null">goods_thumb_id = #{goodsThumbId,jdbcType=INTEGER},</if>
+				<if test="goodsImgId != null">goods_img_id = #{goodsImgId,jdbcType=INTEGER},</if>
+				<if test="originalImgId != null">original_img_id = #{originalImgId,jdbcType=INTEGER},</if>
+				<if test="extensionCode != null">extension_code = #{extensionCode,jdbcType=VARCHAR},</if>
+				<if test="isAloneSale != null">is_alone_sale = #{isAloneSale,jdbcType=INTEGER},</if>
+				<if test="isPromote != null">is_promote = #{isPromote,jdbcType=INTEGER},</if>
+				<if test="bonusTypeId != null">bonus_type_id = #{bonusTypeId,jdbcType=INTEGER},</if>
+				<if test="bonus != null">bonus = #{bonus,jdbcType=DECIMAL},</if>
+				<if test="goodsTypeId != null">goods_type_id = #{goodsTypeId,jdbcType=INTEGER},</if>
+				<if test="sellerNote != null">seller_note = #{sellerNote,jdbcType=VARCHAR},</if>
+				<if test="isPublic != null">is_public = #{isPublic,jdbcType=INTEGER},</if>
+				<if test="goodsFrom != null">goods_from = #{goodsFrom,jdbcType=INTEGER},</if>
+				<if test="goodsPrivilege != null">goods_privilege = #{goodsPrivilege,jdbcType=INTEGER},</if>
+				<if test="ownerId != null">owner_id = #{ownerId,jdbcType=INTEGER},</if>
+				<if test="ownerIds != null">owner_ids = #{ownerIds,jdbcType=VARCHAR},</if>
+				<if test="linkType != null">link_type = #{linkType,jdbcType=INTEGER},</if>
+				<if test="linkId != null">link_id = #{linkId,jdbcType=INTEGER},</if>
+				<if test="attrStr != null">attr_str = #{attrStr,jdbcType=VARCHAR},</if>
+				<if test="attrStr2 != null">attr_str2 = #{attrStr2,jdbcType=VARCHAR},</if>
+				<if test="attrInt != null">attr_int = #{attrInt,jdbcType=INTEGER},</if>
+				<if test="attrInt2 != null">attr_int2 = #{attrInt2,jdbcType=INTEGER},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id IN( ${ids} )
+	</update>
+    <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+	
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.lhfeiyu.po.domain.Treatment" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>(
+			serial,main_status,logic_status,type_id,type_code,deleted_at,deleted_by,goods_id,treatment_name,group_num,group_price,give_integral,attr_conent1,attr_conent2,attr_conent3,attr_conent4,status_code,valid_start_time,valid_end_time,is_real,is_new,is_hot,is_best,is_on_sale,keywords,postage_fee,pack_fee,is_seven_return,goods_name_style,provider_id,provider_name,goods_weight,sync_flag,brand_id,market_price,agent_price,agent_vip_price,promote_price,auction_price,promote_start_date,promote_end_date,goods_thumb_id,goods_img_id,original_img_id,extension_code,is_alone_sale,is_promote,bonus_type_id,bonus,goods_type_id,seller_note,is_public,goods_from,goods_privilege,owner_id,owner_ids,link_type,link_id,attr_str,attr_str2,attr_int,attr_int2,sequence,remark,created_at,created_by,updated_at,updated_by
+		)VALUES(
+		    #{serial,jdbcType=VARCHAR},#{mainStatus,jdbcType=INTEGER},#{logicStatus,jdbcType=INTEGER},#{typeId,jdbcType=INTEGER},#{typeCode,jdbcType=VARCHAR},#{deletedAt,jdbcType=TIMESTAMP},#{deletedBy,jdbcType=VARCHAR},#{goodsId,jdbcType=INTEGER},#{treatmentName,jdbcType=VARCHAR},#{groupNum,jdbcType=INTEGER},#{groupPrice,jdbcType=DECIMAL},#{giveIntegral,jdbcType=INTEGER},#{attrConent1,jdbcType=VARCHAR},#{attrConent2,jdbcType=VARCHAR},#{attrConent3,jdbcType=VARCHAR},#{attrConent4,jdbcType=VARCHAR},#{statusCode,jdbcType=VARCHAR},#{validStartTime,jdbcType=TIMESTAMP},#{validEndTime,jdbcType=TIMESTAMP},#{isReal,jdbcType=INTEGER},#{isNew,jdbcType=INTEGER},#{isHot,jdbcType=INTEGER},#{isBest,jdbcType=INTEGER},#{isOnSale,jdbcType=INTEGER},#{keywords,jdbcType=INTEGER},#{postageFee,jdbcType=DECIMAL},#{packFee,jdbcType=DECIMAL},#{isSevenReturn,jdbcType=INTEGER},#{goodsNameStyle,jdbcType=VARCHAR},#{providerId,jdbcType=INTEGER},#{providerName,jdbcType=VARCHAR},#{goodsWeight,jdbcType=INTEGER},#{syncFlag,jdbcType=INTEGER},#{brandId,jdbcType=INTEGER},#{marketPrice,jdbcType=DECIMAL},#{agentPrice,jdbcType=DECIMAL},#{agentVipPrice,jdbcType=DECIMAL},#{promotePrice,jdbcType=DECIMAL},#{auctionPrice,jdbcType=DECIMAL},#{promoteStartDate,jdbcType=TIMESTAMP},#{promoteEndDate,jdbcType=TIMESTAMP},#{goodsThumbId,jdbcType=INTEGER},#{goodsImgId,jdbcType=INTEGER},#{originalImgId,jdbcType=INTEGER},#{extensionCode,jdbcType=VARCHAR},#{isAloneSale,jdbcType=INTEGER},#{isPromote,jdbcType=INTEGER},#{bonusTypeId,jdbcType=INTEGER},#{bonus,jdbcType=DECIMAL},#{goodsTypeId,jdbcType=INTEGER},#{sellerNote,jdbcType=VARCHAR},#{isPublic,jdbcType=INTEGER},#{goodsFrom,jdbcType=INTEGER},#{goodsPrivilege,jdbcType=INTEGER},#{ownerId,jdbcType=INTEGER},#{ownerIds,jdbcType=VARCHAR},#{linkType,jdbcType=INTEGER},#{linkId,jdbcType=INTEGER},#{attrStr,jdbcType=VARCHAR},#{attrStr2,jdbcType=VARCHAR},#{attrInt,jdbcType=INTEGER},#{attrInt2,jdbcType=INTEGER},#{sequence,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{createdBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR}
+	    )
+	</insert>
+	
+	<insert id="insertBatch">
+		INSERT INTO <include refid="table"/>(
+			serial,main_status,logic_status,type_id,type_code,deleted_at,deleted_by,goods_id,treatment_name,group_num,group_price,give_integral,attr_conent1,attr_conent2,attr_conent3,attr_conent4,status_code,valid_start_time,valid_end_time,is_real,is_new,is_hot,is_best,is_on_sale,keywords,postage_fee,pack_fee,is_seven_return,goods_name_style,provider_id,provider_name,goods_weight,sync_flag,brand_id,market_price,agent_price,agent_vip_price,promote_price,auction_price,promote_start_date,promote_end_date,goods_thumb_id,goods_img_id,original_img_id,extension_code,is_alone_sale,is_promote,bonus_type_id,bonus,goods_type_id,seller_note,is_public,goods_from,goods_privilege,owner_id,owner_ids,link_type,link_id,attr_str,attr_str2,attr_int,attr_int2,sequence,remark,created_at,created_by,updated_at,updated_by
+		)VALUES
+		<foreach collection="list" item="c" separator=",">
+			(
+		    #{c.serial,jdbcType=VARCHAR},#{c.mainStatus,jdbcType=INTEGER},#{c.logicStatus,jdbcType=INTEGER},#{c.typeId,jdbcType=INTEGER},#{c.typeCode,jdbcType=VARCHAR},#{c.deletedAt,jdbcType=TIMESTAMP},#{c.deletedBy,jdbcType=VARCHAR},#{c.goodsId,jdbcType=INTEGER},#{c.treatmentName,jdbcType=VARCHAR},#{c.groupNum,jdbcType=INTEGER},#{c.groupPrice,jdbcType=DECIMAL},#{c.giveIntegral,jdbcType=INTEGER},#{c.attrConent1,jdbcType=VARCHAR},#{c.attrConent2,jdbcType=VARCHAR},#{c.attrConent3,jdbcType=VARCHAR},#{c.attrConent4,jdbcType=VARCHAR},#{c.statusCode,jdbcType=VARCHAR},#{c.validStartTime,jdbcType=TIMESTAMP},#{c.validEndTime,jdbcType=TIMESTAMP},#{c.isReal,jdbcType=INTEGER},#{c.isNew,jdbcType=INTEGER},#{c.isHot,jdbcType=INTEGER},#{c.isBest,jdbcType=INTEGER},#{c.isOnSale,jdbcType=INTEGER},#{c.keywords,jdbcType=INTEGER},#{c.postageFee,jdbcType=DECIMAL},#{c.packFee,jdbcType=DECIMAL},#{c.isSevenReturn,jdbcType=INTEGER},#{c.goodsNameStyle,jdbcType=VARCHAR},#{c.providerId,jdbcType=INTEGER},#{c.providerName,jdbcType=VARCHAR},#{c.goodsWeight,jdbcType=INTEGER},#{c.syncFlag,jdbcType=INTEGER},#{c.brandId,jdbcType=INTEGER},#{c.marketPrice,jdbcType=DECIMAL},#{c.agentPrice,jdbcType=DECIMAL},#{c.agentVipPrice,jdbcType=DECIMAL},#{c.promotePrice,jdbcType=DECIMAL},#{c.auctionPrice,jdbcType=DECIMAL},#{c.promoteStartDate,jdbcType=TIMESTAMP},#{c.promoteEndDate,jdbcType=TIMESTAMP},#{c.goodsThumbId,jdbcType=INTEGER},#{c.goodsImgId,jdbcType=INTEGER},#{c.originalImgId,jdbcType=INTEGER},#{c.extensionCode,jdbcType=VARCHAR},#{c.isAloneSale,jdbcType=INTEGER},#{c.isPromote,jdbcType=INTEGER},#{c.bonusTypeId,jdbcType=INTEGER},#{c.bonus,jdbcType=DECIMAL},#{c.goodsTypeId,jdbcType=INTEGER},#{c.sellerNote,jdbcType=VARCHAR},#{c.isPublic,jdbcType=INTEGER},#{c.goodsFrom,jdbcType=INTEGER},#{c.goodsPrivilege,jdbcType=INTEGER},#{c.ownerId,jdbcType=INTEGER},#{c.ownerIds,jdbcType=VARCHAR},#{c.linkType,jdbcType=INTEGER},#{c.linkId,jdbcType=INTEGER},#{c.attrStr,jdbcType=VARCHAR},#{c.attrStr2,jdbcType=VARCHAR},#{c.attrInt,jdbcType=INTEGER},#{c.attrInt2,jdbcType=INTEGER},#{c.sequence,jdbcType=INTEGER},#{c.remark,jdbcType=VARCHAR},#{c.createdAt,jdbcType=TIMESTAMP},#{c.createdBy,jdbcType=VARCHAR},#{c.updatedAt,jdbcType=TIMESTAMP},#{c.updatedBy,jdbcType=VARCHAR}
+	    	)
+		</foreach>
+	</insert>
+  	
+	<insert id="insertSelective" parameterType="com.lhfeiyu.po.domain.Treatment" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="serial != null"> serial,</if>
+					<if test="mainStatus != null"> main_status,</if>
+					<if test="logicStatus != null"> logic_status,</if>
+					<if test="typeId != null"> type_id,</if>
+					<if test="typeCode != null"> type_code,</if>
+					<if test="deletedAt != null"> deleted_at,</if>
+					<if test="deletedBy != null"> deleted_by,</if>
+					<if test="goodsId != null"> goods_id,</if>
+					<if test="treatmentName != null"> treatment_name,</if>
+					<if test="groupNum != null"> group_num,</if>
+					<if test="groupPrice != null"> group_price,</if>
+					<if test="giveIntegral != null"> give_integral,</if>
+					<if test="attrConent1 != null"> attr_conent1,</if>
+					<if test="attrConent2 != null"> attr_conent2,</if>
+					<if test="attrConent3 != null"> attr_conent3,</if>
+					<if test="attrConent4 != null"> attr_conent4,</if>
+					<if test="statusCode != null"> status_code,</if>
+					<if test="validStartTime != null"> valid_start_time,</if>
+					<if test="validEndTime != null"> valid_end_time,</if>
+					<if test="isReal != null"> is_real,</if>
+					<if test="isNew != null"> is_new,</if>
+					<if test="isHot != null"> is_hot,</if>
+					<if test="isBest != null"> is_best,</if>
+					<if test="isOnSale != null"> is_on_sale,</if>
+					<if test="keywords != null"> keywords,</if>
+					<if test="postageFee != null"> postage_fee,</if>
+					<if test="packFee != null"> pack_fee,</if>
+					<if test="isSevenReturn != null"> is_seven_return,</if>
+					<if test="goodsNameStyle != null"> goods_name_style,</if>
+					<if test="providerId != null"> provider_id,</if>
+					<if test="providerName != null"> provider_name,</if>
+					<if test="goodsWeight != null"> goods_weight,</if>
+					<if test="syncFlag != null"> sync_flag,</if>
+					<if test="brandId != null"> brand_id,</if>
+					<if test="marketPrice != null"> market_price,</if>
+					<if test="agentPrice != null"> agent_price,</if>
+					<if test="agentVipPrice != null"> agent_vip_price,</if>
+					<if test="promotePrice != null"> promote_price,</if>
+					<if test="auctionPrice != null"> auction_price,</if>
+					<if test="promoteStartDate != null"> promote_start_date,</if>
+					<if test="promoteEndDate != null"> promote_end_date,</if>
+					<if test="goodsThumbId != null"> goods_thumb_id,</if>
+					<if test="goodsImgId != null"> goods_img_id,</if>
+					<if test="originalImgId != null"> original_img_id,</if>
+					<if test="extensionCode != null"> extension_code,</if>
+					<if test="isAloneSale != null"> is_alone_sale,</if>
+					<if test="isPromote != null"> is_promote,</if>
+					<if test="bonusTypeId != null"> bonus_type_id,</if>
+					<if test="bonus != null"> bonus,</if>
+					<if test="goodsTypeId != null"> goods_type_id,</if>
+					<if test="sellerNote != null"> seller_note,</if>
+					<if test="isPublic != null"> is_public,</if>
+					<if test="goodsFrom != null"> goods_from,</if>
+					<if test="goodsPrivilege != null"> goods_privilege,</if>
+					<if test="ownerId != null"> owner_id,</if>
+					<if test="ownerIds != null"> owner_ids,</if>
+					<if test="linkType != null"> link_type,</if>
+					<if test="linkId != null"> link_id,</if>
+					<if test="attrStr != null"> attr_str,</if>
+					<if test="attrStr2 != null"> attr_str2,</if>
+					<if test="attrInt != null"> attr_int,</if>
+					<if test="attrInt2 != null"> attr_int2,</if>
+					<if test="sequence != null"> sequence,</if>
+					<if test="remark != null"> remark,</if>
+					<if test="createdAt != null"> created_at,</if>
+					<if test="createdBy != null"> created_by,</if>
+					<if test="updatedAt != null"> updated_at,</if>
+					<if test="updatedBy != null"> updated_by,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+					<if test="serial != null">#{serial,jdbcType=VARCHAR},</if>
+					<if test="mainStatus != null">#{mainStatus,jdbcType=INTEGER},</if>
+					<if test="logicStatus != null">#{logicStatus,jdbcType=INTEGER},</if>
+					<if test="typeId != null">#{typeId,jdbcType=INTEGER},</if>
+					<if test="typeCode != null">#{typeCode,jdbcType=VARCHAR},</if>
+					<if test="deletedAt != null">#{deletedAt,jdbcType=TIMESTAMP},</if>
+					<if test="deletedBy != null">#{deletedBy,jdbcType=VARCHAR},</if>
+					<if test="goodsId != null">#{goodsId,jdbcType=INTEGER},</if>
+					<if test="treatmentName != null">#{treatmentName,jdbcType=VARCHAR},</if>
+					<if test="groupNum != null">#{groupNum,jdbcType=INTEGER},</if>
+					<if test="groupPrice != null">#{groupPrice,jdbcType=DECIMAL},</if>
+					<if test="giveIntegral != null">#{giveIntegral,jdbcType=INTEGER},</if>
+					<if test="attrConent1 != null">#{attrConent1,jdbcType=VARCHAR},</if>
+					<if test="attrConent2 != null">#{attrConent2,jdbcType=VARCHAR},</if>
+					<if test="attrConent3 != null">#{attrConent3,jdbcType=VARCHAR},</if>
+					<if test="attrConent4 != null">#{attrConent4,jdbcType=VARCHAR},</if>
+					<if test="statusCode != null">#{statusCode,jdbcType=VARCHAR},</if>
+					<if test="validStartTime != null">#{validStartTime,jdbcType=TIMESTAMP},</if>
+					<if test="validEndTime != null">#{validEndTime,jdbcType=TIMESTAMP},</if>
+					<if test="isReal != null">#{isReal,jdbcType=INTEGER},</if>
+					<if test="isNew != null">#{isNew,jdbcType=INTEGER},</if>
+					<if test="isHot != null">#{isHot,jdbcType=INTEGER},</if>
+					<if test="isBest != null">#{isBest,jdbcType=INTEGER},</if>
+					<if test="isOnSale != null">#{isOnSale,jdbcType=INTEGER},</if>
+					<if test="keywords != null">#{keywords,jdbcType=INTEGER},</if>
+					<if test="postageFee != null">#{postageFee,jdbcType=DECIMAL},</if>
+					<if test="packFee != null">#{packFee,jdbcType=DECIMAL},</if>
+					<if test="isSevenReturn != null">#{isSevenReturn,jdbcType=INTEGER},</if>
+					<if test="goodsNameStyle != null">#{goodsNameStyle,jdbcType=VARCHAR},</if>
+					<if test="providerId != null">#{providerId,jdbcType=INTEGER},</if>
+					<if test="providerName != null">#{providerName,jdbcType=VARCHAR},</if>
+					<if test="goodsWeight != null">#{goodsWeight,jdbcType=INTEGER},</if>
+					<if test="syncFlag != null">#{syncFlag,jdbcType=INTEGER},</if>
+					<if test="brandId != null">#{brandId,jdbcType=INTEGER},</if>
+					<if test="marketPrice != null">#{marketPrice,jdbcType=DECIMAL},</if>
+					<if test="agentPrice != null">#{agentPrice,jdbcType=DECIMAL},</if>
+					<if test="agentVipPrice != null">#{agentVipPrice,jdbcType=DECIMAL},</if>
+					<if test="promotePrice != null">#{promotePrice,jdbcType=DECIMAL},</if>
+					<if test="auctionPrice != null">#{auctionPrice,jdbcType=DECIMAL},</if>
+					<if test="promoteStartDate != null">#{promoteStartDate,jdbcType=TIMESTAMP},</if>
+					<if test="promoteEndDate != null">#{promoteEndDate,jdbcType=TIMESTAMP},</if>
+					<if test="goodsThumbId != null">#{goodsThumbId,jdbcType=INTEGER},</if>
+					<if test="goodsImgId != null">#{goodsImgId,jdbcType=INTEGER},</if>
+					<if test="originalImgId != null">#{originalImgId,jdbcType=INTEGER},</if>
+					<if test="extensionCode != null">#{extensionCode,jdbcType=VARCHAR},</if>
+					<if test="isAloneSale != null">#{isAloneSale,jdbcType=INTEGER},</if>
+					<if test="isPromote != null">#{isPromote,jdbcType=INTEGER},</if>
+					<if test="bonusTypeId != null">#{bonusTypeId,jdbcType=INTEGER},</if>
+					<if test="bonus != null">#{bonus,jdbcType=DECIMAL},</if>
+					<if test="goodsTypeId != null">#{goodsTypeId,jdbcType=INTEGER},</if>
+					<if test="sellerNote != null">#{sellerNote,jdbcType=VARCHAR},</if>
+					<if test="isPublic != null">#{isPublic,jdbcType=INTEGER},</if>
+					<if test="goodsFrom != null">#{goodsFrom,jdbcType=INTEGER},</if>
+					<if test="goodsPrivilege != null">#{goodsPrivilege,jdbcType=INTEGER},</if>
+					<if test="ownerId != null">#{ownerId,jdbcType=INTEGER},</if>
+					<if test="ownerIds != null">#{ownerIds,jdbcType=VARCHAR},</if>
+					<if test="linkType != null">#{linkType,jdbcType=INTEGER},</if>
+					<if test="linkId != null">#{linkId,jdbcType=INTEGER},</if>
+					<if test="attrStr != null">#{attrStr,jdbcType=VARCHAR},</if>
+					<if test="attrStr2 != null">#{attrStr2,jdbcType=VARCHAR},</if>
+					<if test="attrInt != null">#{attrInt,jdbcType=INTEGER},</if>
+					<if test="attrInt2 != null">#{attrInt2,jdbcType=INTEGER},</if>
+					<if test="sequence != null">#{sequence,jdbcType=INTEGER},</if>
+					<if test="remark != null">#{remark,jdbcType=VARCHAR},</if>
+					<if test="createdAt != null">#{createdAt,jdbcType=TIMESTAMP},</if>
+					<if test="createdBy != null">#{createdBy,jdbcType=VARCHAR},</if>
+					<if test="updatedAt != null">#{updatedAt,jdbcType=TIMESTAMP},</if>
+					<if test="updatedBy != null">#{updatedBy,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+  	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+	
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByCondition">
+		DELETE FROM <include refid="table"/> WHERE ${condition}
+	</delete>
+	
+	<delete id="deleteByIds">
+	    DELETE FROM <include refid="table"/> WHERE id IN (${ids})
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+      
+</mapper>

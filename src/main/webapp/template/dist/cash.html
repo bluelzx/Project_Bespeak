@@ -1,0 +1,88 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>提现</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜提现">
+    <meta name="description" content="迈噜提现">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <a href="provider.html" class="back">
+            <img src="images/back.png" alt="">
+        </a>
+        <div class="cashTop">
+            <p class="cash-p">提现金额</p>
+            <input type="text" placeholder="请输入金额" class="code-je">
+            <p class="cashJe">最多可提现金额:<span>14.5元</span></p>
+        </div>
+        <div class="cashMiddle">
+            <ul class="cashPay">
+                <li class="weiPay">
+                    微信钱包
+                    <i class="weiI"></i>
+                </li>
+                <li class="aliPay">
+                    支付宝
+                    <i class="aliI"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="cashBot" id="zfb">
+            <div>
+                <label for="">支付宝帐号</label>
+                <input type="text" placeholder="请输入支付宝帐号">
+            </div>
+            <div>
+                <label for="">支付宝绑定手机</label>
+                <input type="text" placeholder="请输入手机号">
+            </div>
+            <div class="bt">
+                <label for="">验证码</label>
+                <input type="text" placeholder="请输入验证码">
+                <a href="#">获取验证码</a>
+            </div>
+        </div>
+        <div class="cashBot" id="wei">
+            <div>
+                <label for="">微信帐号</label>
+                <input type="text" placeholder="请输入支付宝帐号">
+            </div>
+            <div>
+                <label for="">微信绑定手机</label>
+                <input type="text" placeholder="请输入手机号">
+            </div>
+            <div class="bt">
+                <label for="">验证码</label>
+                <input type="text" placeholder="请输入验证码">
+                <a href="#">获取验证码</a>
+            </div>
+        </div>
+        <div class="carefulBox">
+            <p class="carefulP">注意事项:</p>
+            <p class="careP1">1.提现时,请确认账户时候正确,避免兑换失败或转入他人账户.</p>
+            <p class="careP1">2.提现将会在3个工作日内到账.</p>
+        </div>
+
+        <a href="#" class="sign cash">确认提现</a>
+    </div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/main.js"></script>  <!--单位设置-->
+    <script src="js/cash.js"></script>
+</body>
+</html>

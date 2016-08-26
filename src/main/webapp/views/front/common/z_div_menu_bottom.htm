@@ -1,0 +1,58 @@
+<div class="performance_fixed">
+	<a href="javascript:lh.jumpR('/');">
+		<div class="com orange">
+			<img class="img-responsive center-block" src="/images/front/img_01.png" /> <span>首页</span>
+		</div>
+	</a> <a href="javascript:lh.jumpR('/');">
+		<div class="com">
+			<img class="img-responsive center-block" src="/images/front/img_02.png" /> <span>文玩珠宝</span>
+		</div>
+	</a>
+	<div class="release">
+		<div class="white_round">
+			<div class="orange_round" id="release">
+				<img class="img-responsive center-block" src="/images/front/img_05.png" />
+			</div>
+			<div class="word">发布</div>
+		</div>
+	</div>
+	<div class="com">
+		<img class="img-responsive center-block" src="/images/front/img_03.png" /> 购物车
+	</div>
+	<div class="com" id="myCenter">
+		<img class="img-responsive center-block" src="/images/front/img_04.png" /> 我的
+	</div>
+	<script type="text/javascript" src="/cssjs_stable/js/jquery-1.11.2.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			var url = localStorage.getItem("url");//获取b的值
+			$("#myCenter").click(function() {
+				lh.jumpR(url);
+			});
+
+		});
+	</script>
+</div>
+<div class="release_click">
+	<div class="row bottom">
+		<div class="col-xs-12 plr0 pt10">
+			<div class="col-xs-4 text-center plr7">
+				<img onclick="lh.jumpR('/ap/page/articleAgreement');" src="/images/front/release_01.png" class="img-responsive center-block" />
+			</div>
+			<div class="col-xs-4 text-center plr7">
+				<img onclick="lh.jumpR('/am/page/manage');" src="/images/front/release_02.png" class="img-responsive center-block" />
+			</div>
+			<div class="col-xs-4 text-center plr7">
+				<img onclick="lh.jumpR('/');" src="/images/front/release_03.png" class="img-responsive center-block" />
+			</div>
+		</div>
+		<div class="col-xs-12 plr0 pt10">
+			<div class="col-xs-4 text-center plr7">
+				<img onclick="lh.jumpR('/goods/page/store');" src="/images/front/release_04.png" class="img-responsive center-block" />
+			</div>
+		</div>
+	</div>
+</div>
+<div class="closeX">
+	<img src="/images/front/closeX.png" id="closeX" class="img-responsive center-block" />
+</div>

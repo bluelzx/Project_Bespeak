@@ -1,0 +1,69 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>月嫂/育婴</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜月嫂/育婴">
+    <meta name="description" content="迈噜月嫂/育婴">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <a href="index.html" class="back">
+            <img src="images/back.png" alt="">
+        </a>
+        <div id="main">
+            <ul class="month-ul">
+                <li>
+                    <a href="javascript:"  class="choice-on">月嫂</a>
+                </li>
+                <li>
+                    <a href="javascript:">育婴</a>
+                </li>
+            </ul>
+            <!--信息详情-->
+            <div class="provider" id="data-container">
+                <!--<a href="{{providerYuYue}}">
+                    <span class='provider-yuyue'>预约</span>
+                </a>-->
+            </div>
+        </div>
+        <!--底部菜单栏结束-->
+    </div>
+    <!--回到顶部按钮-->
+    <div id="go-top"></div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/appointment.js"></script>
+    <script src="js/main.js"></script>
+    <script id="template" type="x-tmpl-mustache">
+        {{#rows}}
+            <div onclick="document.location='month-data.html';" class='provider-box' id='provider_{{id}}'>
+                <a href="{{providerInfUrl}}">
+                    <img src='images/month-img.png' class='provider-img'>
+                </a>
+                <div class='provider-inf'>
+                    <span class='provider-name'>{{providerName}}</span>
+                    <span class='provider-juli'>{{providerJuli}}km</span>
+                    <p class='provider-zy'>{{providerOldTitle}}</p>
+                    <span class='js-like'>{{jsLike}}人喜欢</span>
+                    <p class='provider-p'>{{providerInt}}</p>
+                </div>
+            </div>
+        {{/rows}}
+    </script>
+</body>
+</html>

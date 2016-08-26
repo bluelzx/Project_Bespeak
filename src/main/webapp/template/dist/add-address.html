@@ -1,0 +1,62 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>新增地址</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="新增地址">
+    <meta name="description" content="新增地址">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <a href="provider.html" class="back">
+            <img src="images/back.png" alt="">
+        </a>
+        <div class="addTopBox">
+            <div class="yNameBox">
+                <label for="yname">联系人</label>
+                <input type="text" placeholder="您的姓名" id="yname">
+            </div>
+            <div class="yAddBox">
+                <label for="yphone">手机号</label>
+                <input type="text" placeholder="联系您的电话" id="yphone">
+            </div>
+            <div class="yProvince">
+                <span>所在省</span>
+                <select name="" id="province">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="yCity">
+                <span>所在地区</span>
+                <select name="" id="city">
+                    <option value="">b</option>
+                </select>
+            </div>
+            <div class="xxAdd">
+                <p>详细地址</p>
+                <textarea name="" id="" cols="38" rows="10" class="drawAdd"></textarea>
+            </div>
+        </div>
+        <input type="button" value="新增地址" class="xq-btn" onclick="document.location='index-yuyue.html';">
+
+    </div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/main.js"></script>  <!--单位设置-->
+
+</body>
+</html>

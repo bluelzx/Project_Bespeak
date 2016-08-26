@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhfeiyu.dao.domain.SysDictMapper">
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">sys_dict</sql>
+	<!-- 基础字段 -->
+	<sql id="baseColumns">
+		A.id AS id,A.parent_id AS parentId,A.dict_name AS dictName,A.dict_value AS dictValue,A.dict_code AS dictCode,A.dict_type AS dictType,A.dict_level AS dictLevel,A.second_value AS secondValue,A.is_leaf AS isLeaf,A.remark AS remark,A.sequence AS sequence,A.main_status AS mainStatus,A.updated_at AS updatedAt,A.updated_by AS updatedBy,A.deleted_at AS deletedAt,A.deleted_by AS deletedBy,A.created_at AS createdAt,A.created_by AS createdBy
+	</sql>
+	<sql id="baseSearch">
+		<if test="deleted == null">AND A.deleted_at IS NULL</if> 
+		<if test="deleted != null">AND A.deleted_at IS NOT NULL</if>
+		<if test="id != null and id != '' ">AND A.id = #{id}</if>
+		<if test="sysDictId != null and sysDictId != '' ">AND A.id = #{sysDictId}</if>
+		<if test="serial != null and serial != '' ">AND A.serial = #{serial}</if>
+		<if test="mainStatus != null and mainStatus != '' ">AND A.main_status = #{mainStatus}</if>
+		<if test="logicStatus != null and logicStatus != '' ">AND A.logic_status = #{logicStatus}</if>
+	</sql>
+	<sql id="suffix"><!-- 分组排序  -->
+		<if test="groupBy != null and groupBy !='' "> GROUP BY #{groupBy,jdbcType=VARCHAR} </if>
+		<if test="selfOrder == null"><if test="orderBy != null and orderBy !='' "> ORDER BY A.${orderBy}</if> <if test="ascOrdesc != null and ascOrdesc !='' "> ${ascOrdesc}</if> </if>
+		<if test="selfOrder != null"> ORDER BY ${selfOrder} </if>
+		<if test="selfOrder == null and orderBy == null "> ORDER BY A.id DESC </if>
+	</sql>
+	<sql id="limitCount"><if test="count != null and count !='' "> LIMIT ${start},${count}</if> </sql><!-- 分页 -->
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+	
+	
+	
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="columns">
+		
+	</sql>
+	<sql id="search">
+		<if test="userId != null and userId !=''">
+		   AND A.user_id = #{userId}
+		</if>
+	</sql>
+	<sql id="leftJoin">
+		
+	</sql>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+	
+	
+	
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.SysDict">
+    	SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1 
+		<include refid="baseSearch"/><include refid="search"/>
+		<include refid="suffix"/>
+		<include refid="limitCount"/>
+	</select>
+	
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.po.domain.SysDict">
+   		SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1 
+		<include refid="baseSearch"/><include refid="search"/>
+		<include refid="suffix"/>
+		LIMIT 0,1 
+	</select>
+	
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM <include refid="table"/> A 
+		<include refid="leftJoin"/>
+		WHERE 1=1
+		<include refid="baseSearch"/><include refid="search"/>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultType="com.lhfeiyu.po.domain.SysDict" parameterType="java.lang.Integer">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectBySerial" resultType="com.lhfeiyu.po.domain.SysDict">
+   		SELECT 
+		<include refid="baseColumns"/><include refid="columns"/>
+		FROM <include refid="table"/> A
+		<include refid="leftJoin"/>
+    	WHERE A.serial = #{serial,jdbcType=VARCHAR}
+		LIMIT 0,1 
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+	
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.po.domain.SysDict">
+	    UPDATE <include refid="table"/>
+		<set>
+			
+			parent_id = #{parentId,jdbcType=INTEGER},
+			dict_name = #{dictName,jdbcType=VARCHAR},
+			dict_value = #{dictValue,jdbcType=VARCHAR},
+			dict_code = #{dictCode,jdbcType=VARCHAR},
+			dict_type = #{dictType,jdbcType=VARCHAR},
+			dict_level = #{dictLevel,jdbcType=INTEGER},
+			second_value = #{secondValue,jdbcType=VARCHAR},
+			is_leaf = #{isLeaf,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			sequence = #{sequence,jdbcType=INTEGER},
+			main_status = #{mainStatus,jdbcType=INTEGER},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			
+			deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			deleted_by = #{deletedBy,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySerial" parameterType="com.lhfeiyu.po.domain.SysDict">
+	    UPDATE <include refid="table"/>
+		<set>
+		  	
+		  	parent_id = #{parentId,jdbcType=INTEGER},
+		  	dict_name = #{dictName,jdbcType=VARCHAR},
+		  	dict_value = #{dictValue,jdbcType=VARCHAR},
+		  	dict_code = #{dictCode,jdbcType=VARCHAR},
+		  	dict_type = #{dictType,jdbcType=VARCHAR},
+		  	dict_level = #{dictLevel,jdbcType=INTEGER},
+		  	second_value = #{secondValue,jdbcType=VARCHAR},
+		  	is_leaf = #{isLeaf,jdbcType=INTEGER},
+		  	remark = #{remark,jdbcType=VARCHAR},
+		  	sequence = #{sequence,jdbcType=INTEGER},
+		  	main_status = #{mainStatus,jdbcType=INTEGER},
+		  	updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+		  	
+		  	deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+		  	deleted_by = #{deletedBy,jdbcType=VARCHAR},
+		  	created_at = #{createdAt,jdbcType=TIMESTAMP},
+		  	created_by = #{createdBy,jdbcType=VARCHAR},
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE serial = #{serial,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByIds">
+	    UPDATE <include refid="table"/>
+		<set>
+			
+			parent_id = #{parentId,jdbcType=INTEGER},
+			dict_name = #{dictName,jdbcType=VARCHAR},
+			dict_value = #{dictValue,jdbcType=VARCHAR},
+			dict_code = #{dictCode,jdbcType=VARCHAR},
+			dict_type = #{dictType,jdbcType=VARCHAR},
+			dict_level = #{dictLevel,jdbcType=INTEGER},
+			second_value = #{secondValue,jdbcType=VARCHAR},
+			is_leaf = #{isLeaf,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			sequence = #{sequence,jdbcType=INTEGER},
+			main_status = #{mainStatus,jdbcType=INTEGER},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			
+			deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			deleted_by = #{deletedBy,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateByCondition">
+		UPDATE <include refid="table"/> SET
+		<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		updated_at = NOW(),
+		${condition}
+	</update>
+	
+	<update id="updateDeletedNowByIds">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NOW(),
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateDeletedNullByIds">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NULL,
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	<update id="updateDeletedNowById" parameterType="java.lang.Integer">
+		UPDATE <include refid="table"/>
+		<set>
+			deleted_at = NOW(),
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateDeletedNullById">
+		UPDATE <include refid="table"/>
+		<set> 
+			deleted_at = NULL, 
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateFieldById" parameterType="java.util.Map">
+		UPDATE <include refid="table"/>
+		<set>
+			<if test="expression1 != null">${expression1},</if>
+			<if test="expression2 != null">${expression2},</if>
+			<if test="expression3 != null">${expression3},</if>
+			<if test="expression4 != null">${expression4},</if>
+			<if test="expression5 != null">${expression5},</if>
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateFieldByIds" parameterType="java.util.Map">
+		UPDATE <include refid="table"/>
+		<set>
+			<if test="expression1 != null">${expression1},</if>
+			<if test="expression2 != null">${expression2},</if>
+			<if test="expression3 != null">${expression3},</if>
+			<if test="expression4 != null">${expression4},</if>
+			<if test="expression5 != null">${expression5},</if>
+			<if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+			updated_at = NOW()
+		</set>
+		WHERE id IN( ${ids} )
+	</update>
+	
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.po.domain.SysDict">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="parentId != null">parent_id = #{parentId,jdbcType=INTEGER},</if>
+				<if test="dictName != null">dict_name = #{dictName,jdbcType=VARCHAR},</if>
+				<if test="dictValue != null">dict_value = #{dictValue,jdbcType=VARCHAR},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="dictType != null">dict_type = #{dictType,jdbcType=VARCHAR},</if>
+				<if test="dictLevel != null">dict_level = #{dictLevel,jdbcType=INTEGER},</if>
+				<if test="secondValue != null">second_value = #{secondValue,jdbcType=VARCHAR},</if>
+				<if test="isLeaf != null">is_leaf = #{isLeaf,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySerialSelective" parameterType="com.lhfeiyu.po.domain.SysDict">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="parentId != null">parent_id = #{parentId,jdbcType=INTEGER},</if>
+				<if test="dictName != null">dict_name = #{dictName,jdbcType=VARCHAR},</if>
+				<if test="dictValue != null">dict_value = #{dictValue,jdbcType=VARCHAR},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="dictType != null">dict_type = #{dictType,jdbcType=VARCHAR},</if>
+				<if test="dictLevel != null">dict_level = #{dictLevel,jdbcType=INTEGER},</if>
+				<if test="secondValue != null">second_value = #{secondValue,jdbcType=VARCHAR},</if>
+				<if test="isLeaf != null">is_leaf = #{isLeaf,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy,jdbcType=VARCHAR},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE serial = #{serial,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByIdsSelective">
+	    UPDATE <include refid="table"/>
+		<set>
+				<if test="parentId != null">parent_id = #{parentId,jdbcType=INTEGER},</if>
+				<if test="dictName != null">dict_name = #{dictName,jdbcType=VARCHAR},</if>
+				<if test="dictValue != null">dict_value = #{dictValue,jdbcType=VARCHAR},</if>
+				<if test="dictCode != null">dict_code = #{dictCode,jdbcType=VARCHAR},</if>
+				<if test="dictType != null">dict_type = #{dictType,jdbcType=VARCHAR},</if>
+				<if test="dictLevel != null">dict_level = #{dictLevel,jdbcType=INTEGER},</if>
+				<if test="secondValue != null">second_value = #{secondValue,jdbcType=VARCHAR},</if>
+				<if test="isLeaf != null">is_leaf = #{isLeaf,jdbcType=INTEGER},</if>
+				<if test="remark != null">remark = #{remark,jdbcType=VARCHAR},</if>
+				<if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER},</if>
+				<if test="mainStatus != null">main_status = #{mainStatus,jdbcType=INTEGER},</if>
+				<if test="updatedAt != null">updated_at = #{updatedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedAt != null">deleted_at = #{deletedAt,jdbcType=TIMESTAMP},</if>
+				<if test="deletedBy != null">deleted_by = #{deletedBy,jdbcType=VARCHAR},</if>
+				<if test="createdAt != null">created_at = #{createdAt,jdbcType=TIMESTAMP},</if>
+				<if test="createdBy != null">created_by = #{createdBy,jdbcType=VARCHAR},</if>
+		  <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+		  updated_at = NOW()
+		</set>
+	    WHERE id IN( ${ids} )
+	</update>
+    <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+	
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.lhfeiyu.po.domain.SysDict" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>(
+			parent_id,dict_name,dict_value,dict_code,dict_type,dict_level,second_value,is_leaf,remark,sequence,main_status,updated_at,updated_by,deleted_at,deleted_by,created_at,created_by
+		)VALUES(
+		    #{parentId,jdbcType=INTEGER},#{dictName,jdbcType=VARCHAR},#{dictValue,jdbcType=VARCHAR},#{dictCode,jdbcType=VARCHAR},#{dictType,jdbcType=VARCHAR},#{dictLevel,jdbcType=INTEGER},#{secondValue,jdbcType=VARCHAR},#{isLeaf,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR},#{sequence,jdbcType=INTEGER},#{mainStatus,jdbcType=INTEGER},#{updatedAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{deletedAt,jdbcType=TIMESTAMP},#{deletedBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{createdBy,jdbcType=VARCHAR}
+	    )
+	</insert>
+	
+	<insert id="insertBatch">
+		INSERT INTO <include refid="table"/>(
+			parent_id,dict_name,dict_value,dict_code,dict_type,dict_level,second_value,is_leaf,remark,sequence,main_status,updated_at,updated_by,deleted_at,deleted_by,created_at,created_by
+		)VALUES
+		<foreach collection="list" item="c" separator=",">
+			(
+		    #{c.parentId,jdbcType=INTEGER},#{c.dictName,jdbcType=VARCHAR},#{c.dictValue,jdbcType=VARCHAR},#{c.dictCode,jdbcType=VARCHAR},#{c.dictType,jdbcType=VARCHAR},#{c.dictLevel,jdbcType=INTEGER},#{c.secondValue,jdbcType=VARCHAR},#{c.isLeaf,jdbcType=INTEGER},#{c.remark,jdbcType=VARCHAR},#{c.sequence,jdbcType=INTEGER},#{c.mainStatus,jdbcType=INTEGER},#{c.updatedAt,jdbcType=TIMESTAMP},#{c.updatedBy,jdbcType=VARCHAR},#{c.deletedAt,jdbcType=TIMESTAMP},#{c.deletedBy,jdbcType=VARCHAR},#{c.createdAt,jdbcType=TIMESTAMP},#{c.createdBy,jdbcType=VARCHAR}
+	    	)
+		</foreach>
+	</insert>
+  	
+	<insert id="insertSelective" parameterType="com.lhfeiyu.po.domain.SysDict" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="parentId != null"> parent_id,</if>
+					<if test="dictName != null"> dict_name,</if>
+					<if test="dictValue != null"> dict_value,</if>
+					<if test="dictCode != null"> dict_code,</if>
+					<if test="dictType != null"> dict_type,</if>
+					<if test="dictLevel != null"> dict_level,</if>
+					<if test="secondValue != null"> second_value,</if>
+					<if test="isLeaf != null"> is_leaf,</if>
+					<if test="remark != null"> remark,</if>
+					<if test="sequence != null"> sequence,</if>
+					<if test="mainStatus != null"> main_status,</if>
+					<if test="updatedAt != null"> updated_at,</if>
+					<if test="updatedBy != null"> updated_by,</if>
+					<if test="deletedAt != null"> deleted_at,</if>
+					<if test="deletedBy != null"> deleted_by,</if>
+					<if test="createdAt != null"> created_at,</if>
+					<if test="createdBy != null"> created_by,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+					<if test="parentId != null">#{parentId,jdbcType=INTEGER},</if>
+					<if test="dictName != null">#{dictName,jdbcType=VARCHAR},</if>
+					<if test="dictValue != null">#{dictValue,jdbcType=VARCHAR},</if>
+					<if test="dictCode != null">#{dictCode,jdbcType=VARCHAR},</if>
+					<if test="dictType != null">#{dictType,jdbcType=VARCHAR},</if>
+					<if test="dictLevel != null">#{dictLevel,jdbcType=INTEGER},</if>
+					<if test="secondValue != null">#{secondValue,jdbcType=VARCHAR},</if>
+					<if test="isLeaf != null">#{isLeaf,jdbcType=INTEGER},</if>
+					<if test="remark != null">#{remark,jdbcType=VARCHAR},</if>
+					<if test="sequence != null">#{sequence,jdbcType=INTEGER},</if>
+					<if test="mainStatus != null">#{mainStatus,jdbcType=INTEGER},</if>
+					<if test="updatedAt != null">#{updatedAt,jdbcType=TIMESTAMP},</if>
+					<if test="updatedBy != null">#{updatedBy,jdbcType=VARCHAR},</if>
+					<if test="deletedAt != null">#{deletedAt,jdbcType=TIMESTAMP},</if>
+					<if test="deletedBy != null">#{deletedBy,jdbcType=VARCHAR},</if>
+					<if test="createdAt != null">#{createdAt,jdbcType=TIMESTAMP},</if>
+					<if test="createdBy != null">#{createdBy,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+  	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+	
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByCondition">
+		DELETE FROM <include refid="table"/> WHERE ${condition}
+	</delete>
+	
+	<delete id="deleteByIds">
+	    DELETE FROM <include refid="table"/> WHERE id IN (${ids})
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+      
+</mapper>

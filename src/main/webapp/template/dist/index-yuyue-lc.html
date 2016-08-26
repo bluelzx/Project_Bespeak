@@ -1,0 +1,80 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>预约下单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜预约下单">
+    <meta name="description" content="迈噜预约下单">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <div class="tn-top" style="height:1.6rem;">
+            <a href="body-massage.html" class="back">
+                <img src="images/back.png" alt="">
+            </a>
+        </div>
+        <div class="xd-inf">
+            <span class="xd-name">全身推拿</span>
+            <span class="xd-time">788元/10次/疗程</span>
+            <div class="xd-jj-box">
+                <input type="button" value="-" class="reduce">
+                <input type="text" value="1" id="text_box">
+                <input type="button" value="+" class="plus">
+            </div>
+        </div>
+        <div class="xd-choice">
+            <ul class="xd-cho-line1">
+                <li>联系方式<span>18049520000</span> </li>
+                <li class="xd-fuwu">服务方式<span class="xd-fs">请选择服务方式</span><i></i> </li>
+                <li class="xd-address">服务地址<span>请选择服务地址</span><i></i> </li>
+                <li class="xd-time">服务时间<span>请选择服务时间</span><i></i> </li>
+                <li><input type="text" placeholder="特殊情况请留言"></li>
+            </ul>
+            <ul class="choice-ul">
+                <li class="xd-time">按摩师
+                    <a href="choice-provider.html" class="choice-p">
+                        <img src="images/provider.jpg" alt="" class="choice-img">
+                        <span class="choice-name">王玉</span>
+                        <i></i>
+                    </a>
+
+                </li>
+            </ul>
+            <ul class="xd-cho-line2">
+                <li class="xd-yhq">优惠券<i></i> </li>
+                <li>预付款 <span class="xd-money">158元</span></li>
+            </ul>
+        </div>
+        <div class="xd-careful">
+            <p>*高龄/骨质疏松及孕期等客户不宜按摩；</p>
+            <p>*每周按摩一次，放松身体，改善健康状况更有效果；</p>
+            <p>*因故不能按时按摩，请提前一天取消订单，取消后支付金额原路返回，3个工作日内到账。</p>
+        </div>
+        <a href="#" class="xd-appo">确认预约</a>
+    </div>
+    <div class="motai">
+        <div class="motai-fw">
+            <p id="xd-jd">进店体验</p>
+            <p id="xd-sm">上门服务</p>
+        </div>
+    </div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/place-order.js"></script>
+    <script src="js/main.js"></script>  <!--单位设置-->
+</body>
+</html>

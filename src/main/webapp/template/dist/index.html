@@ -1,0 +1,206 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>迈噜打造母婴健康管理第一品牌</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜打造母婴健康管理第一品牌">
+    <meta name="description" content="迈噜打造母婴健康管理第一品牌">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--顶部栏开始-->
+        <header>
+            <a href="user-address.html" id="address" class="a-address">
+                <span class="city">成都</span>
+                <img src="images/arrow.png" alt="" class="index-arrow">
+            </a>
+            <span class="page-name">首页</span>
+            <a href="#" class="a-phone">
+                <img src="images/phone.png" alt="" class="phone">
+            </a>
+        </header>
+        <!--顶部栏结束-->
+        <!--主体内容开始-->
+        <div id="main">
+            <!--轮播图-->
+            <div class="swiper-container index-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="#" class="swiper-choice">
+                            <img src="images/lun-4.jpg" alt="" class="swiper-image">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#" class="swiper-choice">
+                            <img src="images/lun-2.jpg" alt="" class="swiper-image">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#" class="swiper-choice">
+                            <img src="images/lun-3.jpg" alt="" class="swiper-image">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#" class="swiper-choice">
+                            <img src="images/lun-1.jpg" alt="" class="swiper-image">
+                        </a>
+                    </div>
+                </div>
+                <div class="swiper-pagination" id="index-swiper"></div>
+            </div>
+            <!--nav菜单栏-->
+            <div class="nav">
+                <a href="enterprise-service.html" class="a-line-1">
+                    <img src="images/enterprise-service.png" alt="">
+                    <span>企业服务</span>
+                </a>
+                <a href="train.html" class="a-line-1">
+                    <img src="images/train.png" alt="">
+                    <span>健康培训</span>
+                </a>
+                <a href="public-welfare.html" class="a-line-1">
+                    <img src="images/gongyi.png" alt="">
+                    <span>迈噜公益</span>
+                </a>
+                <a href="#" class="a-line-1">
+                    <img src="images/recharge.png" alt="">
+                    <span>礼金充值</span>
+                </a>
+                <a href="provider.html">
+                    <img src="images/appointment.png" alt="">
+                    <span>预约技师</span>
+                </a>
+                <a href="#">
+                    <img src="images/soldier.png" alt="">
+                    <span>军人家庭</span>
+                </a>
+                <a href="month-provider.html">
+                    <img src="images/maternity-matron.png" alt="">
+                    <span>月嫂/育婴</span>
+                </a>
+                <a href="jiameng.html">
+                    <img src="images/merchant.png" alt="">
+                    <span>加盟商家</span>
+                </a>
+            </div>
+            <!--营销广告-->
+            <div class="guanggaolan">
+                <div class="gg-line-1">
+                    <a href="#">
+                        <img src="images/gg-2.png" alt="">
+                    </a>
+                </div>
+                <div class="gg-line-2">
+                    <a href="#">
+                        <img src="images/gg-1.png" alt="">
+                    </a>
+                </div>
+                <div class="gg-line-2">
+                    <a href="#">
+                        <img src="images/gg-3.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <!--服务导航-->
+            <!--<div class="transverse-nav">
+                <ul>
+                    <li class="ul-nav on" id="index-tuijian">推荐</li>
+                    <li class="ul-nav" id="index-anmo">按摩推拿</li>
+                    <li class="ul-nav" id="index-zuliao">足疗</li>
+                    <li class="ul-nav" id="index-children">小儿推拿</li>
+                    <li class="more">
+                        <a href="#" class="more">
+                            更多
+                        </a>
+                    </li>
+                </ul>
+            </div>-->
+            <div class="appointment-provider swiper-fixed" >
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide choice-on swiper-a" id="provider-tuijian">推荐</div>
+                    <div class="swiper-slide swiper-a" id="provider-anmo">按摩理疗</div>
+                    <div class="swiper-slide swiper-a" id="provider-zuliao">足疗</div>
+                    <div class="swiper-slide swiper-a" id="provider-aijiu">艾灸</div>
+                    <div class="swiper-slide swiper-a" id="provider-guasha">刮痧</div>
+                    <div class="swiper-slide swiper-a" id="provider-spa">SPA</div>
+                    <div class="swiper-slide swiper-a" id="provider-children">小儿推拿</div>
+                    <div class="swiper-slide swiper-a" id="provider-tongru">通乳</div>
+                </div>
+            </div>
+            <!--服务细节-->
+            <div class="recommend" id="data-container">
+                <!--JS插入-->
+            </div>
+        </div>
+        <!--主体内容结束-->
+        <!--底部固定菜单栏开始-->
+        <footer>
+            <a href="javascript:" class="ft-a">
+                <img src="images/index-on.png" alt="">
+                <span class="page-on">首页</span>
+            </a>
+            <a href="provider.html" class="ft-a">
+                <img src="images/technician.png" alt="">
+                <span>技师</span>
+            </a>
+            <a href="order-details.html" class="ft-a">
+                <img src="images/order.png" alt="">
+                <span>订单</span>
+            </a>
+            <a href="middle-no.html" class="ft-a">
+                <img src="images/user.png" alt="">
+                <span>个人中心</span>
+            </a>
+        </footer>
+        <!--底部固定菜单栏结束-->
+    </div>
+    <!--回到顶部-->
+    <div id="go-top"></div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/main.js"></script>  <!--单位设置-->
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/index.js"></script>
+    <!--轮播图JS-->
+    <script language="javascript">
+        var mySwiper = new Swiper('.swiper-container',{
+            pagination : '.swiper-pagination',
+            loop : true,
+            autoplay : 4000,
+            speed:400,
+            autoplayDisableOnInteraction : false,
+        })
+        var mySwiper2 = new Swiper('.swiper-fixed',{
+            slidesPerView : 5.4,
+            freeMode : true,
+            freeModeMomentum : false,
+        })
+    </script>
+    <script id="template" type="x-tmpl-mustache">
+        {{#rows}}
+            <a href='body-massage.html' class='details' id='details_{{id}}'>
+                <img src='images/order-img.png' alt='' class='details-head-img'>
+                <div class='details-box'>
+                    <span class='details-name'>{{serviceName}}</span>
+                    <span class='details-time'>{{serviceMoneyTime}}</span>
+                    <span class='details-discount'>新用户立减{{serviceDiscount}}元</span>
+                    <span class='likeNum'>{{likeNum}}人喜欢</span>
+                    <p class='details-p'>{{serviceInt}}</p>
+                </div>
+            </a>
+        {{/rows}}
+    </script>
+</body>
+</html>

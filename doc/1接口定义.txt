@@ -1,0 +1,8 @@
+﻿2016年8月10日09:30:31：
+
+技师列表页面：
+	页面URL(/providers)
+	数据(/getProviderList)	
+	页面（views/front/provider/providers）
+	JS（js/front/provider/providers）
+	Action:action/front/provider/providerAction

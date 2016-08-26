@@ -1,0 +1,79 @@
+<!--
+    页面使用rem为单位,100px=2.5rem;
+-->
+<!DOCTYPE html>
+<html id="htmlSize">
+<head>
+    <meta charset="UTF-8">
+    <title>预约月嫂/育婴</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="lhfeiyu.com">
+    <meta name="keywords" content="迈噜预约月嫂/育婴">
+    <meta name="description" content="迈噜预约月嫂/育婴">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <!--主体内容开始-->
+        <div class="tn-top js-top xd-box">
+            <a href="month-data.html" class="back">
+                <img src="images/back.png" alt="">
+            </a>
+            <img src="images/month-img.png" alt="" class="js-img">
+            <span class="js-name">鲁达</span>
+            <div class="tn-line1 js-top-bt">
+                <a href="javascript:">
+                    <img src="images/pjx-on.png" alt="" class="pj-like">
+                </a>
+                <a href="javascript:">
+                    <img src="images/pjx-on.png" alt="" class="pj-like">
+                </a>
+                <a href="javascript:">
+                    <img src="images/pjx-on.png" alt="" class="pj-like">
+                </a>
+                <a href="javascript:">
+                    <img src="images/pjx-on.png" alt="" class="pj-like">
+                </a>
+                <a href="javascript:">
+                    <img src="images/pjx.png" alt="" class="pj-like">
+                </a>
+            </div>
+        </div>
+        <div class="xd-choice">
+            <ul class="xd-cho-line1">
+                <li>联系人<input type="text" placeholder="请输入联系人" class="month-input"></li>
+                <li class="xd-fuwu">联系电话<input type="text" placeholder="请输入联系方式" class="month-input"></li>
+                <li class="xd-address">服务地址<span>请选择服务地址</span><i></i> </li>
+                <li class="xd-time">服务开始时间<input class="weui_input" id="date2" type="text" value="2016-11-12"><i></i> </li>
+                <li class="xd-time">服务结束时间<input class="weui_input" id="date1" type="text" value="2016-12-12"><i></i> </li>
+                <li><input type="text" placeholder="特殊情况请留言"></li>
+            </ul>
+            <ul class="xd-cho-line2">
+                <li class="xd-yhq">优惠券<i></i> </li>
+                <li>预付款 <span class="xd-money">158元</span></li>
+            </ul>
+        </div>
+        <a href="#" class="xd-appo">确认预约</a>
+    </div>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/place-order.js"></script>
+    <script src="js/main.js"></script>  <!--单位设置-->
+    <script>
+        $("#date2").calendar();
+        $("#date1").calendar();
+        $("#inline-calendar").calendar({
+            container: "#inline-calendar",
+            input: "#date3"
+        });
+
+    </script>
+</body>
+</html>
